@@ -4,32 +4,31 @@ const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../db')
 const app = require('../index')
-const User = db.model('user')
+const Order = db.model('user')
 
-describe('User routes', () => {
+describe('Order routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  describe('/api/users/', () => {
-    const dummyUser = {
-      email: 'test@email.com',
-      password: '1234',
-      firstName: 'Arnold',
-      lastName: 'Schwarzenegger'
+  describe('/api/orders/', () => {
+    const dummyOrder = {
+      experienceId: [0, 1], //if the order contains multiple experience purchases
+      userId: 0,
+      quantity: 1
     }
 
     beforeEach(() => {
-      return User.create({dummyUser})
+      return Order.create({dummyOrder})
     })
 
-    it('GET /api/users', async () => {
+    it('GET /api/orders', async () => {
       const res = await request(app)
-        .get('/api/users')
+        .get('/api/orders')
         .expect(200)
 
       expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal(dummyUser.email)
+      expect(res.body[0].quantity).to.be.equal(dummyOrder.quantity)
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
