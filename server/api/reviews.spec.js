@@ -4,32 +4,30 @@ const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../db')
 const app = require('../index')
-const User = db.model('user')
+const Review = db.model('user')
 
-describe('User routes', () => {
+describe('Review routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  describe('/api/users/', () => {
-    const dummyUser = {
-      email: 'test@email.com',
-      password: '1234',
-      firstName: 'Arnold',
-      lastName: 'Schwarzenegger'
+  describe('/api/reviews/', () => {
+    const dummyReview = {
+      description: 'This experience was rad.',
+      stars: 5 // is "stars" the correct column type?
     }
 
     beforeEach(() => {
-      return User.build({dummyUser})
+      return Review.build({dummyReview})
     })
 
-    it('GET /api/users', async () => {
+    it('GET /api/reviews', async () => {
       const res = await request(app)
-        .get('/api/users')
+        .get('/api/reviews')
         .expect(200)
 
       expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal(dummyUser.email)
+      expect(res.body[0].description).to.be.equal(dummyUser.description)
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
