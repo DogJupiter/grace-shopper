@@ -24,7 +24,23 @@ export default class AllExperiences extends React.Component {
           rating: 3
         },
         {
-          id: 1,
+          id: 3,
+          title: 'A Third Cool Experience',
+          imageUrl:
+            'https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80',
+          category: 'Dance',
+          rating: 5
+        },
+        {
+          id: 4,
+          title: 'A Third Cool Experience',
+          imageUrl:
+            'https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80',
+          category: 'Dance',
+          rating: 5
+        },
+        {
+          id: 5,
           title: 'A Third Cool Experience',
           imageUrl:
             'https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80',
@@ -36,8 +52,16 @@ export default class AllExperiences extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Grid container style={{flexGrow: 1}} spacing={40}>
+      // This style div adds space to the left of the Grid container so that sidebar can be added
+      <div style={{marginLeft: '27%', justifyContent: 'center'}}>
+        <Grid
+          container
+          justify="center"
+          style={{
+            flexGrow: 1
+          }}
+          spacing={40}
+        >
           <Grid item xs={12}>
             <SingleExperience experiences={this.state.experiences} />
           </Grid>
