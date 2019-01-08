@@ -1,87 +1,48 @@
 import React from 'react'
-import {CardMedia, Grid, Card, Typography, CardContent} from '@material-ui/core'
+import {Grid} from '@material-ui/core'
+import SelectedExperience from './selectedExperience'
 
 export default class AllExperiences extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      experiences: [
+        {
+          id: 1,
+          title: 'Really Cool Experience',
+          imageUrl:
+            'https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80',
+          category: 'Drinks',
+          rating: 4
+        },
+        {
+          id: 2,
+          title: 'Another Really Cool Experience',
+          imageUrl:
+            'https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80',
+          category: 'Sports',
+          rating: 3
+        },
+        {
+          id: 1,
+          title: 'A Third Cool Experience',
+          imageUrl:
+            'https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80',
+          category: 'Dance',
+          rating: 5
+        }
+      ]
+    }
+  }
   render() {
     return (
       <div>
         <Grid container style={{flexGrow: 1}} spacing={40}>
           <Grid item xs={12}>
-            <Grid container justify="center" spacing={40}>
-              <Grid item>
-                <Card style={{width: 400}}>
-                  <CardMedia
-                    style={{height: 60, paddingTop: '56.25%'}}
-                    image="https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80"
-                    title="Hiking to the top of the mountain"
-                  />
-                  <CardContent>
-                    <Typography component="h2">
-                      Hike to the top of the mountain
-                    </Typography>
-                  </CardContent>
-                  <CardContent>
-                    <Typography component="p">Category</Typography>
-                  </CardContent>
-                  <CardContent>
-                    <Typography component="p">Rating</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item>
-                <Card style={{width: 400}}>
-                  <CardMedia
-                    style={{height: 60, paddingTop: '56.25%'}}
-                    image="https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80"
-                    title="Hiking to the top of the mountain"
-                  />
-                  <CardContent>
-                    <Typography component="h2">
-                      Hike to the top of the mountain
-                    </Typography>
-                  </CardContent>
-                  <CardContent>
-                    <Typography component="p">Category</Typography>
-                  </CardContent>
-                  <CardContent>
-                    <Typography component="p">Rating</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item>
-                <Card style={{width: 400}}>
-                  <CardMedia
-                    style={{height: 60, paddingTop: '56.25%'}}
-                    image="https://images.unsplash.com/photo-1524281423221-234569bc0438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80"
-                    title="Hiking to the top of the mountain"
-                  />
-                  <CardContent>
-                    <Typography component="h2">
-                      Hike to the top of the mountain
-                    </Typography>
-                  </CardContent>
-                  <CardContent>
-                    <Typography component="p">Category</Typography>
-                  </CardContent>
-                  <CardContent>
-                    <Typography component="p">Rating</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
+            <SelectedExperience experiences={this.state.experiences} />
           </Grid>
         </Grid>
       </div>
     )
   }
 }
-
-/*<Grid item>
-                <Paper style={{height: '327px', width: '302px'}} />
-              </Grid>
-              <Grid item>
-                <Paper style={{height: '327px', width: '302px'}} />
-              </Grid>
-              <Grid item>
-                <Paper style={{height: '327px', width: '302px'}} />
-              </Grid>*/
