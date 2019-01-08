@@ -18,7 +18,7 @@ describe('Review routes', () => {
     }
 
     beforeEach(() => {
-      return Review.create({dummyReview})
+      return Review.build({dummyReview})
     })
 
     it('GET /api/reviews', async () => {

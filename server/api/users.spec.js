@@ -20,7 +20,7 @@ describe('User routes', () => {
     }
 
     beforeEach(() => {
-      return User.create({dummyUser})
+      return User.build({dummyUser})
     })
 
     it('GET /api/users', async () => {

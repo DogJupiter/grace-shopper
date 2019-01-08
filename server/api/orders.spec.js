@@ -19,7 +19,7 @@ describe('Order routes', () => {
     }
 
     beforeEach(() => {
-      return Order.create({dummyOrder})
+      return Order.build({dummyOrder})
     })
 
     it('GET /api/orders', async () => {

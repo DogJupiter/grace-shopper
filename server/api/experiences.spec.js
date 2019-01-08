@@ -23,7 +23,7 @@ describe('Experience routes', () => {
     }
 
     beforeEach(() => {
-      return Experience.create({dummyExperience})
+      return Experience.build({dummyExperience})
     })
 
     it('GET /api/experiences', async () => {
