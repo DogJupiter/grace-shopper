@@ -6,9 +6,8 @@ import {logout} from '../store'
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import ShoppingCart from '@material-ui/icons/Shopping_cart'
 import SearchIcon from '@material-ui/icons/Search'
-import {AppBar, Toolbar, IconButton, Button, InputBase} from '@material-ui/core'
+import {AppBar, Toolbar, Button, InputBase} from '@material-ui/core'
 
 const styles = theme => ({
   root: {
