@@ -1,6 +1,6 @@
 import React from 'react'
 import {Grid} from '@material-ui/core'
-import SelectedExperience from './selectedExperience'
+import SingleExperience from './singleExperience'
 
 export default class AllExperiences extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ export default class AllExperiences extends React.Component {
       <div>
         <Grid container style={{flexGrow: 1}} spacing={40}>
           <Grid item xs={12}>
-            <SelectedExperience experiences={this.state.experiences} />
+            <SingleExperience experiences={this.state.experiences} />
           </Grid>
         </Grid>
       </div>

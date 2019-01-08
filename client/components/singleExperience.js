@@ -1,7 +1,7 @@
 import React from 'react'
 import {CardMedia, Grid, Card, Typography, CardContent} from '@material-ui/core'
 
-export default class SelectedExperience extends React.Component {
+export default class SingleExperience extends React.Component {
   constructor(props) {
     super(props)
   }
