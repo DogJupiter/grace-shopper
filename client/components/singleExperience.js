@@ -6,21 +6,22 @@ export default class SingleExperience extends React.Component {
     return (
       <Grid container spacing={40}>
         {this.props.experiences.map(exp => {
+          const {name, imageUrl, category, price} = exp
           return (
             <Grid item key={exp.id}>
               <Card style={{width: 336}}>
                 <CardMedia
                   style={{height: 60, paddingTop: '56.25%'}}
-                  image={exp.imageUrl}
-                  title={exp.title}
+                  image={imageUrl}
+                  title={name}
                 />
                 <CardContent>
                   <Typography component="p" style={{color: '#627264'}}>
-                    {exp.category}
+                    {category}
                   </Typography>
-                  <h3 style={{color: '#FCC30A'}}>{exp.title}</h3>
+                  <h3 style={{color: '#FCC30A'}}>{name}</h3>
                   <Typography component="p" style={{color: '#627264'}}>
-                    {exp.rating}
+                    $ {price}.00
                   </Typography>
                 </CardContent>
               </Card>
