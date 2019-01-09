@@ -1,8 +1,11 @@
+//react, redux
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+
+//materialUI
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -91,7 +94,9 @@ class Navbar extends Component {
               />
             </div>
 
-            <Button color="inherit">Login</Button>
+            <Link to="">
+              <Button color="inherit">Login</Button>
+            </Link>
             <Button color="inherit">SignUp</Button>
             <ShoppingCartIcon color="inherit" />
           </Toolbar>

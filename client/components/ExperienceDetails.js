@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
-// import {unstable_Box as Box} from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 // import ButtonBase from '@material-ui/core/ButtonBase'
 import WatchLaterIcon from '@material-ui/icons/WatchLater'
 import EventNoteIcon from '@material-ui/icons/EventNote'
@@ -59,49 +59,52 @@ class ExperienceDetails extends Component {
 
   render() {
     const {classes, experience} = this.props
-    const {
-      id,
-      name,
-      imageUrl,
-      duration,
-      category,
-      description,
-      price,
-      reviews
-    } = experience
-    return id ? (
+
+    return experience && experience.name ? (
       <div className={classes.root} color="font">
         <Paper className={classes.paper}>
           <Grid container className={classes.text}>
             <Grid item sm={3}>
-              <img className={classes.image} src={imageUrl} alt="experience" />
+              <img
+                className={classes.image}
+                src={experience.imageUrl}
+                alt="experience"
+              />
             </Grid>
 
             <Grid item sm>
               <Typography className={classes.header}>{name}</Typography>
               <p>
-                <WatchLaterIcon className={classes.icons} /> {duration} hours
-                total
+                <WatchLaterIcon className={classes.icons} />{' '}
+                {experience.duration} hours total
               </p>
               <p>
-                <EventNoteIcon className={classes.icons} /> {category}
+                <EventNoteIcon className={classes.icons} />{' '}
+                {experience.category}
               </p>
+              <p>$ {experience.price}</p>
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.button}
+              >
+                Add to Cart
+              </Button>
             </Grid>
 
             <Grid item sm={12}>
               <h2 className={classes.uppercase}>Description</h2>
-              <p>{description}</p>
+              <p>{experience.description}</p>
             </Grid>
 
             <Grid item sm={12}>
-              {reviews[0] ? (
+              {experience.reviews[0] ? (
                 <div>
                   <h3 className={classes.uppercase}>
-                    {' '}
                     Reviews from people who took this experience
                   </h3>
                   <h4>What guests are saying</h4>
-                  {reviews.map(review => (
+                  {experience.reviews.map(review => (
                     <Grid
                       key={review.id}
                       container
@@ -123,7 +126,6 @@ class ExperienceDetails extends Component {
                 </div>
               ) : (
                 <p>
-                  {' '}
                   <SentimentIcon className={classes.icons} /> No reviews for
                   this experience
                 </p>
