@@ -5,7 +5,9 @@ module.exports = router
 // GET /api/experiences
 router.get('/', async (req, res, next) => {
   try {
-    const experiences = await Experience.findAll({include: [Review]})
+    const experiences = await Experience.findAll({
+      include: [{model: Review, as: 'review'}]
+    })
     res.json(experiences)
   } catch (err) {
     next(err)
@@ -20,7 +22,7 @@ router.get('/:id', async (req, res, next) => {
       where: {
         id: experienceId
       },
-      include: [Review]
+      include: [{model: Review, as: 'review'}]
     })
     res.json(requestedExperience)
   } catch (err) {

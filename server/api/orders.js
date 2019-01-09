@@ -5,7 +5,7 @@ module.exports = router
 // GET /api/orders
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await Order.findAll({include: [User, Experience]})
+    const orders = await Order.findAll({include: [{model: User, as: 'user'}]})
     res.json(orders)
   } catch (err) {
     next(err)
