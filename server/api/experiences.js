@@ -15,25 +15,25 @@ router.get('/', async (req, res, next) => {
 })
 
 // GET /api/experiences/:category
-router.get('/:category', async (req, res, next) => {
-  const requestedCategory = Number(req.params.id)
-  console.log(requestedCategory)
-  try {
-    const experienceId = await CategoryExperience.findAll({
-      where: {
-        categoryId: requestedCategory
-      }
-    })
-    const filteredExperiences = await Experience.findAll({
-      where: {
-        id: experienceId
-      }
-    })
-    res.json(filteredExperiences)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.get('/:category', async (req, res, next) => {
+//   const requestedCategory = Number(req.params.id)
+//   console.log(requestedCategory)
+//   try {
+//     const experienceId = await CategoryExperience.findAll({
+//       where: {
+//         categoryId: requestedCategory
+//       }
+//     })
+//     const filteredExperiences = await Experience.findAll({
+//       where: {
+//         id: experienceId
+//       }
+//     })
+//     res.json(filteredExperiences)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 // GET /api/experiences/:id
 router.get('/:id', async (req, res, next) => {
