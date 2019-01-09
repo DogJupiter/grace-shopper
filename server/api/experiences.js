@@ -6,7 +6,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const experiences = await Experience.findAll({
-      include: [{model: Review, as: 'review'}]
+      include: [{model: Review}]
     })
     res.json(experiences)
   } catch (err) {
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res, next) => {
       where: {
         id: experienceId
       },
-      include: [{model: Review, as: 'review'}]
+      include: [{model: Review}]
     })
     res.json(requestedExperience)
   } catch (err) {
