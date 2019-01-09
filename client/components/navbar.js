@@ -8,6 +8,7 @@ import {withStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
 import {AppBar, Toolbar, Button, InputBase} from '@material-ui/core'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
 const styles = theme => ({
   root: {
@@ -92,6 +93,7 @@ class Navbar extends Component {
 
             <Button color="inherit">Login</Button>
             <Button color="inherit">SignUp</Button>
+            <ShoppingCartIcon color="inherit" />
           </Toolbar>
         </AppBar>
       </div>
