@@ -3,7 +3,7 @@ import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
-import experience, {fetchExperience} from './experience'
+import experience, {fetchExperience, fetchAllExperiences} from './experience'
 
 const reducer = combineReducers({user, experience})
 const middleware = composeWithDevTools(
@@ -13,4 +13,5 @@ const store = createStore(reducer, middleware)
 
 export default store
 export * from './user'
-export {fetchExperience}
+// exported thunk creators
+export {fetchExperience, fetchAllExperiences}
