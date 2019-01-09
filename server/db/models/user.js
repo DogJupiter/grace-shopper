@@ -5,7 +5,7 @@ const db = require('../db')
 const User = db.define('user', {
   firstName: {
     type: Sequelize.STRING,
-    callowNull: false
+    callowNull: false //CG: this is a bad merge becasue this means your db is literally not syncing. Not empty check as well.
   },
   lastName: {
     type: Sequelize.STRING,
