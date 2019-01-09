@@ -16,3 +16,19 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+// // GET /api/users/:id
+router.get('/:id', async (req, res, next) => {
+  const userId = Number(req.params.id)
+  if (req.user && req.user.id === userId) {
+    try {
+      const selectedUser = await User.findById(userId)
+      res.json(selectedUser)
+    } catch (err) {
+      next(err)
+    }
+  } else {
+    res.status(403).send('Forbidden')
+  }
+})
+// // GET /api/users/:id/orders

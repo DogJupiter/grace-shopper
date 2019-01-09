@@ -53,6 +53,7 @@ export default class AllExperiences extends React.Component {
   render() {
     return (
       // This style div adds space to the left of the Grid container so that sidebar can be added
+      // Anything non-material UI should be done stylistically in a CSS file (SCSS) and this should be given appropriate class/id.
       <div style={{marginLeft: '27%', justifyContent: 'center'}}>
         <Grid
           container
