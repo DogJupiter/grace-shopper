@@ -12,15 +12,22 @@ describe('User routes', () => {
   })
 
   describe('/api/users/', () => {
-    const dummyUser = {
-      email: 'test@email.com',
-      password: '1234',
-      firstName: 'Arnold',
-      lastName: 'Schwarzenegger'
-    }
+    // const dummyUser = {
+    //   email: 'test@email.com',
+    //   password: '1234',
+    //   firstName: 'Arnold',
+    //   lastName: 'Schwarzenegger'
+    // }
 
     beforeEach(() => {
-      return User.build({dummyUser})
+      return User.create({
+        imageUrl:
+          'http://3.bp.blogspot.com/-JpW6qdc5BM4/T79oSN0Yb8I/AAAAAAAAFxg/BwTLJ-6RhfY/s1600/arnold-schwarzenegger-20060109-99172.jpg',
+        email: 'test@email.com',
+        password: '1234',
+        firstName: 'Arnold',
+        lastName: 'Schwarzenegger'
+      })
     })
 
     it('GET /api/users', async () => {
@@ -29,7 +36,7 @@ describe('User routes', () => {
         .expect(200)
 
       expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal(dummyUser.email)
+      expect(res.body[0].email).to.be.equal('test@email.com')
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
