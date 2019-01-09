@@ -31,4 +31,9 @@ router.get('/:id', async (req, res, next) => {
     res.status(403).send('Forbidden')
   }
 })
-// // GET /api/users/:id/orders
+
+/*
+Corey's Code Review Notes
+[DONE] /:id GET route -- //CG: I'd specify findOne 
+[DONE] / GET ROUTE -- //CG: Maybe cast to number, but not required.
+*/
