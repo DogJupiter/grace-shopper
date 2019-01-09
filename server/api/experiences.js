@@ -17,8 +17,9 @@ router.get('/', async (req, res, next) => {
 // GET /api/experiences/:id
 router.get('/:id', async (req, res, next) => {
   try {
-    const experienceId = req.params.id
+    const experienceId = req.params.id //CG: Maybe cast to number, but not required.
     const requestedExperience = await Experience.find({
+      //CG: I'd specify findOne
       where: {
         id: experienceId
       },

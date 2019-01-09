@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Experience = db.define('experience', {
+  //CG: Please also add validations for notEmpty
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -12,7 +13,7 @@ const Experience = db.define('experience', {
     validate: {
       isUrl: true
     }
-  },
+  }, //CG: Food for thought here on making this minutes.
   duration: {
     type: Sequelize.STRING,
     allowNull: false
@@ -32,5 +33,7 @@ const Experience = db.define('experience', {
     }
   }
 })
+
+//CG: You should add quantity her.
 
 module.exports = Experience
