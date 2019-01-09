@@ -5,6 +5,10 @@ const Review = db.define('review', {
   description: {
     type: Sequelize.TEXT,
     allowNull: false
+  },
+  stars: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 })
 

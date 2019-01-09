@@ -64,13 +64,13 @@ const users = [
 ]
 //Review Data
 const reviews = [
-  {description: 'I love this experiences!'},
-  {description: 'I love this experiences!'},
-  {description: 'I love this experiences!'}
+  {description: 'I love this experiences!', stars: 5},
+  {description: 'I love this experiences!', stars: 5},
+  {description: 'I love this experiences!', stars: 5}
 ]
 
 //Order Data
-const orders = [{quantity: []}, {quantity: []}, {quantity: []}]
+const orders = [{quantity: 1}, {quantity: 2}, {quantity: 3}]
 
 const seed = async () => {
   await db
