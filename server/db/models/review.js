@@ -8,7 +8,11 @@ const Review = db.define('review', {
   },
   stars: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      min: 0,
+      max: 5
+    }
   }
 })
 

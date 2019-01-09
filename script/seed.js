@@ -76,9 +76,9 @@ const users = [
 
 //Review Data
 const reviews = [
-  {description: 'I love this experiences!', experienceId: 2},
-  {description: 'I love this experiences!', experienceId: 2},
-  {description: 'I love this experiences!', experienceId: 1}
+  {description: 'I love this experiences!', experienceId: 2, stars: 4},
+  {description: 'I love this experiences!', experienceId: 2, stars: 5},
+  {description: 'I love this experiences!', experienceId: 1, stars: 3}
 ]
 
 //Order Data

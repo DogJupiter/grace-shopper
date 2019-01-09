@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Experience, Review} = require('../db/models')
+const {Experience, Review, CategoryExperience} = require('../db/models')
 module.exports = router
 
 // GET /api/experiences
@@ -17,13 +17,19 @@ router.get('/', async (req, res, next) => {
 // GET /api/experiences/:category
 router.get('/:category', async (req, res, next) => {
   const requestedCategory = Number(req.params.id)
+  console.log(requestedCategory)
   try {
-    const categorizedExp = await Experience.findAll({
+    const experienceId = await CategoryExperience.findAll({
       where: {
         categoryId: requestedCategory
       }
     })
-    res.json(categorizedExp)
+    const filteredExperiences = await Experience.findAll({
+      where: {
+        id: experienceId
+      }
+    })
+    res.json(filteredExperiences)
   } catch (err) {
     next(err)
   }
