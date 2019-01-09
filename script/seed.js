@@ -1,7 +1,15 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Experience, Review, Order} = require('../server/db/models')
+const {
+  User,
+  Experience,
+  Review,
+  Order,
+  Category,
+  OrderExperience,
+  CategoryExperience
+} = require('../server/db/models')
 
 //Experiences Data
 const experiences = [
@@ -9,28 +17,31 @@ const experiences = [
     name: 'Jane Hotel After Midnight',
     imageUrl:
       'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg',
-    category: 'drink',
     duration: '2 hours',
     price: 50,
-    description: 'night out'
+    description: 'night out',
+    quantity: 50,
+    categoryId: 3
   },
   {
     name: 'Ballet in Lincoln Center',
     imageUrl:
       'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg',
-    category: 'sports',
     duration: '2 hours',
     price: 80,
-    description: 'swam lake'
+    description: 'swam lake',
+    quantity: 50,
+    categoryId: 1
   },
   {
     name: 'Street Food in Flushing',
     imageUrl:
       'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg',
-    category: 'food',
     duration: '2 hours',
     price: 40,
-    description: 'eat eat eat'
+    description: 'eat eat eat',
+    quantity: 50,
+    categoryId: 2
   }
 ]
 //User Data
@@ -62,9 +73,8 @@ const users = [
     googleId: null
   }
 ]
-//Review Data
 
-//added experienceId2
+//Review Data
 const reviews = [
   {description: 'I love this experiences!', experienceId: 2},
   {description: 'I love this experiences!', experienceId: 2},
@@ -72,8 +82,34 @@ const reviews = [
 ]
 
 //Order Data
-const orders = [{quantity: 1}, {quantity: 2}, {quantity: 3}]
+const orders = [
+  {status: 'created', quantity: 2},
+  {status: 'created', quantity: 1},
+  {status: 'created', quantity: 3}
+]
 
+//Category Data
+const categories = [
+  {category: 'entertainment'}, //categoryId = 1
+  {category: 'food'}, //categoryId = 2
+  {category: 'drink'} //categoryId = 3
+]
+
+//OrderExperience JointTable data
+const orderExperiences = [
+  {orderId: 1, experienceId: 1},
+  {orderId: 1, experienceId: 2},
+  {orderId: 1, experienceId: 3}
+]
+
+//OrderExperience JointTable data
+const categoryExperiences = [
+  {categoryId: 3, experienceId: 1},
+  {categoryId: 1, experienceId: 2},
+  {categoryId: 2, experienceId: 3}
+]
+
+//CategoryExperience JointTable data
 const seed = async () => {
   await db
     .sync({force: true})
@@ -102,6 +138,27 @@ const seed = async () => {
       return Promise.all(
         reviews.map(review => {
           return Review.create(review)
+        })
+      )
+    })
+    .then(() => {
+      return Promise.all(
+        categories.map(category => {
+          return Category.create(category)
+        })
+      )
+    })
+    .then(() => {
+      return Promise.all(
+        orderExperiences.map(id => {
+          return OrderExperience.create(id)
+        })
+      )
+    })
+    .then(() => {
+      return Promise.all(
+        categoryExperiences.map(id => {
+          return CategoryExperience.create(id)
         })
       )
     })
