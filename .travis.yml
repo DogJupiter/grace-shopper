@@ -14,7 +14,7 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "benewyork-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
 before_deploy:
   - npm run build-client # make the bundle
@@ -22,6 +22,6 @@ before_deploy:
 deploy:
   skip_cleanup: true # prevents travis from deleting the build
   provider: heroku
-  app: YOUR-HEROKU-APP-NAME-HERE # see README
+  app: benewyork # see README
   api_key:
     secure: s+z0FlTq1FP6DW2GbBSmbXnojwF87OhVVIHpyylz6THkpkR5ETGLLWFGFQrz/I5zGwAREfNrZM4TxF9WmV8/qcvDkKWRXiPr+64dc9RP1Lut8PCfPMdjufa75Kw7T+azd/4FjIC0oAmN1k+K80Aegmm3rgaxDYjshCY2C5C+M5nndPCyL4XNRz+2/HWtlIoemwg7re49Vj1GR4/VkooXO4OjlIbCcwtQA1O+xBoKvR+VETo512sG4UwxpcUSXuGjCpoOlmxfooGRNpsDin39K0QMgxGiKDogsG0DZ0p71NQbXTcU/Cr3rEfu5P8yIr8xWvgSRur0u0rH158iB91dSy0oLHnfL8AmKlwXWNL0vXN1R1ovtndkZkM1lHljSmYUj9mDyijYKfthceBH8xGixv93UJBxYOAMQ54oVBcLU752P0OZSv8JQK920wFig24T5EtTUa5FJkvp9f+q31Ltg5xt8E1iBPwRbV1jE+okoTq18kEK3p6aOANzUrO7dOqgjkCRb2UI7PJHk+bS9G6mVbSVa8UNktBOByQN/ueRgDiuDwE2FYiGI1qkz0FB0UMIFnmCqPhgmsig0qpHhnp8vMc+Q7pVaO16sunozEQARL8CWyyfByYYfuJYeBFED2rzun0nBOZ843ZlnRya0moAbkJ/PRKLLLchsf7gfCxl9ks=
