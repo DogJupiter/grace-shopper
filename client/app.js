@@ -10,6 +10,9 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: '#627264'
+    },
+    font: {
+      main: '#484848'
     }
   }
 })
