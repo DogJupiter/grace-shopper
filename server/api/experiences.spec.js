@@ -6,7 +6,7 @@ const db = require('../db')
 const app = require('../index')
 const Experience = db.model('experience')
 
-describe('Experience routes', () => {
+describe.only('Experience routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
