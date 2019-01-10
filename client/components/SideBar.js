@@ -44,7 +44,8 @@ class SideBar extends React.Component {
               'Sports',
               'Entertainment',
               'Health & Wellness',
-              'Food & Drinks'
+              'Food & Drinks',
+              'dakota'
             ].map((text, index) => (
               <ListItem button key={text}>
                 <ListItemText primary={text} />
