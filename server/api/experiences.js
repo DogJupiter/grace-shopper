@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Experience, Review, User, CategoryExperience} = require('../db/models')
+const {Experience, Review, User} = require('../db/models')
 module.exports = router
 
 // GET /api/experiences
@@ -36,7 +36,7 @@ router.get('/', async (req, res, next) => {
 // })
 
 // GET /api/experiences/:id
-//line 47 nested eager loading added
+
 router.get('/:id', async (req, res, next) => {
   try {
     const experienceId = Number(req.params.id)
