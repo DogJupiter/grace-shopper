@@ -20,7 +20,8 @@ const experiences = [
     duration: '2 hours',
     price: 50,
     description: 'night out',
-    quantity: 50
+    quantity: 50,
+    categoryId: 3
   },
   {
     name: 'Ballet in Lincoln Center',
@@ -29,7 +30,8 @@ const experiences = [
     duration: '2 hours',
     price: 80,
     description: 'swam lake',
-    quantity: 50
+    quantity: 50,
+    categoryId: 2
   },
   {
     name: 'Street Food in Flushing',
@@ -38,7 +40,8 @@ const experiences = [
     duration: '2 hours',
     price: 40,
     description: 'eat eat eat',
-    quantity: 50
+    quantity: 50,
+    categoryId: 3
   },
   {
     name: 'Hip Hop Lesson with the Showtime Kids',
@@ -47,7 +50,8 @@ const experiences = [
     duration: '3 hours',
     price: 60,
     description: `IT'S SHOWTIME EVERYBODY WHAT TIME IS IT SHOWTIME`,
-    quantity: 50
+    quantity: 50,
+    categoryId: 2
   }
 ]
 //User Data
