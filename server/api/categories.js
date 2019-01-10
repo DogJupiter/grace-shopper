@@ -20,41 +20,44 @@ router.get('/', async (req, res, next) => {
 // GET /api/categories/:id
 router.get('/:id', async (req, res, next) => {
   try {
-    const categoryId = Number(req.params.id)
-    const requestedCategory = await Category.findOne({
-      where: {
-        id: categoryId
-      }
-    })
-    res.json(requestedCategory)
-  } catch (err) {
-    next(err)
-  }
-})
-
-// GET /api/categories/:id/experiences
-router.get('/:id/experiences', async (req, res, next) => {
-  const requestedCategory = Number(req.params.id)
-  try {
-    //We've chosen the category (e.g. food)
-    //Poll the cat-exp table
-    const entries = await CategoryExperience.findAll({
+    const requestedCategory = Number(req.params.id)
+    const filteredExperiences = await Experience.findAll({
       where: {
         categoryId: requestedCategory
-      }
+      },
+      include: [{model: Category}]
     })
-    //This will return an array of entries which are categorized as "food" or whatever.
+    // console.log('HERE', filteredExperiences.get())
 
-    //Each of these elements in the array will have an experience ID.
-
-    const filteredExperiences = await Experience.findAll({
-      // where: {
-      //   id: entries.id
-      // }
-    })
-    // const test = await Experience.findAll({})
     res.json(filteredExperiences)
   } catch (err) {
     next(err)
   }
 })
+
+// // GET /api/categories/:id/experiences
+// router.get('/:id/experiences', async (req, res, next) => {
+//   const requestedCategory = Number(req.params.id)
+//   try {
+//     //We've chosen the category (e.g. food)
+//     //Poll the cat-exp table
+//     const entries = await CategoryExperience.findAll({
+//       where: {
+//         categoryId: requestedCategory
+//       }
+//     })
+//     //This will return an array of entries which are categorized as "food" or whatever.
+
+//     //Each of these elements in the array will have an experience ID.
+
+//     const filteredExperiences = await Experience.findAll({
+//       // where: {
+//       //   id: entries.id
+//       // }
+//     })
+//     // const test = await Experience.findAll({})
+//     res.json(filteredExperiences)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
