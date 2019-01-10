@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Experience, Review, CategoryExperience} = require('../db/models')
+const {Experience, Review, User, CategoryExperience} = require('../db/models')
 module.exports = router
 
 // GET /api/experiences
@@ -36,6 +36,7 @@ router.get('/', async (req, res, next) => {
 // })
 
 // GET /api/experiences/:id
+//line 47 nested eager loading added
 router.get('/:id', async (req, res, next) => {
   try {
     const experienceId = Number(req.params.id)
@@ -43,7 +44,7 @@ router.get('/:id', async (req, res, next) => {
       where: {
         id: experienceId
       },
-      include: [{model: Review}]
+      include: [{model: Review, include: [{model: User}]}]
     })
     res.json(requestedExperience)
   } catch (err) {
@@ -53,6 +54,6 @@ router.get('/:id', async (req, res, next) => {
 
 /*
 Corey's Code Review Notes
-[DONE] /:id GET route -- //CG: I'd specify findOne 
+[DONE] /:id GET route -- //CG: I'd specify findOne
 [DONE] / GET ROUTE -- //CG: Maybe cast to number, but not required.
 */

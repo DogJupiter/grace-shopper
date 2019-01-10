@@ -9,10 +9,11 @@ const theme = createMuiTheme({
       main: '#FFFFFF'
     },
     secondary: {
-      main: '#627264'
+      main: '#627264',
+      contrastText: '#FAE8EB'
     },
-    font: {
-      main: '#484848'
+    badges: {
+      main: '#FAE8EB'
     }
   }
 })

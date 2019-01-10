@@ -72,10 +72,26 @@ const users = [
 ]
 
 //Review Data
+//added userId for testing reviews
 const reviews = [
-  {description: 'I love this experiences!', experienceId: 2, stars: 4},
-  {description: 'I love this experiences!', experienceId: 2, stars: 5},
-  {description: 'I love this experiences!', experienceId: 1, stars: 3}
+  {
+    description: 'I love this experiences!',
+    experienceId: 2,
+    stars: 4,
+    userId: 1
+  },
+  {
+    description: 'I love this experiences!',
+    experienceId: 2,
+    stars: 5,
+    userId: 3
+  },
+  {
+    description: 'I love this experiences!',
+    experienceId: 1,
+    stars: 3,
+    userId: 2
+  }
 ]
 
 //Order Data

@@ -6,7 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import AllExperiences from './components/allExperiences'
 import ExperienceDetails from './components/ExperienceDetails'
-
+import Cart from './components/Cart'
 /**
  * COMPONENT
  */
@@ -29,6 +29,7 @@ class Routes extends Component {
         <Route path="/home" component={UserHome} />
         <Route path="/landing" component={AllExperiences} />
         <Route path="/experiences/:id" component={ExperienceDetails} />
+        <Route path="/cart" component={Cart} />
         {/* </Switch>
         )} */}
         {/* Displays our Login component as a fallback */}
