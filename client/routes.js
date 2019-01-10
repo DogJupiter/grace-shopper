@@ -6,6 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import AllExperiences from './components/allExperiences'
 import ExperienceDetails from './components/ExperienceDetails'
+import FilteredExperiences from './components/filteredExperiences'
 
 /**
  * COMPONENT
@@ -21,14 +22,20 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route exact path="/" component={AllExperiences} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {/* {isLoggedIn && (
           <Switch> */}
         {/* Routes placed here are only available after logging in */}
         <Route path="/home" component={UserHome} />
-        <Route path="/landing" component={AllExperiences} />
-        <Route path="/experiences/:id" component={ExperienceDetails} />
+        {/* <Route path="/landing" component={AllExperiences} /> */}
+        <Route
+          exact
+          path="/experiences/category/:id"
+          component={FilteredExperiences}
+        />
+        <Route exact path="/experiences/:id" component={ExperienceDetails} />
         {/* </Switch>
         )} */}
         {/* Displays our Login component as a fallback */}

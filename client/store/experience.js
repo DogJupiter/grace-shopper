@@ -4,12 +4,14 @@ import history from '../history'
 const initState = {
   singleExperience: {},
   allExperiences: [],
-  selectedExperience: {}
+  selectedExperience: {},
+  filteredExperiences: []
 }
 
 //action types
 const GET_EXPERIENCE = 'GET_EXPERIENCE'
 const GET_ALL_EXPERIENCES = 'GET_ALL_EXPERIENCES'
+const GET_FILTERED_EXPERIENCES = 'GET_FILTERED_EXPERIENCES'
 
 //action creators
 const getExperince = experience => ({
@@ -19,6 +21,11 @@ const getExperince = experience => ({
 
 const getAllExperiences = experiences => ({
   type: GET_ALL_EXPERIENCES,
+  payload: experiences
+})
+
+const getFilteredExperiences = experiences => ({
+  type: GET_FILTERED_EXPERIENCES,
   payload: experiences
 })
 
@@ -40,12 +47,22 @@ export const fetchAllExperiences = () => {
   }
 }
 
+export const fetchFilteredExperiences = id => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/categories/${id}`)
+    console.log('HERE IS THE DATA!!!', data)
+    dispatch(getFilteredExperiences(data))
+  }
+}
+
 const experienceReducer = (state = initState, action) => {
   switch (action.type) {
     case GET_EXPERIENCE:
       return {...state, singleExperience: action.payload}
     case GET_ALL_EXPERIENCES:
       return {...state, allExperiences: action.payload}
+    case GET_FILTERED_EXPERIENCES:
+      return {...state, filteredExperiences: action.payload}
     default:
       return state
   }

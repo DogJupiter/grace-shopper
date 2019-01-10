@@ -11,12 +11,14 @@ Review.belongsTo(Experience)
 Experience.hasMany(Review)
 User.hasMany(Order)
 Order.belongsTo(User)
-Order.belongsToMany(Experience, {through: OrderExperience})
-Experience.belongsToMany(Order, {through: OrderExperience})
+// Order.belongsToMany(Experience, {through: OrderExperience})
+// Experience.belongsToMany(Order, {through: OrderExperience})
 
-Experience.belongsTo(Category, {through: CategoryExperience})
-Category.hasMany(Experience)
-Category.belongsToMany(Experience, {through: CategoryExperience})
+// Experience.belongsTo(Category, {through: CategoryExperience})
+// Category.hasMany(Experience)
+// Category.belongsToMany(Experience, {through: CategoryExperience})
+Experience.belongsTo(Category)
+Category.hasOne(Experience)
 
 module.exports = {
   User,
