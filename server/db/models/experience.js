@@ -48,6 +48,9 @@ const Experience = db.define('experience', {
       max: 100, //assume each class will be filled by 100 attendance
       min: 0
     }
+  },
+  categoryId: {
+    type: Sequelize.INTEGER
   }
 })
 
