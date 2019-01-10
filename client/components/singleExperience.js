@@ -1,8 +1,25 @@
 import React from 'react'
-import {CardMedia, Grid, Card, Typography, CardContent} from '@material-ui/core'
 import {Link} from 'react-router-dom'
-export default class SingleExperience extends React.Component {
+
+import {withStyles} from '@material-ui/core/styles'
+import {CardMedia, Grid, Card, Typography, CardContent} from '@material-ui/core'
+import PropTypes from 'prop-types'
+
+const styles = theme => ({
+  image: {
+    height: 45,
+    paddingTop: '56.25%',
+    objectFit: 'cover'
+  },
+  img: {
+    maxWidth: '100%',
+    maxHeight: '100%'
+  }
+})
+
+class SingleExperience extends React.Component {
   render() {
+    const {classes} = this.props
     return (
       <Grid container spacing={40}>
         {this.props.experiences.map(exp => {
@@ -12,16 +29,16 @@ export default class SingleExperience extends React.Component {
               <Link to={`/experiences/${id}`}>
                 <Card style={{width: 336}}>
                   <CardMedia
-                    style={{height: 60, paddingTop: '56.25%'}}
+                    className={classes.image}
                     image={imageUrl}
                     title={name}
                   />
                   <CardContent>
-                    <Typography component="p" style={{color: '#627264'}}>
+                    <Typography paragraph style={{color: '#627264'}}>
                       {category}
                     </Typography>
-                    <h3 style={{color: '#FCC30A'}}>{name}</h3>
-                    <Typography component="p" style={{color: '#627264'}}>
+                    <h3 color="secondary">{name}</h3>
+                    <Typography paragraph style={{color: '#627264'}}>
                       $ {price}.00
                     </Typography>
                   </CardContent>
@@ -34,3 +51,9 @@ export default class SingleExperience extends React.Component {
     )
   }
 }
+
+SingleExperience.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(SingleExperience)
