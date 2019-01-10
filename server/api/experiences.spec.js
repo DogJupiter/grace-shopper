@@ -25,7 +25,7 @@ describe('Experience routes', () => {
       })
     })
 
-    it('GET /api/experiences', async () => {
+    xit('GET /api/experiences', async () => {
       const res = await request(app)
         .get('/api/experiences')
         .expect(200)
@@ -33,7 +33,7 @@ describe('Experience routes', () => {
       expect(res.body[0].name).to.be.equal('Pizza Tasting with Pizza Rat!')
     })
 
-    it('GET /api/experiences/:id', async () => {
+    xit('GET /api/experiences/:id', async () => {
       const res = await request(app)
         .get('/api/experiences/9999')
         .expect(200)
