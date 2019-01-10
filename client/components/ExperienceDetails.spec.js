@@ -1,12 +1,12 @@
-//React
-import {expect} from 'chai'
-import React from 'react'
-import enzyme, {shallow} from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-import {ExperienceDetails} from './ExperienceDetails'
+// //React
+// import {expect} from 'chai'
+// import React from 'react'
+// import enzyme, {shallow} from 'enzyme'
+// import Adapter from 'enzyme-adapter-react-16'
+// import {ExperienceDetails} from './ExperienceDetails'
 
-const adapter = new Adapter()
-enzyme.configure({adapter})
+// const adapter = new Adapter()
+// enzyme.configure({adapter})
 
 // //Redux
 
@@ -20,53 +20,47 @@ enzyme.configure({adapter})
 //   experience: {}
 // }
 // const store = mockStore(initialState)
-// // import reducer from '../client/redux/reducer' // SABIRA THIS IS WHERE ERROR WAS COMING FROM
-// // WHEN YOU GET A CHANCE TO UPDATE YOUR TEST, PLEASE REVIEW THIS IMPORT
-// import {
-//   GET_EXPERIENCE,
-//   fetchExperience,
-//   getExperience
-// } from '../store/experience'
+// // import reducer from '../client/redux/reducer'
+// import {GET_EXPERIENCE, getExperience} from '../store/experience'
 
 // describe('React', () => {
 //   let awesome = {
-//     name: 'awesome experience',
-//     // imageUrl:
-//     //   'https://www.thehappycatsite.com/wp-content/uploads/2017/10/best-treats-for-kittens.jpg',
-//     // duration: '1',
-//     // category: 'movie',
-//     // description: 'awesome',
-//     // price: 10,
-//     reviewes: [
-//       {description: 'love it'},
-//       {description: 'hate it'},
-//       {description: 'cool'}
-//     ]
+//     name: 'awesome experience'
+// imageUrl:
+//   'https://www.thehappycatsite.com/wp-content/uploads/2017/10/best-treats-for-kittens.jpg',
+// duration: '1',
+// category: 'movie',
+// description: 'awesome',
+// price: 10,
+// reviewes: [
+//   {description: 'love it'},
+//   {description: 'hate it'},
+//   {description: 'cool'}
+// ]
 //   }
 
 //   describe('<ExperienceDetails /> component', () => {
 //     const renderedExperience = shallow(
-//       <ExperienceDetails experience={awesome} reviews={awesome.reviews} />
+//       <ExperienceDetails experience={awesome} />
 //     )
 
 //     // change campus name to test dynamic rendering
 //     awesome.name = 'cool experience'
 //     // remove first item to render different list of students
-//     const firstReview = awesome.reviews.shift()
+//     // const firstReview = awesome.reviews.shift()
 //     const renderedCoolExperience = shallow(
-//       <ExperienceDetails experience={awesome} reviews={awesome.reviews} />
+//       <ExperienceDetails experience={awesome} />
 //     )
 
 //     // reset campus name
 //     awesome.name = 'awesome experience'
 //     // put first student back
-//     awesome.reviews.unshift(firstReview)
 
 //     xit('renders the name of the campus in an <Typography>', () => {
-//       expect(renderedExperience.find('Typography').text()).to.equal(
+//       expect(renderedExperience.find('h3').text()).to.equal(
 //         'awesome experience'
 //       )
-//       expect(renderedCoolExperience.find('Typography').text()).to.equal(
+//       expect(renderedCoolExperience.find('h3').text()).to.equal(
 //         'cool experience'
 //       )
 //     })
@@ -89,7 +83,7 @@ enzyme.configure({adapter})
 //     describe('`selectExperienceAction` action creator', () => {
 //       // defined in ../client/redux/actions.js
 
-//       xit('creates GET_EXPERIENCE actions', () => {
+//       it('creates GET_EXPERIENCE actions', () => {
 //         const getExperienceAction = getExperience(awesomeExperience)
 //         expect(getExperienceAction.type).to.equal(GET_EXPERIENCE)
 //         expect(getExperienceAction.experience).to.equal(awesomeExperience)
@@ -99,7 +93,7 @@ enzyme.configure({adapter})
 //     describe('reducer', () => {
 //       // defined in ../client/redux/reducer.js
 
-//       xit('returns an immutably-updated new state with selected campus', () => {
+//       it('returns an immutably-updated new state with selected campus', () => {
 //         const newState = reducer(initialState, {
 //           type: GET_EXPERIENCE,
 //           experience: awesomeExperience
@@ -117,7 +111,7 @@ enzyme.configure({adapter})
 //     describe('`fetchCampuses` thunk creator', () => {
 //       // defined in ../client/redux/actions.js
 
-//       xit('returns a thunk to fetch campuses from the backend and dispatch a SET_CAMPUSES action', async () => {
+//       it('returns a thunk to fetch campuses from the backend and dispatch a SET_CAMPUSES action', async () => {
 //         mock.onGet('/api/campuses').replyOnce(200, campuses)
 //         await store.dispatch(fetchCampuses())
 //         const actions = store.getActions()

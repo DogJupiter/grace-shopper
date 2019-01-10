@@ -1,12 +1,22 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-// import ButtonBase from '@material-ui/core/ButtonBase'
+
+import {
+  Grid,
+  Typography,
+  Avatar,
+  Button,
+  ListItemText,
+  ListItem,
+  List,
+  Divider
+} from '@material-ui/core'
+// import Grid from '@material-ui/core/Grid'
+
+// import Typography from '@material-ui/core/Typography'
+// import Avatar from '@material-ui/core/Avatar'
+// import Button from '@material-ui/core/Button'
 
 import {
   WatchLater,
@@ -62,6 +72,7 @@ class ExperienceDetails extends Component {
   async componentDidMount() {
     console.log('mounted experience', this.props)
     await this.props.fetchExperience(this.props.match.params.id)
+    await this.props.fetchUsers
   }
 
   render() {
@@ -73,7 +84,6 @@ class ExperienceDetails extends Component {
         classes={{root: classes.root, margin: classes.margin}}
         color="font"
       >
-        {/* <Paper className={classes.paper}> */}
         <Grid container className={classes.text} style={{margin: 50}}>
           <Grid item sm={3}>
             <img
@@ -84,20 +94,23 @@ class ExperienceDetails extends Component {
           </Grid>
 
           <Grid item sm style={{marginLeft: 40}}>
-            <Typography className={classes.header}>
+            <Typography variant="h3" className={classes.uppercase}>
               {experience.name}
             </Typography>
-            <p>
-              <WatchLater className={classes.icons} /> {experience.duration}{' '}
-              total
-            </p>
+            <List>
+              <ListItem>
+                <WatchLater className={classes.icons} />
+                <ListItemText>{experience.duration} total</ListItemText>
+              </ListItem>
 
-            <p>
-              <EventNote className={classes.icons} />
-              {experience.category}
-            </p>
-
-            <p>$ {experience.price}.00</p>
+              <ListItem>
+                <EventNote className={classes.icons} />
+                <ListItemText> {experience.category}</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText>$ {experience.price}.00</ListItemText>
+              </ListItem>
+            </List>
             <Button
               variant="outlined"
               color="secondary"
@@ -107,32 +120,47 @@ class ExperienceDetails extends Component {
             </Button>
           </Grid>
 
-          <Grid item sm={12}>
-            <h2 className={classes.uppercase}>Description</h2>
-            <p>{experience.description}</p>
+          <Grid item sm={12} style={{marginTop: 30, marginBottom: 30}}>
+            <Typography variant="h4">Description</Typography>
+
+            <Typography variant="body1" style={{marginTop: 20}}>
+              {experience.description}
+            </Typography>
           </Grid>
 
           <Grid item sm={12}>
             {experience.reviews[0] ? (
               <div>
-                <h3 className={classes.uppercase}>
+                <Typography variant="h6">
                   Reviews from people who took this experience
-                </h3>
-                <h4>What guests are saying</h4>
+                </Typography>
+
+                {/* <Typography variant="subtitle1">
+                    What guests are saying
+                  </Typography> */}
+
                 {experience.reviews.map(review => (
-                  <Grid
-                    key={review.id}
-                    container
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <Grid item sm={1}>
-                      <Avatar alt="userImg" src="" className={classes.avatar} />
-                    </Grid>
-                    <Grid item sm={11}>
-                      {review.description}
-                    </Grid>
-                  </Grid>
+                  <List className={classes.root} key={review.id}>
+                    <ListItem>
+                      <Avatar
+                        alt="userImg"
+                        src={review.user.imageUrl}
+                        className={classes.avatar}
+                      />
+                      <ListItemText
+                        primary={review.user.firstName}
+                        secondary={`${new Date(
+                          review.user.createdAt
+                        ).toLocaleString('en-us', {
+                          month: 'long'
+                        })}, ${new Date(review.user.createdAt).getFullYear()}`}
+                      />
+                    </ListItem>
+                    <ListItemText>{review.description}</ListItemText>
+
+                    {/* for possible use in the future */}
+                    {/* <Divider variant="light" /> */}
+                  </List>
                 ))}
               </div>
             ) : (
