@@ -6,6 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import AllExperiences from './components/allExperiences'
 import ExperienceDetails from './components/ExperienceDetails'
+import Cart from './components/Cart'
 import FilteredExperiences from './components/filteredExperiences'
 
 /**
@@ -29,6 +30,8 @@ class Routes extends Component {
           <Switch> */}
         {/* Routes placed here are only available after logging in */}
         <Route path="/home" component={UserHome} />
+
+        <Route path="/cart" component={Cart} />
         {/* <Route path="/landing" component={AllExperiences} /> */}
         <Route
           exact

@@ -10,7 +10,14 @@ import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
-import {AppBar, Toolbar, Button, InputBase} from '@material-ui/core'
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  InputBase,
+  IconButton,
+  Badge
+} from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
 const styles = theme => ({
@@ -79,9 +86,12 @@ class Navbar extends Component {
       <div className={classes.root}>
         <AppBar position="static" color="secondary" className={classes.appBar}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
+            <div>
+              <img src="/logo.svg" style={{height: 50}} />
+            </div>
+            {/* <Typography variant="h6" color="inherit" className={classes.grow}>
               Logo
-            </Typography>
+            </Typography> */}
 
             <div className={classes.grow} />
             <div className={classes.search}>
@@ -97,11 +107,25 @@ class Navbar extends Component {
               />
             </div>
 
-            <Link to="">
-              <Button color="inherit">Login</Button>
+            <div className={classes.sectionDesktop}>
+              <Link to="/login">
+                <Button color="primary">Login</Button>
+              </Link>
+              <Link to="/signup">
+                <Button color="primary">SignUp</Button>
+              </Link>
+            </div>
+            <Link to="/cart">
+              <IconButton color="primary">
+                <Badge
+                  className={classes.margin}
+                  badgeContent={4}
+                  color="primary"
+                >
+                  <ShoppingCartIcon color="inherit" />
+                </Badge>
+              </IconButton>
             </Link>
-            <Button color="inherit">SignUp</Button>
-            <ShoppingCartIcon color="inherit" />
           </Toolbar>
         </AppBar>
       </div>

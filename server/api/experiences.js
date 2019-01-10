@@ -36,6 +36,7 @@ router.get('/', async (req, res, next) => {
 // })
 
 // GET /api/experiences/:id
+
 router.get('/:id', async (req, res, next) => {
   try {
     const experienceId = Number(req.params.id)
@@ -53,6 +54,6 @@ router.get('/:id', async (req, res, next) => {
 
 /*
 Corey's Code Review Notes
-[DONE] /:id GET route -- //CG: I'd specify findOne 
+[DONE] /:id GET route -- //CG: I'd specify findOne
 [DONE] / GET ROUTE -- //CG: Maybe cast to number, but not required.
 */
