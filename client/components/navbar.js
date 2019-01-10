@@ -17,6 +17,9 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1
+  },
   grow: {
     flexGrow: 1
   },
@@ -74,7 +77,7 @@ class Navbar extends Component {
     const {handleClick, isLoggedIn, classes} = this.props
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="secondary">
+        <AppBar position="static" color="secondary" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Logo

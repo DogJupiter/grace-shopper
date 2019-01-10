@@ -1,39 +1,48 @@
 import React from 'react'
 import {Grid} from '@material-ui/core'
+import {withStyles} from '@material-ui/core/styles'
+
 import SingleExperience from './singleExperience'
+import SideBar from './SideBar'
 import {connect} from 'react-redux'
 import {fetchAllExperiences} from '../store'
 
+const styles = theme => ({
+  content: {
+    flexGrow: 1,
+    marginTop: '45px'
+  },
+  loader: {
+    fontSize: '35px',
+    marginTop: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
+
 class AllExperiences extends React.Component {
   componentDidMount() {
-    console.log('mounted')
     this.props.fetchAllExperiences()
   }
 
   render() {
-    console.log(this.props, 'props')
+    const {classes} = this.props
 
+    if (!this.props.allExperiences.length) {
+      return <div className={classes.loader}>Loading ...</div>
+    }
     return (
-      // This style div adds space to the left of the Grid container so that sidebar can be added
-      // Anything non-material UI should be done stylistically in a CSS file (SCSS) and this should be given appropriate class/id.
-      this.props.allExperiences && this.props.allExperiences.length ? (
-        <div style={{marginLeft: '27%', justifyContent: 'center'}}>
-          <Grid
-            container
-            justify="center"
-            style={{
-              flexGrow: 1
-            }}
-            spacing={40}
-          >
-            <Grid item xs={12}>
-              <SingleExperience experiences={this.props.allExperiences} />
-            </Grid>
+      <div>
+        <Grid container justify="center" spacing={40}>
+          <Grid item xs={3} className={classes.content}>
+            <SideBar />
           </Grid>
-        </div>
-      ) : (
-        <div>Loading ...</div>
-      )
+          <Grid item xs={9} className={classes.content}>
+            <SingleExperience experiences={this.props.allExperiences} />
+          </Grid>
+        </Grid>
+      </div>
     )
   }
 }
@@ -44,4 +53,6 @@ const mapDispatchToProps = dispatch => ({
   fetchAllExperiences: () => dispatch(fetchAllExperiences())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllExperiences)
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(AllExperiences)
+)
