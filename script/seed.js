@@ -39,6 +39,15 @@ const experiences = [
     price: 40,
     description: 'eat eat eat',
     quantity: 50
+  },
+  {
+    name: 'Hip Hop Lesson with the Showtime Kids',
+    imageUrl:
+      'http://spoilednyc.s3.amazonaws.com/wp-content/uploads/2015/02/2showtime.jpg',
+    duration: '3 hours',
+    price: 60,
+    description: `IT'S SHOWTIME EVERYBODY WHAT TIME IS IT SHOWTIME`,
+    quantity: 50
   }
 ]
 //User Data

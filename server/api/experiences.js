@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Experience, Review, CategoryExperience} = require('../db/models')
+const {Experience, Review, User} = require('../db/models')
 module.exports = router
 
 // GET /api/experiences
@@ -43,7 +43,7 @@ router.get('/:id', async (req, res, next) => {
       where: {
         id: experienceId
       },
-      include: [{model: Review}]
+      include: [{model: Review, include: [{model: User}]}]
     })
     res.json(requestedExperience)
   } catch (err) {
