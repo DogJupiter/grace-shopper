@@ -8,7 +8,6 @@ import AllExperiences from './components/allExperiences'
 import ExperienceDetails from './components/ExperienceDetails'
 import Cart from './components/Cart'
 import FilteredExperiences from './components/filteredExperiences'
-
 /**
  * COMPONENT
  */
@@ -16,38 +15,26 @@ class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
   }
-
   render() {
     const {isLoggedIn} = this.props
-
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route exact path="/" component={AllExperiences} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        {/* {isLoggedIn && (
-          <Switch> */}
-        {/* Routes placed here are only available after logging in */}
-        <Route path="/home" component={UserHome} />
-
-        <Route path="/cart" component={Cart} />
-        {/* <Route path="/landing" component={AllExperiences} /> */}
+        <Route exact path="/" component={UserHome} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/home" component={UserHome} />
+        <Route exact path="/cart" component={Cart} />
         <Route
           exact
           path="/experiences/category/:id"
           component={FilteredExperiences}
         />
+        <Route exact path="/experiences" component={AllExperiences} />
         <Route exact path="/experiences/:id" component={ExperienceDetails} />
-        {/* </Switch>
-        )} */}
-        {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
       </Switch>
     )
   }
 }
-
 /**
  * CONTAINER
  */
@@ -58,7 +45,6 @@ const mapState = state => {
     isLoggedIn: !!state.user.id
   }
 }
-
 const mapDispatch = dispatch => {
   return {
     loadInitialData() {
@@ -66,11 +52,9 @@ const mapDispatch = dispatch => {
     }
   }
 }
-
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Routes))
-
 /**
  * PROP TYPES
  */
