@@ -33,12 +33,12 @@ class Routes extends Component {
 
         <Route path="/cart" component={Cart} />
         {/* <Route path="/landing" component={AllExperiences} /> */}
+        <Route exact path="/experiences/:id" component={ExperienceDetails} />
         <Route
           exact
           path="/experiences/category/:id"
           component={FilteredExperiences}
         />
-        <Route exact path="/experiences/:id" component={ExperienceDetails} />
         {/* </Switch>
         )} */}
         {/* Displays our Login component as a fallback */}
