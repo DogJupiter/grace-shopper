@@ -11,16 +11,17 @@ const Order = db.define('order', {
     type: Sequelize.STRING,
     unique: true
   }, //this is for CART
-  quantity: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 1
+  items: {
+    // each item will be represented as an {experience: {experience}, quantity:quantity, price:price}
+    type: Sequelize.ARRAY(Sequelize.JSON),
+    allowNull: false
   },
-  totalPrice: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0,
-    validate: {
-      min: 0
+  subTotal: {
+    type: Sequelize.VIRTUAL,
+    get: function() {
+      return this.items && this.items.length
+        ? this.items.reduce((accum, item) => accum + item.q * item.p, 0)
+        : 0
     }
   },
   firstName: {
@@ -39,12 +40,5 @@ const Order = db.define('order', {
     type: Sequelize.TEXT
   }
 })
-
-/* CG:
-1. What is the difference between cart and order?
-2. Order      <-->      Experiences
-      Order_Experiences (orderId, experienceId) --> quantity.
-
-*/
 
 module.exports = Order

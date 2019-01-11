@@ -41,11 +41,11 @@ const Experience = db.define('experience', {
       min: 0
     }
   },
-  quantity: {
+  inventory: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    defaultValue: 1,
     validate: {
-      max: 100, //assume each class will be filled by 100 attendance
       min: 0
     }
   },
@@ -53,5 +53,9 @@ const Experience = db.define('experience', {
     type: Sequelize.INTEGER
   }
 })
+
+Experience.prototype.decreaseInventory = function(num) {
+  this.inventory = this.inventory - num
+}
 
 module.exports = Experience
