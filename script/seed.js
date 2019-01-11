@@ -7,8 +7,7 @@ const {
   Review,
   Order,
   Category,
-  OrderExperience,
-  CategoryExperience
+  Item
 } = require('../server/db/models')
 
 //Experiences Data
@@ -20,8 +19,7 @@ const experiences = [
     duration: '2 hours',
     price: 50,
     description: 'night out',
-    inventory: 50,
-    categoryId: 3
+    inventory: 50
   },
   {
     name: 'Ballet in Lincoln Center',
@@ -30,8 +28,7 @@ const experiences = [
     duration: '2 hours',
     price: 80,
     description: 'swam lake',
-    inventory: 50,
-    categoryId: 2
+    inventory: 50
   },
   {
     name: 'Street Food in Flushing',
@@ -40,8 +37,7 @@ const experiences = [
     duration: '2 hours',
     price: 40,
     description: 'eat eat eat',
-    inventory: 50,
-    categoryId: 3
+    inventory: 50
   },
   {
     name: 'Hip Hop Lesson with the Showtime Kids',
@@ -50,8 +46,7 @@ const experiences = [
     duration: '3 hours',
     price: 60,
     description: `IT'S SHOWTIME EVERYBODY WHAT TIME IS IT SHOWTIME`,
-    inventory: 50,
-    categoryId: 2
+    inventory: 50
   }
 ]
 //User Data
@@ -109,23 +104,22 @@ const reviews = [
 
 //Order Data
 const orders = [
-  {status: 'created', items: [], userId: 1},
-  {
-    status: 'completed',
-    items: [
-      {product: 'dance with princess', quantity: 1, price: 100},
-      {product: 'skydiving with princess', quantity: 2, price: 200}
-    ],
-    userId: 2
-  },
-  {status: 'created', items: [], userId: 3}
+  {status: 'created', userId: 1},
+  {status: 'completed', userId: 2},
+  {status: 'created', userId: 3}
+]
+
+const items = [
+  {quantity: 1, experienceId: 1, orderId: 1},
+  {quantity: 5, experienceId: 2, orderId: 2},
+  {quantity: 2, experienceId: 3, orderId: 3}
 ]
 
 //Category Data
 const categories = [
-  {category: 'entertainment'}, //categoryId = 1
-  {category: 'food'}, //categoryId = 2
-  {category: 'drink'} //categoryId = 3
+  {type: 'entertainment'}, //categoryId = 1
+  {type: 'food'}, //categoryId = 2
+  {type: 'drink'} //categoryId = 3
 ]
 
 //CategoryExperience JointTable data
@@ -157,6 +151,13 @@ const seed = async () => {
       return Promise.all(
         reviews.map(review => {
           return Review.create(review)
+        })
+      )
+    })
+    .then(() => {
+      return Promise.all(
+        items.map(item => {
+          return Item.create(item)
         })
       )
     })
