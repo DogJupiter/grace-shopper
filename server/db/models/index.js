@@ -22,6 +22,5 @@ module.exports = {
   User,
   Experience,
   Review,
-  Order,
-  Category
+  Order
 }
