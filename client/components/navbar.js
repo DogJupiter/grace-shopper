@@ -72,12 +72,19 @@ const styles = theme => ({
     }
   }
 })
+
+const sumCart = cart => {
+  let total = 0
+  cart.map(item => (total += item.quantity))
+  return total
+}
+
 class Navbar extends Component {
   constructor(props) {
     super()
   }
   render() {
-    const {handleClick, isLoggedIn, classes} = this.props
+    const {handleClick, isLoggedIn, classes, activeCart} = this.props
     return (
       <div className={classes.root}>
         <AppBar position="static" color="secondary" className={classes.appBar}>
@@ -121,7 +128,7 @@ class Navbar extends Component {
               <IconButton color="primary">
                 <Badge
                   className={classes.margin}
-                  badgeContent={4}
+                  badgeContent={sumCart(activeCart)}
                   color="primary"
                 >
                   <ShoppingCartIcon color="inherit" />
@@ -139,7 +146,8 @@ class Navbar extends Component {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    activeCart: state.cart
   }
 }
 const mapDispatch = dispatch => {

@@ -6,6 +6,7 @@ import SingleExperience from './singleExperience'
 import SideBar from './SideBar'
 import {connect} from 'react-redux'
 import {fetchAllExperiences} from '../store'
+import {getCart} from '../store/cart'
 
 const styles = theme => ({
   content: {
@@ -24,6 +25,7 @@ const styles = theme => ({
 class AllExperiences extends React.Component {
   componentDidMount() {
     this.props.fetchAllExperiences()
+    this.props.getCart()
   }
 
   render() {
@@ -47,10 +49,12 @@ class AllExperiences extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  allExperiences: state.experience.allExperiences
+  allExperiences: state.experience.allExperiences,
+  currentCart: state.cart
 })
 const mapDispatchToProps = dispatch => ({
-  fetchAllExperiences: () => dispatch(fetchAllExperiences())
+  fetchAllExperiences: () => dispatch(fetchAllExperiences()),
+  getCart: () => dispatch(getCart())
 })
 
 export default withStyles(styles)(

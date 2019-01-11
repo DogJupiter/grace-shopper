@@ -2,24 +2,35 @@ const router = require('express').Router()
 const {Order, User, Experience} = require('../db/models')
 module.exports = router
 
+// GET /api/orders/
+router.get('/', async (req, res, next) => {
+  try {
+    const customerOrders = await Order.findAll({})
+    res.json(customerOrders)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // GET /api/orders/:customerId
 router.get('/:customerId', async (req, res, next) => {
-  const userId = Number(req.params.id)
-  if (req.user && req.user.id === userId) {
-    try {
-      const customerOrders = await Order.findAll({
-        where: {
-          customerId: userId
-        },
-        include: [{model: User, as: 'user'}]
-      })
-      res.json(customerOrders)
-    } catch (err) {
-      next(err)
-    }
-  } else {
-    res.status(403).send('Forbidden')
+  // if (req.user && req.user.id === userId) {
+  try {
+    const customerId = Number(req.params.id)
+    const customerOrders = await Order.findAll({
+      // where: {
+      //   customerId: customer
+      // },
+      include: [{model: User}]
+    })
+    res.json(customerOrders)
+  } catch (err) {
+    console.log('hit error')
+    next(err)
   }
+  // } else {
+  //   res.status(403).send('Forbidden')
+  // }
 })
 
 /*
