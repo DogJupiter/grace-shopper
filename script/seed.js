@@ -1,15 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {
-  User,
-  Experience,
-  Review,
-  Order,
-  Category,
-  OrderExperience,
-  CategoryExperience
-} = require('../server/db/models')
+const {User, Experience, Review, Order} = require('../server/db/models')
 
 //Experiences Data
 const experiences = [
@@ -18,10 +10,11 @@ const experiences = [
     imageUrl:
       'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg',
     duration: '2 hours',
-    price: 50,
     description: 'night out',
-    quantity: 50,
-    categoryId: 3
+    price: 50,
+    quantity: 5,
+    tags: ['date', 'movie'],
+    inventory: 100
   },
   {
     name: 'Ballet in Lincoln Center',
@@ -30,8 +23,9 @@ const experiences = [
     duration: '2 hours',
     price: 80,
     description: 'swam lake',
-    quantity: 50,
-    categoryId: 2
+    quantity: 5,
+    tags: ['ballet', 'art', 'date'],
+    inventory: 100
   },
   {
     name: 'Street Food in Flushing',
@@ -40,8 +34,9 @@ const experiences = [
     duration: '2 hours',
     price: 40,
     description: 'eat eat eat',
-    quantity: 50,
-    categoryId: 3
+    quantity: 5,
+    tags: ['food', 'pizza'],
+    inventory: 100
   },
   {
     name: 'Hip Hop Lesson with the Showtime Kids',
@@ -50,8 +45,9 @@ const experiences = [
     duration: '3 hours',
     price: 60,
     description: `IT'S SHOWTIME EVERYBODY WHAT TIME IS IT SHOWTIME`,
-    quantity: 50,
-    categoryId: 2
+    quantity: 5,
+    tags: ['music', 'excersise'],
+    inventory: 100
   }
 ]
 //User Data
@@ -62,7 +58,8 @@ const users = [
     email: 'Koby@email.com',
     password: '123',
     imageUrl: 'https://timedotcom.files.wordpress.com/2014/11/458357166.jpg',
-    googleId: null
+    googleId: null,
+    isAdmin: false
   },
   {
     firstName: 'Kevin',
@@ -71,7 +68,8 @@ const users = [
     password: '123',
     imageUrl:
       'https://s.newsweek.com/sites/www.newsweek.com/files/styles/full/public/2017/12/05/golden-state-warriors-forward-kevin-durant..jpg',
-    googleId: null
+    googleId: null,
+    isAdmin: false
   },
   {
     firstName: 'Stephen',
@@ -80,7 +78,18 @@ const users = [
     password: '123',
     imageUrl:
       'http://static1.uk.businessinsider.com/image/56c770d5dd08958e6d8b463c-1190-625/stephen-curry-heres-a-look-at-the-marvelous-life-of-the-greatest-basketball-player-in-the-world.jpg',
-    googleId: null
+    googleId: null,
+    isAdmin: false
+  },
+  {
+    firstName: 'Admin',
+    lastName: 'TheAdmin',
+    email: 'admin@email.com',
+    password: '123456',
+    imageUrl:
+      'http://static1.uk.businessinsider.com/image/56c770d5dd08958e6d8b463c-1190-625/stephen-curry-heres-a-look-at-the-marvelous-life-of-the-greatest-basketball-player-in-the-world.jpg',
+    googleId: null,
+    isAdmin: true
   }
 ]
 
@@ -109,30 +118,16 @@ const reviews = [
 
 //Order Data
 const orders = [
-  {status: 'created', quantity: 2},
-  {status: 'created', quantity: 1},
-  {status: 'created', quantity: 3}
-]
-
-//Category Data
-const categories = [
-  {category: 'entertainment'}, //categoryId = 1
-  {category: 'food'}, //categoryId = 2
-  {category: 'drink'} //categoryId = 3
-]
-
-//OrderExperience JointTable data
-const orderExperiences = [
-  {orderId: 1, experienceId: 1},
-  {orderId: 1, experienceId: 2},
-  {orderId: 1, experienceId: 3}
-]
-
-//OrderExperience JointTable data
-const categoryExperiences = [
-  {categoryId: 3, experienceId: 1},
-  {categoryId: 1, experienceId: 2},
-  {categoryId: 2, experienceId: 3}
+  {status: 'created', items: [], userId: 1},
+  {
+    status: 'completed',
+    items: [
+      {product: 'dance with princess', quantity: 1, price: 100},
+      {product: 'skydiving with princess', quantity: 2, price: 200}
+    ],
+    userId: 2
+  },
+  {status: 'created', items: [], userId: 3}
 ]
 
 //CategoryExperience JointTable data
@@ -164,27 +159,6 @@ const seed = async () => {
       return Promise.all(
         reviews.map(review => {
           return Review.create(review)
-        })
-      )
-    })
-    .then(() => {
-      return Promise.all(
-        categories.map(category => {
-          return Category.create(category)
-        })
-      )
-    })
-    .then(() => {
-      return Promise.all(
-        orderExperiences.map(id => {
-          return OrderExperience.create(id)
-        })
-      )
-    })
-    .then(() => {
-      return Promise.all(
-        categoryExperiences.map(id => {
-          return CategoryExperience.create(id)
         })
       )
     })

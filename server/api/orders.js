@@ -4,22 +4,22 @@ module.exports = router
 
 // GET /api/orders/:customerId
 router.get('/:customerId', async (req, res, next) => {
-  const userId = Number(req.params.id)
-  if (req.user && req.user.id === userId) {
-    try {
-      const customerOrders = await Order.findAll({
-        where: {
-          customerId: userId
-        },
-        include: [{model: User, as: 'user'}]
-      })
-      res.json(customerOrders)
-    } catch (err) {
-      next(err)
-    }
-  } else {
-    res.status(403).send('Forbidden')
+  const userId = Number(req.params.customerId)
+  // if (req.user && req.user.id === userId) {
+  try {
+    const customerOrders = await Order.findAll({
+      where: {
+        userId: userId
+      },
+      include: [{model: User, as: 'user'}]
+    })
+    res.json(customerOrders)
+  } catch (err) {
+    next(err)
   }
+  // } else {
+  //   res.status(403).send('Forbidden')
+  // }
 })
 
 /*

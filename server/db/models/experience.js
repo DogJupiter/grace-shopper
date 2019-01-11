@@ -14,7 +14,9 @@ const Experience = db.define('experience', {
     allowNull: false,
     validate: {
       isUrl: true
-    }
+    },
+    defaultValue:
+      'http://spoilednyc.s3.amazonaws.com/wp-content/uploads/2015/02/2showtime.jpg'
   },
   duration: {
     type: Sequelize.STRING,
@@ -45,13 +47,26 @@ const Experience = db.define('experience', {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      max: 100, //assume each class will be filled by 100 attendance
+      max: 10, //assume each class will be filled by 100 attendance
       min: 0
     }
   },
-  categoryId: {
-    type: Sequelize.INTEGER
+  tags: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: []
+  },
+  inventory: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
+    validate: {
+      min: 0
+    }
   }
 })
+
+Experience.prototype.decreaseInventory = function(num) {
+  this.inventory = this.inventory - num
+}
 
 module.exports = Experience

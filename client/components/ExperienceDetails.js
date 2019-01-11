@@ -9,8 +9,7 @@ import {
   Button,
   ListItemText,
   ListItem,
-  List,
-  Divider
+  List
 } from '@material-ui/core'
 // import Grid from '@material-ui/core/Grid'
 
