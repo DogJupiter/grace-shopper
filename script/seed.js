@@ -20,7 +20,7 @@ const experiences = [
     duration: '2 hours',
     price: 50,
     description: 'night out',
-    quantity: 50,
+    inventory: 50,
     categoryId: 3
   },
   {
@@ -30,7 +30,7 @@ const experiences = [
     duration: '2 hours',
     price: 80,
     description: 'swam lake',
-    quantity: 50,
+    inventory: 50,
     categoryId: 2
   },
   {
@@ -40,7 +40,7 @@ const experiences = [
     duration: '2 hours',
     price: 40,
     description: 'eat eat eat',
-    quantity: 50,
+    inventory: 50,
     categoryId: 3
   },
   {
@@ -50,7 +50,7 @@ const experiences = [
     duration: '3 hours',
     price: 60,
     description: `IT'S SHOWTIME EVERYBODY WHAT TIME IS IT SHOWTIME`,
-    quantity: 50,
+    inventory: 50,
     categoryId: 2
   }
 ]
@@ -109,9 +109,16 @@ const reviews = [
 
 //Order Data
 const orders = [
-  {status: 'created', quantity: 2},
-  {status: 'created', quantity: 1},
-  {status: 'created', quantity: 3}
+  {status: 'created', items: [], userId: 1},
+  {
+    status: 'completed',
+    items: [
+      {product: 'dance with princess', quantity: 1, price: 100},
+      {product: 'skydiving with princess', quantity: 2, price: 200}
+    ],
+    userId: 2
+  },
+  {status: 'created', items: [], userId: 3}
 ]
 
 //Category Data
@@ -119,20 +126,6 @@ const categories = [
   {category: 'entertainment'}, //categoryId = 1
   {category: 'food'}, //categoryId = 2
   {category: 'drink'} //categoryId = 3
-]
-
-//OrderExperience JointTable data
-const orderExperiences = [
-  {orderId: 1, experienceId: 1},
-  {orderId: 1, experienceId: 2},
-  {orderId: 1, experienceId: 3}
-]
-
-//OrderExperience JointTable data
-const categoryExperiences = [
-  {categoryId: 3, experienceId: 1},
-  {categoryId: 1, experienceId: 2},
-  {categoryId: 2, experienceId: 3}
 ]
 
 //CategoryExperience JointTable data
@@ -171,20 +164,6 @@ const seed = async () => {
       return Promise.all(
         categories.map(category => {
           return Category.create(category)
-        })
-      )
-    })
-    .then(() => {
-      return Promise.all(
-        orderExperiences.map(id => {
-          return OrderExperience.create(id)
-        })
-      )
-    })
-    .then(() => {
-      return Promise.all(
-        categoryExperiences.map(id => {
-          return CategoryExperience.create(id)
         })
       )
     })
