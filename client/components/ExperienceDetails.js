@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 
+import {addToCart} from '../store/cart'
+
 import {
   Grid,
   Typography,
@@ -69,6 +71,10 @@ const styles = theme => ({
 })
 
 class ExperienceDetails extends Component {
+  handleAddToCart(experience) {
+    this.props.addToCart(experience)
+  }
+
   async componentDidMount() {
     console.log('mounted experience', this.props)
     await this.props.fetchExperience(this.props.match.params.id)
@@ -115,6 +121,7 @@ class ExperienceDetails extends Component {
               variant="outlined"
               color="secondary"
               className={classes.button}
+              onClick={() => this.handleAddToCart(experience)}
             >
               Add to Cart
             </Button>
@@ -181,11 +188,13 @@ ExperienceDetails.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  experience: state.experience.singleExperience
+  experience: state.experience.singleExperience,
+  activeCart: state.cart
 })
 
-const mapDispatchToProps = dispatch => ({
-  fetchExperience: id => dispatch(fetchExperience(id))
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  fetchExperience: id => dispatch(fetchExperience(id)),
+  addToCart: exp => dispatch(addToCart(exp, ownProps.history))
 })
 
 export default withStyles(styles)(
