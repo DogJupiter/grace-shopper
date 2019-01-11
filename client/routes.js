@@ -7,6 +7,7 @@ import {me} from './store'
 import AllExperiences from './components/allExperiences'
 import ExperienceDetails from './components/ExperienceDetails'
 import Cart from './components/Cart'
+import Checkout from './components/Checkout'
 import FilteredExperiences from './components/filteredExperiences'
 /**
  * COMPONENT
@@ -24,6 +25,7 @@ class Routes extends Component {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/home" component={UserHome} />
         <Route exact path="/cart" component={Cart} />
+        <Route exact path="/checkout" component={Checkout} />
         <Route
           exact
           path="/experiences/category/:id"
