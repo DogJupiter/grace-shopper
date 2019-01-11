@@ -2,46 +2,70 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Grid, TextField, Button} from '@material-ui/core'
 
-/**
- * COMPONENT
- */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{minHeight: '100vh'}}
+      >
+        <Grid item xs={12}>
+          <form method="get" action="/auth/google">
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              id="standard-full-width"
+              style={{margin: 8}}
+              fullWidth
+            >
+              {displayName} with Google
+            </Button>
+          </form>
+          <form onSubmit={handleSubmit} name={name}>
+            <TextField
+              name="email"
+              label="Email"
+              margin="normal"
+              id="standard-full-width"
+              style={{margin: 8}}
+              fullWidth
+            />
+            <TextField
+              name="password"
+              label="Password"
+              margin="normal"
+              id="standard-full-width"
+              style={{margin: 8}}
+              fullWidth
+            />
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              id="standard-full-width"
+              style={{margin: 8}}
+              fullWidth
+            >
+              {displayName}
+            </Button>
+            {error && error.response && <div> {error.response.data} </div>}
+          </form>
+        </Grid>
+      </Grid>
     </div>
   )
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
-const mapLogin = state => {
+const mapLoginToProps = state => {
   return {
     name: 'login',
     displayName: 'Login',
@@ -49,7 +73,7 @@ const mapLogin = state => {
   }
 }
 
-const mapSignup = state => {
+const mapSignupToProps = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
@@ -57,7 +81,7 @@ const mapSignup = state => {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
@@ -69,12 +93,11 @@ const mapDispatch = dispatch => {
   }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Login = connect(mapLoginToProps, mapDispatchToProps)(AuthForm)
+export const Signup = connect(mapSignupToProps, mapDispatchToProps)(AuthForm)
 
-/**
- * PROP TYPES
- */
+//Google-Login
+
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,

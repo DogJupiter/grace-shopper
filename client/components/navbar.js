@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-
 //materialUI
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
@@ -19,7 +18,6 @@ import {
   Badge
 } from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -74,12 +72,10 @@ const styles = theme => ({
     }
   }
 })
-
 class Navbar extends Component {
   constructor(props) {
     super()
   }
-
   render() {
     const {handleClick, isLoggedIn, classes} = this.props
     return (
@@ -92,7 +88,6 @@ class Navbar extends Component {
             {/* <Typography variant="h6" color="inherit" className={classes.grow}>
               Logo
             </Typography> */}
-
             <div className={classes.grow} />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -106,14 +101,21 @@ class Navbar extends Component {
                 }}
               />
             </div>
-
             <div className={classes.sectionDesktop}>
-              <Link to="/login">
-                <Button color="primary">Login</Button>
-              </Link>
-              <Link to="/signup">
-                <Button color="primary">SignUp</Button>
-              </Link>
+              {isLoggedIn ? (
+                <a onClick={handleClick}>
+                  <Button color="primary">Logout</Button>
+                </a>
+              ) : (
+                <div>
+                  <Link to="/login">
+                    <Button color="primary">Login</Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button color="primary">SignUp</Button>
+                  </Link>
+                </div>
+              )}
             </div>
             <Link to="/cart">
               <IconButton color="primary">
@@ -132,7 +134,6 @@ class Navbar extends Component {
     )
   }
 }
-
 /**
  * CONTAINER
  */
@@ -141,7 +142,6 @@ const mapState = state => {
     isLoggedIn: !!state.user.id
   }
 }
-
 const mapDispatch = dispatch => {
   return {
     handleClick() {
@@ -149,9 +149,7 @@ const mapDispatch = dispatch => {
     }
   }
 }
-
 export default withStyles(styles)(connect(mapState, mapDispatch)(Navbar))
-
 /**
  * PROP TYPES
  */
@@ -160,7 +158,6 @@ Navbar.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired
 }
-
 {
   /* <AppBar>
         <h1>DOG JUPITER</h1>
