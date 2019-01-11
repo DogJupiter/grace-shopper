@@ -3,6 +3,7 @@ import axios from 'axios'
 //ACTION TYPES
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
+const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 
 //ACTION CREATORS
 export const getCart = () => ({
@@ -13,6 +14,11 @@ export const addToCart = (experience, history) => ({
   type: ADD_TO_CART,
   payload: experience,
   history
+})
+
+export const removeFromCart = experience => ({
+  type: REMOVE_FROM_CART,
+  payload: experience
 })
 
 //Initial State
@@ -52,6 +58,25 @@ const cartReducer = (state = activeCart, action) => {
       localStorage.setItem('cart', JSON.stringify(newCart))
       // history.push('/cart')
       return newCart
+    case REMOVE_FROM_CART:
+      let removalIndex = state.findIndex(
+        item => item.experience.id === action.payload.id
+      )
+      newCart = state
+      newCart[removalIndex].quantity -= 1
+
+      if (newCart[removalIndex].quantity === 0) {
+        newCart.splice(removalIndex, 1)
+      }
+
+      if (localStorage.getItem('cart').length <= 0) {
+        localStorage.clear()
+      }
+
+      localStorage.setItem('cart', JSON.stringify(newCart))
+      console.log('state, currently--->', newCart)
+      return newCart
+
     default:
       return state
   }

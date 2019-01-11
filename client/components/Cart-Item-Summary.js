@@ -1,5 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {removeFromCart, getCart} from '../store/cart'
+import {store} from '../store'
 
 class CartItemSummary extends React.Component {
   handleQtyUpdate() {
@@ -8,8 +10,17 @@ class CartItemSummary extends React.Component {
     console.log('NEW AMOUNT---->', newAmt)
     this.props.cartItem.quantity = newAmt
   }
+  handleDeleteClick() {
+    let cartState = this.props.cartState
+    this.props.removeFromCart(this.props.cartItem.experience)
+    if (cartState.length === 0) {
+      console.log('cartstate length currently 0', cartState)
+      return <h1>Nothing in cart!</h1>
+    }
+  }
   render() {
     let cartItem = this.props.cartItem.experience
+
     return (
       <div>
         <div className="cart-item">
@@ -30,7 +41,7 @@ class CartItemSummary extends React.Component {
                 id="qty"
                 className="qty-update"
                 value={this.props.cartItem.quantity}
-                // onChange={() => console.log('qty changed')}
+                onChange={() => console.log('qty changed')}
               />
               <button type="button">Update</button>
             </form>
@@ -39,7 +50,9 @@ class CartItemSummary extends React.Component {
             ${cartItem.price * this.props.cartItem.quantity}.00
           </div>
           <div className="cart-item-img">
-            <h4>button placeholder</h4>
+            <button type="button" onClick={() => this.handleDeleteClick()}>
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -51,7 +64,8 @@ const mapStateToProps = state => ({
   activeCart: state.cart
 })
 const mapDispatchToProps = dispatch => ({
-  getCart: () => dispatch(getCart())
+  getCart: () => dispatch(getCart()),
+  removeFromCart: exp => dispatch(removeFromCart(exp))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartItemSummary)

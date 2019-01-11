@@ -4,22 +4,21 @@ import {Grid} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
 
 import {connect} from 'react-redux'
-import {getCart} from '../store'
-
-const totalCost = cart => {
-  let total = 0
-  cart.map(item => (total += item.experience.price * item.quantity))
-  return `$${total}.00`
-}
+import {getCart} from '../store/cart'
 
 class Cart extends React.Component {
   // componentDidMount() {
   //   this.props.getCart()
   // }
+  totalCost(cart) {
+    let total = 0
+    cart.map(item => (total += item.experience.price * item.quantity))
+    return `$${total}.00`
+  }
 
   render() {
     let currentCart = this.props.activeCart
-    if (!currentCart.length) {
+    if (currentCart.length < 1) {
       return <h1>Nothing in cart</h1>
     }
 
@@ -47,13 +46,23 @@ class Cart extends React.Component {
           {/* THERE WILL BE A MAP OF VALS HERE */}
           {currentCart.map(item => {
             console.log(item)
-            return <CartItemSummary key={item.id} cartItem={item} />
+            return (
+              <CartItemSummary
+                key={item.experience.id}
+                cartItem={item}
+                cartState={this.props.activeCart}
+              />
+            )
           })}
         </div>
         <div className="cart-subtotal">
           <p>
             Subtotal:{' '}
-            <input type="text" name="subtotal" value={totalCost(currentCart)} />
+            <input
+              type="text"
+              name="subtotal"
+              value={this.props.totalCost(currentCart)}
+            />
           </p>
           <p>
             <button type="button">Continue</button>

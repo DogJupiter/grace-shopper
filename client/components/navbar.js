@@ -18,6 +18,8 @@ import {
   Badge
 } from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import {getCart} from '../store/cart'
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -73,15 +75,15 @@ const styles = theme => ({
   }
 })
 
-const sumCart = cart => {
-  let total = 0
-  cart.map(item => (total += item.quantity))
-  return total
-}
-
 class Navbar extends Component {
-  constructor(props) {
-    super()
+  componentDidMount() {
+    this.props.getCart()
+  }
+
+  sumCart(cart) {
+    let total = 0
+    cart.map(item => (total += item.quantity))
+    return total
   }
   render() {
     const {handleClick, isLoggedIn, classes, activeCart} = this.props
@@ -90,7 +92,9 @@ class Navbar extends Component {
         <AppBar position="static" color="secondary" className={classes.appBar}>
           <Toolbar>
             <div>
-              <img src="/logo.svg" style={{height: 50}} />
+              <Link to="/experiences">
+                <img src="/logo.svg" style={{height: 50}} />
+              </Link>
             </div>
             {/* <Typography variant="h6" color="inherit" className={classes.grow}>
               Logo
@@ -128,7 +132,7 @@ class Navbar extends Component {
               <IconButton color="primary">
                 <Badge
                   className={classes.margin}
-                  badgeContent={sumCart(activeCart)}
+                  badgeContent={this.sumCart(activeCart)}
                   color="primary"
                 >
                   <ShoppingCartIcon color="inherit" />
@@ -154,7 +158,8 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
-    }
+    },
+    getCart: () => dispatch(getCart())
   }
 }
 export default withStyles(styles)(connect(mapState, mapDispatch)(Navbar))
