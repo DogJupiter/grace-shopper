@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Order} = require('../db/models')
 module.exports = router
 
 // GET /api/users
@@ -32,8 +32,84 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-/*
-Corey's Code Review Notes
-[DONE] /:id GET route -- //CG: I'd specify findOne 
-[DONE] / GET ROUTE -- //CG: Maybe cast to number, but not required.
-*/
+/**
+ * GET/POST/PUT/DELETE ORDERS
+ */
+
+// Get /api/users/:id/orders
+// get all orders
+router.get('/:id/orders', async (req, res, next) => {
+  const userId = Number(req.params.id)
+  if (req.user && req.user.id === userId) {
+    try {
+      // find all the order that match the userId
+      const order = await Order.findAll({where: {userId}})
+      if (!order) {
+        return res.status(401).send('Unauthorized')
+      }
+      return res.json(order)
+    } catch (error) {
+      next(error)
+    }
+  } else {
+    res.status(403).send('Forbidden')
+  }
+})
+
+// POST /api/users/:id/orders
+// add order based on specific user
+router.post('/:id/orders', async (req, res, next) => {
+  const userId = Number(req.params.id)
+  if (req.user && req.user.id === userId) {
+    // get all Order's information
+    let newOrder = req.body
+    // attach userId on the object
+    newOrder.userId = req.params.id
+    try {
+      // create the new order
+      const order = await Order.create(newOrder)
+      res.json(order)
+    } catch (error) {
+      next(error)
+    }
+  } else {
+    res.status(403).send('Forbidden')
+  }
+})
+
+router.put('/:id/orders/:orderId', async (req, res, next) => {
+  const userId = Number(req.params.id)
+  if (req.user && req.user.id === userId) {
+    const quantity = req.body.quantity
+    const orderId = req.params.orderId
+    try {
+      const update = await Order.update(
+        {quantity},
+        {where: {id: orderId}, fields: ['quantity']}
+      )
+      if (update) {
+        res.json(update)
+        res.sendStatus(204)
+      }
+      return res.status(404).send()
+    } catch (error) {
+      next(error)
+    }
+  } else {
+    res.status(403).send('Forbidden')
+  }
+})
+
+router.delete('/:id/orders/:orderId', async (req, res, next) => {
+  const userId = Number(req.params.id)
+  if (req.user && req.user.id === userId) {
+    try {
+      await Order.destroy({where: {id: req.params.orderId}})
+      res.status(202).send()
+    } catch (error) {
+      next(error)
+    }
+  } else {
+    res.status(403).send('Forbidden')
+  }
+})
