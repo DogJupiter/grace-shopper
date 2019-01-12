@@ -84,10 +84,13 @@ const cartReducer = (state = activeCart, action) => {
             experience: action.payload,
             quantity: 1
           })
-          newCart.totalQty -= 1
+          newCart.totalQty += 1
         }
       }
       localStorage.setItem('cart', JSON.stringify(newCart))
+      if (newCart.totalQty === 0) {
+        localStorage.clear()
+      }
       return newCart
 
     case REMOVE_FROM_CART:
@@ -104,7 +107,9 @@ const cartReducer = (state = activeCart, action) => {
         }
       }
       localStorage.setItem('cart', JSON.stringify(newCart))
-      // history.push('/cart')
+      if (newCart.totalQty === 0) {
+        localStorage.clear()
+      }
       return newCart
 
     case DELETE_ALL_FROM_CART:
@@ -113,8 +118,13 @@ const cartReducer = (state = activeCart, action) => {
         let removalIndex = state.experiences.findIndex(
           item => item.experience.id === action.payload.id
         )
+        let totalQtyDecrement = newCart.experiences[removalIndex].quantity
         newCart.experiences = state.experiences.slice()
         newCart.experiences.splice(removalIndex, 1)
+        newCart.totalQty -= totalQtyDecrement
+      }
+      if (newCart.totalQty === 0) {
+        localStorage.clear()
       }
       return newCart
 
