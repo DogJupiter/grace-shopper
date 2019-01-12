@@ -6,6 +6,7 @@ const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const DELETE_ALL_FROM_CART = 'DELETE_ALL_FROM_CART'
+const ADD_TO_MEMBER_CART = 'ADD_TO_MEMBER_CART'
 
 //ACTION CREATORS
 export const getCart = () => ({
@@ -28,6 +29,11 @@ export const deleteAllFromCart = experience => ({
   payload: experience
 })
 
+export const addToMemberCart = experience => ({
+  type: ADD_TO_MEMBER_CART,
+  payload: experience
+})
+
 //Initial State
 let activeCart
 if (localStorage.getItem('cart')) {
@@ -36,6 +42,18 @@ if (localStorage.getItem('cart')) {
   activeCart = {
     experiences: [],
     totalQty: 0
+  }
+}
+
+// THUNK CREATOR
+export const updateMemberCart = (userId, experience) => {
+  return async dispatch => {
+    const res = await axios.post(
+      `/api/user/${userId}/orders/cart`,
+      experience.id
+    )
+    const action = addToMemberCart(res.data)
+    dispatch(action)
   }
 }
 
@@ -98,6 +116,9 @@ const cartReducer = (state = activeCart, action) => {
         newCart.experiences.splice(removalIndex, 1)
       }
       return newCart
+
+    case ADD_TO_MEMBER_CART:
+      return {...state, experience: [...experience, action.payload]}
 
     default:
       return state

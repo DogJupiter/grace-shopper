@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 
-import {addToCart} from '../store/cart'
+import {addToCart, updateMemberCart} from '../store/cart'
+import {me} from '../store/user'
 
 import {
   Grid,
@@ -72,12 +73,15 @@ const styles = theme => ({
 
 class ExperienceDetails extends Component {
   handleAddToCart(experience) {
-    // !isLoggedIn
-    // call addToCart which will store users cart on localStorage
-    // this is going to localStorage
-    this.props.addToCart(experience)
-    // isLoggedIn
-    //
+    this.props.getUser()
+    if (this.props.isLoggedIn) {
+      // POST request to backend to add cart item
+      // this.props.saveMemberCart() -> update DB CART
+      // then will update local state with added experiences
+      this.props.updateMemberCart(experience, userId)
+    } else {
+      this.props.addToCart(experience)
+    }
   }
 
   async componentDidMount() {
@@ -87,6 +91,10 @@ class ExperienceDetails extends Component {
   }
 
   render() {
+    console.log(
+      'THESE ARE ALL THE PROPS BEING PASSED TO EXP-DETAILS?',
+      this.props.verifyUser
+    )
     const {classes, experience} = this.props
 
     return experience && experience.name ? (
@@ -189,17 +197,21 @@ class ExperienceDetails extends Component {
 }
 
 ExperienceDetails.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
   experience: state.experience.singleExperience,
-  activeCart: state.cart
+  activeCart: state.cart,
+  isLoggedIn: !!state.user.id
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
-  addToCart: exp => dispatch(addToCart(exp))
+  addToCart: exp => dispatch(addToCart(exp)),
+  getUser: () => dispatch(me()),
+  updateMemberCart: userId => dispatch(updateMemberCart(userId))
 })
 
 export default withStyles(styles)(

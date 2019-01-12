@@ -32,14 +32,14 @@ class Routes extends Component {
           component={FilteredExperiences}
         />
         <Route exact path="/experiences" component={AllExperiences} />
-        {/* <Route exact path="/experiences/:id" component={ExperienceDetails} /> */}
-        <Route
+        <Route exact path="/experiences/:id" component={ExperienceDetails} />
+        {/* <Route
           exact
           path="/experiences/:id"
-          render={props => (
-            <ExperienceDetails routeProps={props} isLoggedIn={isLoggedIn} />
+          render={routeProps => (
+            <ExperienceDetails {...routeProps} props={this.props.isLoggedIn} />
           )}
-        />
+        /> */}
       </Switch>
     )
   }
