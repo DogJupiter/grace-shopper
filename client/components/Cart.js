@@ -18,7 +18,6 @@ class Cart extends React.Component {
 
   render() {
     let currentCart = this.props.activeCart.experiences
-    console.log('CURRENT CART---->', currentCart)
     if (!currentCart || currentCart.length < 1) {
       return <h1>Nothing in cart</h1>
     }
