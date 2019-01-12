@@ -11,16 +11,19 @@ const Order = db.define('order', {
     type: Sequelize.STRING,
     unique: true
   }, //this is for CART
-  items: {
-    // each item will be represented as an {experience: {experience}, quantity:quantity, price:price}
-    type: Sequelize.ARRAY(Sequelize.JSON),
-    allowNull: false
-  },
+  // items: {
+  //   // each item will be represented as an {experience: {experience}, quantity:quantity, price:price}
+  //   type: Sequelize.ARRAY(Sequelize.JSON),
+  //   allowNull: false
+  // },
   subTotal: {
     type: Sequelize.VIRTUAL,
     get: function() {
       return this.items && this.items.length
-        ? this.items.reduce((accum, item) => accum + item.q * item.p, 0)
+        ? this.items.reduce(
+            (accum, item) => accum + item.quantity * item.experience.price,
+            0
+          )
         : 0
     }
   },

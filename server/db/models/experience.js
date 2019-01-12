@@ -48,9 +48,6 @@ const Experience = db.define('experience', {
     validate: {
       min: 0
     }
-  },
-  categoryId: {
-    type: Sequelize.INTEGER
   }
 })
 
