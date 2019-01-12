@@ -37,7 +37,7 @@ router.get('/:id', async (req, res, next) => {
  */
 
 // Get /api/users/:id/orders
-// get all orders
+// get all orders eager load
 router.get('/:id/orders', async (req, res, next) => {
   const userId = Number(req.params.id)
   // if (req.user && req.user.id === userId) {
@@ -61,6 +61,7 @@ router.get('/:id/orders', async (req, res, next) => {
 
 // POST /api/users/:id/orders
 // add order based on specific user
+// ?
 router.post('/:id/orders', async (req, res, next) => {
   const userId = Number(req.params.id)
   if (req.user && req.user.id === userId) {
@@ -80,9 +81,43 @@ router.post('/:id/orders', async (req, res, next) => {
   }
 })
 
-// router.post('/:id/orders/:orderId/items', async (req, res, next) => {
-//   const userId = Number(req.params.id)
-//   let newItem = req.body
+router.get('/:id/orders/:orderId', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {id: req.params.orderId},
+      include: [{model: Item, include: [{model: Experience}]}]
+    })
+    res.send(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//add item to cart route
+router.post('/:id/orders/:orderId/items', async (req, res, next) => {
+  try {
+    //if we don't have a cart yet - create a cart
+    let orderId = req.params.orderId
+    console.log(orderId, 'orderId')
+    if (!orderId) {
+      const order = await Order.create()
+      orderId = order.id
+    }
+
+    //add item to the created/existing cart
+    await Item.create({
+      quantity: 1,
+      orderId: orderId,
+      experienceId: req.body.experienceId
+    })
+    res.send(await Item.findAll())
+  } catch (err) {
+    next(err)
+  }
+})
+
+// router.put('/:id/orders/:orderId/items/:itemId', async(req,res, next) => {
+
 // })
 
 router.put('/:id/orders/:orderId', async (req, res, next) => {
