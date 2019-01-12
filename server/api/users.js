@@ -37,12 +37,13 @@ router.get('/:id', async (req, res, next) => {
  */
 
 // Get /api/users/:id/orders
-// get all orders eager load
+// sabira: fetch all orders including cart (eager load for calculating subtotal and displaying all items what are inside of it)
+
 router.get('/:id/orders', async (req, res, next) => {
   const userId = Number(req.params.id)
+  // sabira: commented out security to test routes
   // if (req.user && req.user.id === userId) {
   try {
-    // find all the order that match the userId including what inside of it
     const order = await Order.findAll({
       where: {userId},
       include: [{model: Item, include: [{model: Experience}]}]
@@ -53,6 +54,47 @@ router.get('/:id/orders', async (req, res, next) => {
     return res.json(order)
   } catch (error) {
     next(error)
+  }
+  // } else {
+  //   res.status(403).send('Forbidden')
+  // }
+})
+
+//sabira: fetch all completed orders
+router.get('/:id/orders/completed', async (req, res, next) => {
+  const userId = Number(req.params.id)
+  // sabira: commented out security to test route
+  // if (req.user && req.user.id === userId) {
+  try {
+    const order = await Order.findAll({
+      where: {userId, status: 'completed'},
+      include: [{model: Item, include: [{model: Experience}]}]
+    })
+    if (!order) {
+      return res.status(401).send('Unauthorized')
+    }
+    return res.json(order)
+  } catch (error) {
+    next(error)
+  }
+  // } else {
+  //   res.status(403).send('Forbidden')
+  // }
+})
+
+//sabira: get cart (if status set to 'created' it means it cart, otherwise it's comleted order)
+router.get('/:id/orders/cart', async (req, res, next) => {
+  const userId = Number(req.params.id)
+  // sabira: commented out security to test route
+  // if (req.user && req.user.id === userId) {
+  try {
+    const order = await Order.findOne({
+      where: {status: 'created'},
+      include: [{model: Item, include: [{model: Experience}]}]
+    })
+    res.send(order)
+  } catch (err) {
+    next(err)
   }
   // } else {
   //   res.status(403).send('Forbidden')
@@ -81,10 +123,11 @@ router.post('/:id/orders', async (req, res, next) => {
   }
 })
 
+//sabira: fetch specific completed order for specific user, eager load always nessesary to calculate subtotal
 router.get('/:id/orders/:orderId', async (req, res, next) => {
   try {
     const order = await Order.findOne({
-      where: {id: req.params.orderId},
+      where: {id: req.params.orderId, status: 'completed'},
       include: [{model: Item, include: [{model: Experience}]}]
     })
     res.send(order)
@@ -93,21 +136,19 @@ router.get('/:id/orders/:orderId', async (req, res, next) => {
   }
 })
 
-//add item to cart route
-router.post('/:id/orders/:orderId/items', async (req, res, next) => {
+//sabira: add item to cart route
+router.post('/:id/orders/cart/', async (req, res, next) => {
   try {
-    //if we don't have a cart yet - create a cart
-    let orderId = req.params.orderId
-    console.log(orderId, 'orderId')
-    if (!orderId) {
-      const order = await Order.create()
-      orderId = order.id
+    //sabira: find the cart if it exists
+    let cart = await Order.findOne({where: {status: 'created'}})
+    //sabira: if we don't have a cart yet - create a cart
+    if (!cart) {
+      cart = await Order.create()
     }
-
-    //add item to the created/existing cart
+    //sabira: add item to the created/existing cart
     await Item.create({
       quantity: 1,
-      orderId: orderId,
+      orderId: cart.id,
       experienceId: req.body.experienceId
     })
     res.send(await Item.findAll())

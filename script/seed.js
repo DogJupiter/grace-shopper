@@ -106,15 +106,15 @@ const reviews = [
 const orders = [
   {status: 'created', userId: 1},
   {status: 'completed', userId: 2},
-  {status: 'created', userId: 3}
+  {status: 'completed', userId: 1}
 ]
-
+//sabira: new model needs to be seeded
 const items = [
-  {quantity: 1, experienceId: 1, orderId: 1},
+  {quantity: 1, experienceId: 1, orderId: 3},
   {quantity: 5, experienceId: 2, orderId: 2},
   {quantity: 2, experienceId: 3, orderId: 3}
 ]
-
+//sabira: seeding joining table
 const expCats = [
   {experienceId: 1, categoryId: 2},
   {experienceId: 1, categoryId: 3},
@@ -123,11 +123,7 @@ const expCats = [
 ]
 
 //Category Data
-const categories = [
-  {type: 'entertainment'}, //categoryId = 1
-  {type: 'food'}, //categoryId = 2
-  {type: 'drink'} //categoryId = 3
-]
+const categories = [{type: 'entertainment'}, {type: 'food'}, {type: 'drink'}]
 
 //CategoryExperience JointTable data
 const seed = async () => {
