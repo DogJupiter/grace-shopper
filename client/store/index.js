@@ -10,7 +10,7 @@ const reducer = combineReducers({user, experience, cart})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
-export const store = createStore(reducer, middleware)
+const store = createStore(reducer, middleware)
 
 export default store
 export * from './user'
