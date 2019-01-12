@@ -46,8 +46,9 @@ if (localStorage.getItem('cart')) {
 }
 
 // THUNK CREATOR
-export const updateMemberCart = (userId, experience) => {
+export const updateMemberCart = (experience, userId) => {
   return async dispatch => {
+    // GET ALL ITEMS FROM DB
     const res = await axios.post(
       `/api/user/${userId}/orders/cart`,
       experience.id

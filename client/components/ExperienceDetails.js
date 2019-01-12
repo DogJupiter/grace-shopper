@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 
 import {addToCart, updateMemberCart} from '../store/cart'
-import {me} from '../store/user'
+import {me, getUser} from '../store/user'
 
 import {
   Grid,
@@ -73,7 +73,8 @@ const styles = theme => ({
 
 class ExperienceDetails extends Component {
   handleAddToCart(experience) {
-    this.props.getUser()
+    this.props.checkUser()
+    const userId = this.props.userId
     if (this.props.isLoggedIn) {
       // POST request to backend to add cart item
       // this.props.saveMemberCart() -> update DB CART
@@ -204,13 +205,14 @@ ExperienceDetails.propTypes = {
 const mapStateToProps = state => ({
   experience: state.experience.singleExperience,
   activeCart: state.cart,
-  isLoggedIn: !!state.user.id
+  isLoggedIn: !!state.user.id,
+  getUser: state.getUser
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
   addToCart: exp => dispatch(addToCart(exp)),
-  getUser: () => dispatch(me()),
+  checkUser: () => dispatch(me()),
   updateMemberCart: userId => dispatch(updateMemberCart(userId))
 })
 
