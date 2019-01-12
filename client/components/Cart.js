@@ -61,7 +61,7 @@ class Cart extends React.Component {
             <input
               type="text"
               name="subtotal"
-              value={this.props.totalCost(currentCart)}
+              value={this.totalCost(currentCart)}
             />
           </p>
           <p>
@@ -76,8 +76,11 @@ class Cart extends React.Component {
 const mapStateToProps = state => ({
   activeCart: state.cart
 })
-const mapDispatchToProps = dispatch => ({
-  getCart: () => dispatch(getCart())
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  getCart: () => {
+    dispatch(getCart())
+    // ownProps.history.push('/cart')
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

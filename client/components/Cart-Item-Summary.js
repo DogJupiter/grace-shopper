@@ -1,15 +1,21 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {removeFromCart, getCart} from '../store/cart'
+import {removeFromCart, getCart, addToCart} from '../store/cart'
 import {store} from '../store'
 
+import history from '../history'
+
 class CartItemSummary extends React.Component {
-  handleQtyUpdate() {
-    //check quantity of item in the cart, change it by what's in the box
-    const newAmt = event.target.content.value
-    console.log('NEW AMOUNT---->', newAmt)
-    this.props.cartItem.quantity = newAmt
+  handleQtyIncrease() {
+    this.props.addToCart(this.props.cartItem.experience)
+    history.push('/cart')
   }
+
+  handleQtyDecrease() {
+    this.props.removeFromCart(this.props.cartItem.experience)
+    history.push('/cart')
+  }
+
   handleDeleteClick() {
     let cartState = this.props.cartState
     this.props.removeFromCart(this.props.cartItem.experience)
@@ -20,6 +26,7 @@ class CartItemSummary extends React.Component {
   }
   render() {
     let cartItem = this.props.cartItem.experience
+    // console.log('CART ITEM', cartItem)
 
     return (
       <div>
@@ -34,17 +41,44 @@ class CartItemSummary extends React.Component {
           </div>
           <div className="cart-item-img">
             {/* Product Qty appears here */}
-            <form method="post" action="">
+            <p>{this.props.cartItem.quantity}</p>
+            <p>
+              <button type="button" onClick={() => this.handleQtyIncrease()}>
+                Increase
+              </button>
+            </p>
+            <p>
+              <button type="button" onClick={() => this.handleQtyDecrease()}>
+                Decrease
+              </button>
+            </p>
+            {/* <form method="post" action="">
               <input
                 type="text"
                 name="qty"
                 id="qty"
                 className="qty-update"
                 value={this.props.cartItem.quantity}
-                onChange={() => console.log('qty changed')}
               />
-              <button type="button">Update</button>
-            </form>
+              <p>
+                <p>
+                  <button
+                    type="button"
+                    onClick={() => this.handleQtyIncrease()}
+                  >
+                    Increase
+                  </button>
+                </p>
+                <p>
+                  <button
+                    type="button"
+                    onClick={() => this.handleQtyDecrease()}
+                  >
+                    Decrease
+                  </button>
+                </p>
+              </p>
+            </form> */}
           </div>
           <div className="cart-item-img">
             ${cartItem.price * this.props.cartItem.quantity}.00
@@ -63,9 +97,16 @@ class CartItemSummary extends React.Component {
 const mapStateToProps = state => ({
   activeCart: state.cart
 })
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   getCart: () => dispatch(getCart()),
-  removeFromCart: exp => dispatch(removeFromCart(exp))
+  removeFromCart: exp => {
+    dispatch(removeFromCart(exp))
+    ownProps.history.push('/cart')
+  },
+  addToCart: exp => {
+    dispatch(addToCart(exp))
+    ownProps.history.push('/cart')
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartItemSummary)

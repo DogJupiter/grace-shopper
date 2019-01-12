@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 //ACTION TYPES
 const GET_CART = 'GET_CART'
@@ -31,7 +32,7 @@ if (localStorage.getItem('cart')) {
 
 //REDUCER STUFF
 
-const cartReducer = (state = activeCart, action) => {
+const cartReducer = (state = [], action) => {
   let newCart
 
   switch (action.type) {
@@ -74,7 +75,7 @@ const cartReducer = (state = activeCart, action) => {
       }
 
       localStorage.setItem('cart', JSON.stringify(newCart))
-      console.log('state, currently--->', newCart)
+      // history.push('/cart')
       return newCart
 
     default:
