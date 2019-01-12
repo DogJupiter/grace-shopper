@@ -82,7 +82,7 @@ class Navbar extends Component {
 
   sumCart(cart) {
     let total = 0
-    cart.map(item => (total += item.quantity))
+    cart.experiences.map(item => (total += item.quantity))
     return total
   }
   render() {
@@ -128,17 +128,31 @@ class Navbar extends Component {
                 </div>
               )}
             </div>
-            <Link to="/cart">
-              <IconButton color="primary">
-                <Badge
-                  className={classes.margin}
-                  badgeContent={this.sumCart(activeCart)}
-                  color="primary"
-                >
-                  <ShoppingCartIcon color="inherit" />
-                </Badge>
-              </IconButton>
-            </Link>
+            {activeCart.experiences ? (
+              <Link to="/cart">
+                <IconButton color="primary">
+                  <Badge
+                    className={classes.margin}
+                    badgeContent={this.sumCart(activeCart)}
+                    color="primary"
+                  >
+                    <ShoppingCartIcon color="inherit" />
+                  </Badge>
+                </IconButton>
+              </Link>
+            ) : (
+              <Link to="/cart">
+                <IconButton color="primary">
+                  <Badge
+                    className={classes.margin}
+                    badgeContent={0}
+                    color="primary"
+                  >
+                    <ShoppingCartIcon color="inherit" />
+                  </Badge>
+                </IconButton>
+              </Link>
+            )}
           </Toolbar>
         </AppBar>
       </div>
