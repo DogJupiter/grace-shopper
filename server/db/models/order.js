@@ -20,7 +20,10 @@ const Order = db.define('order', {
     type: Sequelize.VIRTUAL,
     get: function() {
       return this.items && this.items.length
-        ? this.items.reduce((accum, item) => accum + item.q * item.p, 0)
+        ? this.items.reduce(
+            (accum, item) => accum + item.quantity * item.experience.price,
+            0
+          )
         : 0
     }
   },

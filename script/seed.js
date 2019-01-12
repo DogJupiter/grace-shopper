@@ -115,6 +115,13 @@ const items = [
   {quantity: 2, experienceId: 3, orderId: 3}
 ]
 
+const expCats = [
+  {experienceId: 1, categoryId: 2},
+  {experienceId: 1, categoryId: 3},
+  {experienceId: 2, categoryId: 1},
+  {experienceId: 2, categoryId: 2}
+]
+
 //Category Data
 const categories = [
   {type: 'entertainment'}, //categoryId = 1
@@ -165,6 +172,14 @@ const seed = async () => {
       return Promise.all(
         categories.map(category => {
           return Category.create(category)
+        })
+      )
+    })
+    .then(categories => {
+      // console.log(categories);
+      return Promise.all(
+        categories.map(category => {
+          return category.addExperience(1)
         })
       )
     })

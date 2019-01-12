@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Order} = require('../db/models')
+const {User, Order, Item, Experience} = require('../db/models')
 module.exports = router
 
 // GET /api/users
@@ -40,20 +40,23 @@ router.get('/:id', async (req, res, next) => {
 // get all orders
 router.get('/:id/orders', async (req, res, next) => {
   const userId = Number(req.params.id)
-  if (req.user && req.user.id === userId) {
-    try {
-      // find all the order that match the userId
-      const order = await Order.findAll({where: {userId}})
-      if (!order) {
-        return res.status(401).send('Unauthorized')
-      }
-      return res.json(order)
-    } catch (error) {
-      next(error)
+  // if (req.user && req.user.id === userId) {
+  try {
+    // find all the order that match the userId including what inside of it
+    const order = await Order.findAll({
+      where: {userId},
+      include: [{model: Item, include: [{model: Experience}]}]
+    })
+    if (!order) {
+      return res.status(401).send('Unauthorized')
     }
-  } else {
-    res.status(403).send('Forbidden')
+    return res.json(order)
+  } catch (error) {
+    next(error)
   }
+  // } else {
+  //   res.status(403).send('Forbidden')
+  // }
 })
 
 // POST /api/users/:id/orders
@@ -76,6 +79,11 @@ router.post('/:id/orders', async (req, res, next) => {
     res.status(403).send('Forbidden')
   }
 })
+
+// router.post('/:id/orders/:orderId/items', async (req, res, next) => {
+//   const userId = Number(req.params.id)
+//   let newItem = req.body
+// })
 
 router.put('/:id/orders/:orderId', async (req, res, next) => {
   const userId = Number(req.params.id)
