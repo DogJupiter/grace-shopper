@@ -37,10 +37,7 @@ class Routes extends Component {
           exact
           path="/experiences/:id"
           render={props => (
-            <ExperienceDetails
-              routeProps={props}
-              isLoggedIn={this.props.isLoggedIn}
-            />
+            <ExperienceDetails routeProps={props} isLoggedIn={isLoggedIn} />
           )}
         />
       </Switch>

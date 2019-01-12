@@ -72,7 +72,12 @@ const styles = theme => ({
 
 class ExperienceDetails extends Component {
   handleAddToCart(experience) {
+    // !isLoggedIn
+    // call addToCart which will store users cart on localStorage
+    // this is going to localStorage
     this.props.addToCart(experience)
+    // isLoggedIn
+    //
   }
 
   async componentDidMount() {
