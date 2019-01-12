@@ -1,15 +1,33 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {
+  removeFromCart,
+  getCart,
+  addToCart,
+  deleteAllFromCart
+} from '../store/cart'
+
+import history from '../history'
 
 class CartItemSummary extends React.Component {
-  handleQtyUpdate() {
-    //check quantity of item in the cart, change it by what's in the box
-    const newAmt = event.target.content.value
-    console.log('NEW AMOUNT---->', newAmt)
-    this.props.cartItem.quantity = newAmt
+  handleQtyIncrease() {
+    this.props.addToCart(this.props.cartItem.experience)
+    history.push('/cart')
+  }
+
+  handleQtyDecrease() {
+    this.props.removeFromCart(this.props.cartItem.experience)
+    history.push('/cart')
+  }
+
+  handleDeleteClick() {
+    this.props.deleteAllFromCart(this.props.cartItem.experience)
+    history.push('/cart')
   }
   render() {
     let cartItem = this.props.cartItem.experience
+    // console.log('CART ITEM', cartItem)
+
     return (
       <div>
         <div className="cart-item">
@@ -23,23 +41,25 @@ class CartItemSummary extends React.Component {
           </div>
           <div className="cart-item-img">
             {/* Product Qty appears here */}
-            <form method="post" action="">
-              <input
-                type="text"
-                name="qty"
-                id="qty"
-                className="qty-update"
-                value={this.props.cartItem.quantity}
-                // onChange={() => console.log('qty changed')}
-              />
-              <button type="button">Update</button>
-            </form>
+            <p>{this.props.cartItem.quantity}</p>
+            <p>
+              <button type="button" onClick={() => this.handleQtyIncrease()}>
+                Increase
+              </button>
+            </p>
+            <p>
+              <button type="button" onClick={() => this.handleQtyDecrease()}>
+                Decrease
+              </button>
+            </p>
           </div>
           <div className="cart-item-img">
             ${cartItem.price * this.props.cartItem.quantity}.00
           </div>
           <div className="cart-item-img">
-            <h4>button placeholder</h4>
+            <button type="button" onClick={() => this.handleDeleteClick()}>
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -50,8 +70,17 @@ class CartItemSummary extends React.Component {
 const mapStateToProps = state => ({
   activeCart: state.cart
 })
-const mapDispatchToProps = dispatch => ({
-  getCart: () => dispatch(getCart())
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  getCart: () => dispatch(getCart()),
+  removeFromCart: exp => {
+    dispatch(removeFromCart(exp))
+  },
+  addToCart: exp => {
+    dispatch(addToCart(exp))
+  },
+  deleteAllFromCart: exp => {
+    dispatch(deleteAllFromCart(exp))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartItemSummary)

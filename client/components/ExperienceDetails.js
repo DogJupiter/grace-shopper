@@ -199,7 +199,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
-  addToCart: exp => dispatch(addToCart(exp, ownProps.history))
+  addToCart: exp => dispatch(addToCart(exp))
 })
 
 export default withStyles(styles)(

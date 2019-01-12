@@ -1,8 +1,26 @@
 import React from 'react'
 import {Grid} from '@material-ui/core'
-import SingleExperience from './singleExperience'
+import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
+
+import SingleExperience from './singleExperience'
+import SideBar from './SideBar'
+
 import {fetchFilteredExperiences} from '../store/experience'
+
+const styles = theme => ({
+  content: {
+    flexGrow: 1,
+    marginTop: '45px'
+  },
+  loader: {
+    fontSize: '35px',
+    marginTop: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
 class FilteredExperiences extends React.Component {
   async componentDidMount() {
@@ -10,6 +28,7 @@ class FilteredExperiences extends React.Component {
   }
 
   render() {
+    const {classes} = this.props
     return (
       // This style div adds space to the left of the Grid container so that sidebar can be added
       // Anything non-material UI should be done stylistically in a CSS file (SCSS) and this should be given appropriate class/id.
@@ -17,6 +36,9 @@ class FilteredExperiences extends React.Component {
         this.props.filteredExperiences.length ? (
         <div style={{marginLeft: '27%', justifyContent: 'center'}}>
           <h1>THIS IS THE FILTERED EXPERIENCES VIEW!!!</h1>
+          <Grid item xs={3} className={classes.content}>
+            <SideBar />
+          </Grid>
           <Grid
             container
             justify="center"
@@ -43,4 +65,6 @@ const mapDispatchToProps = dispatch => ({
   fetchFiltered: id => dispatch(fetchFilteredExperiences(id))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilteredExperiences)
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(FilteredExperiences)
+)
