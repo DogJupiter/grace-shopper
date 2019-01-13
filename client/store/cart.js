@@ -36,6 +36,7 @@ if (localStorage.getItem('cart')) {
   activeCart = {
     experiences: [],
     totalQty: 0
+    // subTotal: 0
   }
 }
 
@@ -57,7 +58,12 @@ const cartReducer = (state = activeCart, action) => {
         //Is the item already in the cart?
         if (duplicateItemIdx > -1) {
           //if so, add another to the existing
-          newCart.experiences[duplicateItemIdx].quantity += 1
+          if (newCart.experiences[duplicateItemIdx].quantity === 5) {
+            window.alert('Sorry! Max five tickets!')
+            newCart.experiences[duplicateItemIdx].quantity = 5
+          } else {
+            newCart.experiences[duplicateItemIdx].quantity += 1
+          }
           newCart.totalQty += 1
         } else {
           //if not, add a new one

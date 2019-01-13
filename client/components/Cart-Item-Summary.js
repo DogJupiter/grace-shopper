@@ -1,19 +1,26 @@
 import React from 'react'
-import {Grid, Typography, Button} from '@material-ui/core'
-import {withStyles} from '@material-ui/core/styles'
-import Icon from '@material-ui/core/Icon'
-import IconButton from '@material-ui/core/IconButton'
-import AddIcon from '@material-ui/icons/AddCircle'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+
+import {
+  Grid,
+  Typography,
+  Button,
+  withStyles,
+  IconButton
+} from '@material-ui/core'
+
+import AddIcon from '@material-ui/icons/AddCircle'
+import RemoveIcon from '@material-ui/icons/RemoveCircle'
+import DeleteIcon from '@material-ui/icons/DeleteSweep'
+
 import {
   removeFromCart,
   getCart,
   addToCart,
   deleteAllFromCart
 } from '../store/cart'
-
 import history from '../history'
-import {BorderAllRounded} from '@material-ui/icons'
 
 const styles = theme => ({
   content: {
@@ -43,6 +50,10 @@ const styles = theme => ({
   },
   cartItemName: {
     spacing: 10
+  },
+  productQty: {
+    fontSize: '16px',
+    fontWeight: 500
   }
 })
 
@@ -68,13 +79,16 @@ class CartItemSummary extends React.Component {
     return (
       <div>
         <div>
-          <Grid container justify="center" spacing={3}>
+          <Grid container justify="center" spacing={8}>
             <Grid item xs={2} mx="auto" px="auto" className={classes.content}>
-              <img src={cartItem.imageUrl} className={classes.image} />
+              {/* CART ITEM IMAGE HERE */}
+              <Link to={`/experiences/${cartItem.id}`}>
+                <img src={cartItem.imageUrl} className={classes.image} />
+              </Link>
             </Grid>
             <Grid item xs={2} mx="auto" px="auto" className={classes.content}>
+              {/* CART ITEM NAME HERE */}
               <Typography
-                paragraph
                 style={{color: '#627264'}}
                 className={classes.cartItemDetails}
               >
@@ -82,93 +96,52 @@ class CartItemSummary extends React.Component {
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.content}>
-              <Typography paragraph style={{color: '#627264'}}>
+              {/* CART ITEM QUANTITY HERE */}
+              <Typography
+                style={{color: '#627264'}}
+                className={classes.productQty}
+              >
                 {this.props.cartItem.quantity}
-                <p>
-                  <IconButton
-                    className={classes.icon}
-                    color="secondary"
-                    onClick={() => this.handleQtyIncrease()}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                  <IconButton
-                    className={classes.icon}
-                    color="secondary"
-                    onClick={() => this.handleQtyIncrease()}
-                  >
-                    remove
-                  </IconButton>
-                  {/* <button
-                    type="button"
-                    onClick={() => this.handleQtyIncrease()}
-                  >
-                    Increase
-                  </button>
-                </p>
-                <p>
-                  <button
-                    type="button"
-                    onClick={() => this.handleQtyDecrease()}
-                  >
-                    Decrease
-                  </button> */}
-                </p>
+                <br />
+                <IconButton
+                  className={classes.icon}
+                  color="secondary"
+                  onClick={() => this.handleQtyIncrease()}
+                >
+                  <AddIcon />
+                </IconButton>
+                <IconButton
+                  className={classes.icon}
+                  color="secondary"
+                  onClick={() => this.handleQtyDecrease()}
+                >
+                  <RemoveIcon />
+                </IconButton>
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.content}>
-              <Typography paragraph style={{color: '#627264'}}>
+              {/* CART ITEM PRICE HERE */}
+              <Typography
+                style={{color: '#627264'}}
+                className={classes.productQty}
+              >
                 ${cartItem.price * this.props.cartItem.quantity}.00
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.content}>
+              {/* CART ITEM DELETE BUTTON HERE */}
               <Button
                 variant="outlined"
                 color="secondary"
                 className={classes.button}
                 onClick={() => this.handleDeleteClick()}
               >
-                Delete from Cart
+                Delete &nbsp; &nbsp; <DeleteIcon />
               </Button>
             </Grid>
           </Grid>
         </div>
       </div>
-
-      // <div>
-      //   <div className="cart-item">
-      //     <div className="cart-item-img">
-      //       {/* Product Image appears here */}
-      //       <img src={cartItem.imageUrl} className="cart-img" />
-      //     </div>
-      //     <div className="cart-item-img">
-      //       {/* Product Name appears here */}
-      //       <p>{cartItem.name}</p>
-      //     </div>
-      //     <div className="cart-item-img">
-      //       {/* Product Qty appears here */}
-      //       <p>{this.props.cartItem.quantity}</p>
-      //       <p>
-      //         <button type="button" onClick={() => this.handleQtyIncrease()}>
-      //           Increase
-      //         </button>
-      //       </p>
-      //       <p>
-      //         <button type="button" onClick={() => this.handleQtyDecrease()}>
-      //           Decrease
-      //         </button>
-      //       </p>
-      //     </div>
-      //     <div className="cart-item-img">
-      //       ${cartItem.price * this.props.cartItem.quantity}.00
-      //     </div>
-      //     <div className="cart-item-img">
-      //       <button type="button" onClick={() => this.handleDeleteClick()}>
-      //         Delete
-      //       </button>
-      //     </div>
-      //   </div>
-      // </div>
     )
   }
 }
