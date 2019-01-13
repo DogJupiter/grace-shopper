@@ -76,10 +76,9 @@ class Cart extends React.Component {
 const mapStateToProps = state => ({
   activeCart: state.cart
 })
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   getCart: () => {
     dispatch(getCart())
-    // ownProps.history.push('/cart')
   }
 })
 
