@@ -41,7 +41,8 @@ const Order = db.define('order', {
   },
   instruction: {
     type: Sequelize.TEXT
-  }
+  },
+  cart: Sequelize.JSON
 })
 
 module.exports = Order

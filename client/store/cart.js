@@ -7,6 +7,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const DELETE_ALL_FROM_CART = 'DELETE_ALL_FROM_CART'
 const ADD_TO_MEMBER_CART = 'ADD_TO_MEMBER_CART'
+const GET_MEMBER_CART = 'GET_MEMBER_CART'
 
 //ACTION CREATORS
 export const getCart = () => ({
@@ -34,7 +35,13 @@ export const addToMemberCart = experience => ({
   payload: experience
 })
 
+const getMemberCart = cart => ({
+  type: GET_MEMBER_CART,
+  payload: cart
+})
+
 //Initial State
+
 let activeCart
 if (localStorage.getItem('cart')) {
   activeCart = JSON.parse(localStorage.getItem('cart'))
@@ -52,6 +59,14 @@ export const updateMemberCart = (experience, userId) => {
     console.log('POST EXPERIENCE TO CART', res.data)
     const action = addToMemberCart(res.data)
     console.log('THIS IS THE ACTION', action)
+    dispatch(action)
+  }
+}
+
+export const fetchMemberCart = userId => {
+  return async dispatch => {
+    const res = await axios.get(`/api/users/${userId}/orders/cart`)
+    const action = getMemberCart(res.data.cart)
     dispatch(action)
   }
 }
@@ -140,6 +155,10 @@ const cartReducer = (state = activeCart, action) => {
       }
 
       return newCart
+
+    case GET_MEMBER_CART:
+      return {...state, experiences: action.payload}
+
     default:
       return state
   }

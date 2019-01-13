@@ -4,7 +4,8 @@ import {Grid} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
 
 import {connect} from 'react-redux'
-import {getCart} from '../store/cart'
+import {getCart, fetchMemberCart} from '../store/cart'
+import {getUser} from '../store/user'
 
 class Cart extends React.Component {
   // componentDidMount() {
@@ -19,7 +20,14 @@ class Cart extends React.Component {
   }
 
   render() {
-    let currentCart = this.props.activeCart.experiences
+    let currentCart
+    if (this.props.getUser.id) {
+      this.props.getMemberCart(this.props.getUser.id)
+    }
+    this.props.getUser.id
+      ? (currentCart = this.props.activeCart.experiences.cart)
+      : (currentCart = this.props.activeCart.experiences)
+
     if (!currentCart || currentCart.length < 1) {
       return <h1>Nothing in cart</h1>
     }
@@ -83,13 +91,15 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => ({
   activeCart: state.cart,
+  memberCart: state.cart,
   getUser: state.user
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
   getCart: () => {
     dispatch(getCart())
     // ownProps.history.push('/cart')
-  }
+  },
+  getMemberCart: userId => dispatch(fetchMemberCart(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

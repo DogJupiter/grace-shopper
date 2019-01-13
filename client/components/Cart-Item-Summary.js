@@ -28,7 +28,7 @@ class CartItemSummary extends React.Component {
     let cartItem
 
     this.props.getUser.id
-      ? (cartItem = this.props.cartItem)
+      ? (cartItem = this.props.cartItem.experiences.cart.experiences)
       : (cartItem = this.props.cartItem.experience)
     // console.log('CART ITEM', cartItem)
 
