@@ -67,6 +67,10 @@ const styles = theme => ({
   },
   margin: {
     marginTop: 100
+  },
+  singleViewContainer: {
+    marginTop: 50,
+    marginRight: 100
   }
 })
 
@@ -89,6 +93,7 @@ class ExperienceDetails extends Component {
         container
         classes={{root: classes.root, margin: classes.margin}}
         color="font"
+        className={classes.singleViewContainer}
       >
         <Grid container className={classes.text} style={{margin: 50}}>
           <Grid item sm={3}>

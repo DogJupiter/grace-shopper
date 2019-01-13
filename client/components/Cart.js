@@ -46,6 +46,10 @@ const styles = theme => ({
     textAlign: 'center',
     fontWeight: 300
   },
+  singleItemView: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   subtotal: {
     fontSize: '15px',
     fontWeight: 500
@@ -113,22 +117,18 @@ class Cart extends React.Component {
           </Grid>
         </div>
         {/* THERE WILL BE A MAP OF VALS HERE */}
-        <List>
-          {currentCart.map(item => {
-            console.log(item)
-            return (
-              <div key={item.experience.id}>
-                <ListItem>
-                  <CartItemSummary
-                    cartItem={item}
-                    cartState={this.props.activeCart}
-                  />
-                </ListItem>
-                <Divider variant="middle" />
-              </div>
-            )
-          })}
-        </List>
+        {currentCart.map(item => {
+          return (
+            <div key={item.experience.id}>
+              {/* <ListItem> */}
+              <CartItemSummary
+                cartItem={item}
+                cartState={this.props.activeCart}
+              />
+              <Divider variant="middle" />
+            </div>
+          )
+        })}
         {/* CART SUBTOTAL IS CALCULATED HERE */}
         <Card className={classes.cart} align="right">
           <CardContent>

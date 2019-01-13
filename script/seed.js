@@ -13,45 +13,42 @@ const {
 //Experiences Data
 const experiences = [
   {
-    name: 'Jane Hotel After Midnight',
-    imageUrl:
-      'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg',
-    duration: '2 hours',
-    price: 50,
-    description: 'night out',
-    inventory: 50
-  },
-  {
-    name: 'Ballet in Lincoln Center',
-    imageUrl:
-      'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg',
-    duration: '2 hours',
-    price: 80,
-    description: 'swam lake',
-    inventory: 50
-  },
-  {
-    name: 'Street Food in Flushing',
-    imageUrl:
-      'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg',
-    duration: '2 hours',
-    price: 40,
-    description: 'eat eat eat',
-    inventory: 50
-  },
-  {
     name: 'Hip Hop Lesson with the Showtime Kids',
-    imageUrl:
-      'http://spoilednyc.s3.amazonaws.com/wp-content/uploads/2015/02/2showtime.jpg',
+    imageUrl: 'https://i.imgur.com/WeB146l.jpg',
     duration: '3 hours',
     price: 60,
-    description: `IT'S SHOWTIME EVERYBODY WHAT TIME IS IT SHOWTIME`,
+    description: `IT'S SHOWTIME, EVERYBODY! WHAT TIME IS IT.... You guessed it! SHOWTIME! Be part of every New Yorker's beloved morning ritual! Take advantage of this beNewYork exclusive, and participate in a small-group Subway Dancing Lesson with the Showtime Kids themselves! In just three hours, you'll learn the essentials of breakdancing, pop & locking, and amazing subway pole aerial spins. If time allows, the Kids will also go over Dance Routine Etiquette: Claiming your dance space at peak-time... Avoiding altercations with commuters that you've kicked in the face.... And more! Reservations are limited, so snatch up a ticket before they're gone.`,
+    inventory: 50
+  },
+  {
+    name: 'Driving Around in Circles for Fun with BigBus New York',
+    imageUrl: 'https://i.imgur.com/mKxIXz6.png',
+    duration: '149 hours',
+    price: 30,
+    description: `Feet swollen from all that city street wandering? Fret no more - join BigBus New York on a hop-on/hop-off city sightseeing extravaganza. You'll drive around in circles, catching sight of all the best that New York City has to offer! Don't blink, or you might miss the action. $30 PROMOTIONAL PERIOD ENDS SOON.`,
+    inventory: 50
+  },
+  {
+    name: 'Pizza Tour with Pizza Rat',
+    imageUrl: 'https://i.imgur.com/7VzWLko.jpg',
+    duration: '2 hours',
+    price: 10,
+    description: `Your trip to New York City wouldn't be complete without inhaling a bevvy of Dollar pizza slices from every Sal's Pizza in town. Let a true professional guide you to the hottest spots where you can grab the hottest slices. This Pizza Tour with Pizza Rat will leave you breathless as you explore some of the least-expected pizza joints around town. Tour commences at 3:00am every Sunday in the tunnels between 66th & 72nd Streets on the 1-Train Line. Please dress appropriately. Ticket price does not include cost of any pizza you may purchase or steal on the tour.`,
+    inventory: 50
+  },
+  {
+    name: 'Union Square Drum Circle',
+    imageUrl: 'https://i.imgur.com/3hBOGrS.jpg',
+    duration: '2 hours',
+    price: 10,
+    description: `TO-DO`,
     inventory: 50
   }
 ]
 //User Data
 const users = [
   {
+    // id: 1,
     firstName: 'Koby',
     lastName: 'Bryant',
     email: 'Koby@email.com',
@@ -60,6 +57,17 @@ const users = [
     googleId: null
   },
   {
+    // id: 2,
+    firstName: 'Stephen',
+    lastName: 'Curry',
+    email: 'Curry@email.com',
+    password: '123',
+    imageUrl:
+      'http://static1.uk.businessinsider.com/image/56c770d5dd08958e6d8b463c-1190-625/stephen-curry-heres-a-look-at-the-marvelous-life-of-the-greatest-basketball-player-in-the-world.jpg',
+    googleId: null
+  },
+  {
+    // id: 3,
     firstName: 'Kevin',
     lastName: 'Durant',
     email: 'Kevin@email.com',
@@ -69,12 +77,39 @@ const users = [
     googleId: null
   },
   {
-    firstName: 'Stephen',
-    lastName: 'Curry',
-    email: 'Curry@email.com',
+    // id: 4,
+    firstName: 'Hannah',
+    lastName: 'Horvath',
+    email: 'Hannah@email.com',
     password: '123',
-    imageUrl:
-      'http://static1.uk.businessinsider.com/image/56c770d5dd08958e6d8b463c-1190-625/stephen-curry-heres-a-look-at-the-marvelous-life-of-the-greatest-basketball-player-in-the-world.jpg',
+    imageUrl: 'https://i.imgur.com/7wsjW4V.png',
+    googleId: null
+  },
+  {
+    // id: 5,
+    firstName: 'Ilana',
+    lastName: 'Wexler',
+    email: 'Ilana@email.com',
+    password: '123',
+    imageUrl: 'https://i.imgur.com/5Do6rdj.png',
+    googleId: null
+  },
+  {
+    // id: 6,
+    firstName: 'Mindy',
+    lastName: 'Lahiri',
+    email: 'Mindy@email.com',
+    password: '123',
+    imageUrl: 'https://i.imgur.com/oD94mNi.png',
+    googleId: null
+  },
+  {
+    // id: 7,
+    firstName: 'Marty',
+    lastName: 'Zebra',
+    email: 'iLikeToMoveItMoveIt@email.com',
+    password: '123',
+    imageUrl: 'https://i.imgur.com/Becyu42.jpg',
     googleId: null
   }
 ]
@@ -83,21 +118,46 @@ const users = [
 //added userId for testing reviews
 const reviews = [
   {
-    description: 'I love this experiences!',
-    experienceId: 2,
+    description:
+      'I kicked my mom in the face. She was not happy. Do not recommend.',
+    experienceId: 1,
+    stars: 1,
+    userId: 2
+  },
+  {
+    description: `I'm not entirely sure that I'm a better dancer after taking this lesson, but at least I can say that I'm able to hang upside down from the ceiling handlebars. Never know when that might come in handy.`,
+    experienceId: 1,
     stars: 4,
+    userId: 4
+  },
+  {
+    description: `I lost a shoe while attempting a triple back handspring down the aisle, and I haven't seen it since. New York, I love you, but you're bringing me down.`,
+    experienceId: 1,
+    stars: 2,
+    userId: 5
+  },
+  {
+    description: `The "hop-off" part of the experience was a lie. I hopped on, and they wouldn't let me off. It's 149 hours later, and I'm very hungry. Although, on the plus side, $30 for a 149-hour experience is a top-notch deal. But, if I could do it all over again, I wouldn't.`,
+    experienceId: 2,
+    stars: 3,
+    userId: 6
+  },
+  {
+    description: `I LOVE GOING AROUND IN CIRCLES IT'S THE BEST. 10/10 WOULD RECOMMEND.`,
+    experienceId: 2,
+    stars: 5,
     userId: 1
   },
   {
-    description: 'I love this experiences!',
-    experienceId: 2,
+    description: `It was all fun and games until somebody mentioned Pineapple. Can't we all just get along!?`,
+    experienceId: 3,
     stars: 5,
-    userId: 3
+    userId: 7
   },
   {
-    description: 'I love this experiences!',
-    experienceId: 1,
-    stars: 3,
+    description: `I went into this excursion a little bit hesitant. I mean - isn't walking on the subway tracks illegal and dangerous? But let me tell you. Pizza Rat know what he's doing. This guys knows his slices! I walked away from this experience with a newfound appreciation of pizza and just a tiny misdemeanor charge!`,
+    experienceId: 3,
+    stars: 5,
     userId: 2
   }
 ]

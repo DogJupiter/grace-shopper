@@ -7,7 +7,9 @@ import {
   Typography,
   Button,
   withStyles,
-  IconButton
+  IconButton,
+  Card,
+  CardMedia
 } from '@material-ui/core'
 
 import AddIcon from '@material-ui/icons/AddCircle'
@@ -28,32 +30,26 @@ const styles = theme => ({
     justify: 'center',
     alignItems: 'center',
     flexGrow: 1,
-    marginTop: '45px'
-  },
-  loader: {
-    fontSize: '35px',
-    marginTop: '50px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  image: {
-    maxWidth: '100%',
-    borderRadius: 16,
-    boxShadow: 3,
-    position: 'left'
+    marginTop: '60px'
   },
   cartItemDetails: {
+    marginTop: '45px',
     fontSize: '20px',
     fontWeight: 300,
     align: 'center'
   },
-  cartItemName: {
-    spacing: 10
+  productName: {
+    fontFamily: '-apple-system',
+    fontSize: '24px',
+    fontWeight: 500
   },
   productQty: {
     fontSize: '16px',
     fontWeight: 500
+  },
+  cartItemImage: {
+    marginTop: '30px',
+    marginBottom: '30px'
   }
 })
 
@@ -79,18 +75,26 @@ class CartItemSummary extends React.Component {
     return (
       <div>
         <div>
-          <Grid container justify="center" spacing={8}>
-            <Grid item xs={2} mx="auto" px="auto" className={classes.content}>
+          <Grid container justify="center" spacing={16}>
+            <Grid item xs={2} mr={100} px="auto">
               {/* CART ITEM IMAGE HERE */}
-              <Link to={`/experiences/${cartItem.id}`}>
-                <img src={cartItem.imageUrl} className={classes.image} />
-              </Link>
+              <Card className={classes.cartItemImage}>
+                <Link to={`/experiences/${cartItem.id}`}>
+                  <CardMedia
+                    component="img"
+                    alt={cartItem.name}
+                    width="200"
+                    height="150"
+                    image={cartItem.imageUrl}
+                  />
+                </Link>
+              </Card>
             </Grid>
             <Grid item xs={2} mx="auto" px="auto" className={classes.content}>
               {/* CART ITEM NAME HERE */}
               <Typography
                 style={{color: '#627264'}}
-                className={classes.cartItemDetails}
+                className={classes.productName}
               >
                 {cartItem.name}
               </Typography>
