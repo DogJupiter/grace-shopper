@@ -20,50 +20,6 @@ form div {
   display: inline-block;
 }
 
-.cart-div {
-  border-style: solid;
-  border-color: red;
-}
-
-.individual-items-view {
-  /* display: flex; */
-  border-style: solid;
-  border-color: green;
-}
-
-.cart-item-header {
-  display: grid;
-  grid-template-columns: [img] 20% [name] 20% [qty] 20% [price] 20% [del] 20%;
-  height: 75px;
-  align-content: center;
-  grid-column-gap: 10px;
-  border-style: dotted;
-  border-color: purple;
+.cart-view {
   text-align: center;
-}
-.cart-item {
-  display: grid;
-  grid-template-columns: [img] 20% [name] 20% [qty] 20% [price] 20% [del] 20%;
-  grid-column-gap: 10px;
-  align-content: center;
-  text-align: center;
-  border-style: dotted;
-  border-color: purple;
-}
-
-.qty-update {
-  width: 50px;
-}
-
-.cart-item-img {
-  border-style: dotted;
-  border-color: orange;
-}
-
-img.cart-img {
-  max-width: 250px;
-}
-
-.cart-subtotal {
-  text-align: right;
 }
