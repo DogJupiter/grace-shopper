@@ -136,7 +136,19 @@ router.get('/:id/orders/:orderId', async (req, res, next) => {
   }
 })
 
-//sabira: add item to cart route
+router.put('/:id/orders/cart/items/:itemId/add', async (req, res, next) => {
+  try {
+    const cart = await Order.findOne({where: {status: 'created'}})
+    const item = await Item.findOne({where: {id: req.params.itemId}})
+    item.addQuantity()
+    console.log(item, 'item')
+    res.send(await Item.findAll({where: {orderId: cart.id}}))
+  } catch (err) {
+    next(err)
+  }
+})
+
+//sabira: add item to cart route (axios.post('route', experience))
 router.post('/:id/orders/cart/', async (req, res, next) => {
   try {
     //sabira: find the cart if it exists
@@ -149,17 +161,24 @@ router.post('/:id/orders/cart/', async (req, res, next) => {
     await Item.create({
       quantity: 1,
       orderId: cart.id,
-      experienceId: req.body.experienceId
+      experienceId: req.body.id
     })
-    res.send(await Item.findAll())
+    res.send(await Item.findAll({where: {orderId: cart.id}}))
   } catch (err) {
     next(err)
   }
 })
 
-// router.put('/:id/orders/:orderId/items/:itemId', async(req,res, next) => {
-
-// })
+router.post('/:id/orders/cart/items/:itemId/add', async (req, res, next) => {
+  try {
+    const cart = await Order.findOne({where: {status: 'created'}})
+    const item = await Item.findOne({where: {id: req.params.itemId}})
+    item.addQuantity()
+    res.send(await Item.findAll({where: {orderId: cart.id}}))
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.put('/:id/orders/:orderId', async (req, res, next) => {
   const userId = Number(req.params.id)

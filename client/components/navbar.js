@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, fetchCart} from '../store'
 //materialUI
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import {getCart} from '../store/cart'
+import {fetchCart} from '../store'
 
 const styles = theme => ({
   root: {
@@ -78,6 +79,10 @@ const styles = theme => ({
 class Navbar extends Component {
   componentDidMount() {
     this.props.getCart()
+
+    this.props.fetchCart(3)
+    console.log('cart should be fetched in navbar')
+    console.log(this.props.cartServer, 'cartServer')
   }
 
   sumCart(cart) {
@@ -133,7 +138,8 @@ class Navbar extends Component {
                 <IconButton color="primary">
                   <Badge
                     className={classes.margin}
-                    badgeContent={this.sumCart(activeCart)}
+                    // badgeContent = {this.props.cartServer.items.length}
+                    // badgeContent={this.sumCart(activeCart)}
                     color="primary"
                   >
                     <ShoppingCartIcon color="inherit" />
@@ -165,7 +171,8 @@ class Navbar extends Component {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    activeCart: state.cart
+    activeCart: state.cart,
+    cartServer: state.cartServer
   }
 }
 const mapDispatch = dispatch => {
@@ -173,7 +180,8 @@ const mapDispatch = dispatch => {
     handleClick() {
       dispatch(logout())
     },
-    getCart: () => dispatch(getCart())
+    getCart: () => dispatch(getCart()),
+    fetchCart: userId => dispatch(fetchCart(userId))
   }
 }
 export default withStyles(styles)(connect(mapState, mapDispatch)(Navbar))

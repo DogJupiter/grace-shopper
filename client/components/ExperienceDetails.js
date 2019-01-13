@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 
 import {addToCart} from '../store/cart'
+import {fetchCart, addItemToCart} from '../store/'
 
 import {
   Grid,
@@ -73,12 +74,16 @@ const styles = theme => ({
 class ExperienceDetails extends Component {
   handleAddToCart(experience) {
     this.props.addToCart(experience)
+    this.props.addItemToCart(3, experience)
   }
 
   async componentDidMount() {
     console.log('mounted experience', this.props)
     await this.props.fetchExperience(this.props.match.params.id)
-    await this.props.fetchUsers
+    // await this.props.fetchUsers;
+    console.log('kevins cart going to be fetched')
+    await this.props.fetchCart(3)
+    console.log('kevins cart fetched')
   }
 
   render() {
@@ -86,7 +91,7 @@ class ExperienceDetails extends Component {
 
     return experience && experience.name ? (
       <div
-        container
+        container="true"
         classes={{root: classes.root, margin: classes.margin}}
         color="font"
       >
@@ -189,12 +194,17 @@ ExperienceDetails.propTypes = {
 
 const mapStateToProps = state => ({
   experience: state.experience.singleExperience,
-  activeCart: state.cart
+  activeCart: state.cart,
+  user: state.user,
+  cartServer: state.cartServer
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
-  addToCart: exp => dispatch(addToCart(exp))
+  addToCart: exp => dispatch(addToCart(exp)),
+  fetchCart: userId => dispatch(fetchCart(userId)),
+  addItemToCart: (userId, experience) =>
+    dispatch(addItemToCart(userId, experience))
 })
 
 export default withStyles(styles)(
