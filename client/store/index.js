@@ -3,7 +3,7 @@ import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user, {me} from './user'
-import cart from './cart'
+import cart, {getCart} from './cart'
 import experience, {fetchExperience, fetchAllExperiences} from './experience'
 
 import cartServer, {fetchCart, addItemToCart} from './cartServer'
@@ -17,4 +17,11 @@ const store = createStore(reducer, middleware)
 export default store
 export * from './user'
 // exported thunk creators
-export {fetchExperience, fetchAllExperiences, fetchCart, addItemToCart, me}
+export {
+  fetchExperience,
+  fetchAllExperiences,
+  fetchCart,
+  addItemToCart,
+  me,
+  getCart
+}

@@ -19,7 +19,6 @@ import {
 } from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import {getCart} from '../store/cart'
-import {fetchCart} from '../store'
 
 const styles = theme => ({
   root: {
@@ -77,10 +76,14 @@ const styles = theme => ({
 })
 
 class Navbar extends Component {
-  componentDidMount() {
-    this.props.getCart()
+  async componentDidMount() {
+    // this.props.getCart()
+    console.log('before fetching cart in Navbar')
+    console.log(this.props.user, 'user')
+    this.props.user.id
+      ? await this.props.fetchCart(this.props.user.id)
+      : this.props.getCart()
 
-    this.props.fetchCart(3)
     console.log('cart should be fetched in navbar')
     console.log(this.props.cartServer, 'cartServer')
   }
@@ -172,7 +175,8 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
     activeCart: state.cart,
-    cartServer: state.cartServer
+    cartServer: state.cartServer,
+    user: state.user
   }
 }
 const mapDispatch = dispatch => {

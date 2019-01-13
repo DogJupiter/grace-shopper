@@ -45,16 +45,16 @@ export const auth = (email, password, method) => async dispatch => {
     console.error(dispatchOrHistoryErr)
   }
 }
-//sabira: i commented out wenyi code to try implement small changes
-// export const logout = () => async dispatch => {
-//   try {
-//     await axios.post('/auth/logout')
-//     dispatch(removeUser())
-//     history.push('/login')
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
+
+export const logout = () => async dispatch => {
+  try {
+    await axios.post('/auth/logout')
+    dispatch(removeUser())
+    history.push('/login')
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 /**
  * REDUCER

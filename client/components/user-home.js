@@ -7,11 +7,12 @@ import {connect} from 'react-redux'
  */
 export const UserHome = props => {
   const {user} = props
+  console.log(props.user, 'user from userHome')
   if (!user.id) {
     return <Redirect to="/" />
   }
   return (
-    <div classNmae="landing-page">
+    <div className="landing-page">
       <h3>Welcome {user.email}</h3>
     </div>
   )

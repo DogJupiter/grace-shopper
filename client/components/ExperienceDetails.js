@@ -82,7 +82,7 @@ class ExperienceDetails extends Component {
     await this.props.fetchExperience(this.props.match.params.id)
     // await this.props.fetchUsers;
     console.log('kevins cart going to be fetched')
-    await this.props.fetchCart(3)
+    await this.props.fetchCart(this.props.user.id)
     console.log('kevins cart fetched')
   }
 
