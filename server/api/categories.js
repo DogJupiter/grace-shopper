@@ -16,13 +16,12 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const requestedCategory = Number(req.params.id)
-    const filteredExperiences = await Experience.findAll({
-      where: {
-        categoryId: requestedCategory
-      }
+    const filteredExperiences = await Category.findOne({
+      where: {id: requestedCategory},
+      include: [{model: Experience}]
     })
 
-    res.json(filteredExperiences)
+    res.json(filteredExperiences.experiences)
   } catch (err) {
     next(err)
   }
