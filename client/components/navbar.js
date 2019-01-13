@@ -76,25 +76,28 @@ const styles = theme => ({
 })
 
 class Navbar extends Component {
+  constructor() {
+    super()
+    this.handleLogout = this.handleLogout.bind(this)
+  }
+
   async componentDidMount() {
     // this.props.getCart()
-    console.log('before fetching cart in Navbar')
-    console.log(this.props.user, 'user')
     this.props.user.id
       ? await this.props.fetchCart(this.props.user.id)
       : this.props.getCart()
-
-    console.log('cart should be fetched in navbar')
-    console.log(this.props.cartServer, 'cartServer')
   }
-
+  //sabira: refactored function
   sumCart(cart) {
-    let total = 0
-    cart.experiences.map(item => (total += item.quantity))
-    return total
+    return cart.experiences.reduce((accum, item) => accum + item.quantity, 0)
   }
+
+  async handleLogout() {
+    await this.props.logout()
+  }
+
   render() {
-    const {handleClick, isLoggedIn, classes, activeCart} = this.props
+    const {isLoggedIn, classes, activeCart} = this.props
     return (
       <div className={classes.root}>
         <AppBar position="static" color="secondary" className={classes.appBar}>
@@ -104,9 +107,6 @@ class Navbar extends Component {
                 <img src="/logo.svg" style={{height: 50}} />
               </Link>
             </div>
-            {/* <Typography variant="h6" color="inherit" className={classes.grow}>
-              Logo
-            </Typography> */}
             <div className={classes.grow} />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -122,7 +122,7 @@ class Navbar extends Component {
             </div>
             <div className={classes.sectionDesktop}>
               {isLoggedIn ? (
-                <a onClick={handleClick}>
+                <a onClick={this.handleLogout}>
                   <Button color="primary">Logout</Button>
                 </a>
               ) : (
@@ -136,13 +136,38 @@ class Navbar extends Component {
                 </div>
               )}
             </div>
-            {activeCart.experiences ? (
+            {isLoggedIn ? (
+              this.props.cartServer.items ? (
+                <Link to="/cart">
+                  <IconButton color="primary">
+                    <Badge
+                      className={classes.margin}
+                      badgeContent={this.props.cartServer.items.length}
+                      color="primary"
+                    >
+                      <ShoppingCartIcon color="inherit" />
+                    </Badge>
+                  </IconButton>
+                </Link>
+              ) : (
+                <Link to="/cart">
+                  <IconButton color="primary">
+                    <Badge
+                      className={classes.margin}
+                      badgeContent={0}
+                      color="primary"
+                    >
+                      <ShoppingCartIcon color="inherit" />
+                    </Badge>
+                  </IconButton>
+                </Link>
+              )
+            ) : activeCart.experiences.length ? (
               <Link to="/cart">
                 <IconButton color="primary">
                   <Badge
                     className={classes.margin}
-                    // badgeContent = {this.props.cartServer.items.length}
-                    // badgeContent={this.sumCart(activeCart)}
+                    badgeContent={this.sumCart(activeCart)}
                     color="primary"
                   >
                     <ShoppingCartIcon color="inherit" />
@@ -181,9 +206,11 @@ const mapState = state => {
 }
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
-      dispatch(logout())
-    },
+    // sabira: handleClick is now handle logout, if you scroll up you'll see
+    // handleClick() {
+    //   dispatch(logout())
+    // },
+    logout: () => dispatch(logout()),
     getCart: () => dispatch(getCart()),
     fetchCart: userId => dispatch(fetchCart(userId))
   }

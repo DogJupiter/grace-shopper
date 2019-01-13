@@ -33,7 +33,7 @@ export const deleteAllFromCart = experience => ({
 export const fetchCart = userId => {
   return async dispatch => {
     const {data} = await axios.get(`/api/users/${userId}/orders/cart`)
-    console.log(data, 'kevins cart')
+    console.log(data, 'kevins cart from cartServer reducer')
     dispatch(getCart(data))
   }
 }

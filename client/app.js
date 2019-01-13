@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-
+//sabira: propTypes added
+import PropTypes from 'prop-types'
 import {Navbar} from './components'
 import Routes from './routes'
 //sabira: import from the store
@@ -10,6 +11,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 // import { connect } from 'http2';
 //sabira: import from react-redux
 import {connect} from 'react-redux'
+//sabira: trying to wrap component with router as it as before in routes.js
+import {withRouter} from 'react-router-dom'
 
 const theme = createMuiTheme({
   palette: {
@@ -36,14 +39,13 @@ class App extends Component {
   //sabira: fetching me - to stay logged in
   //fetch cart before anything else
   async componentDidMount() {
-    //   console.log('fetchServerCart')
-    //   await this.props.fetchCart(this.props.user.id)
-    // }
-    console.log('fetch cart or get cart in app.js')
-    this.props.user.id
-      ? await this.props.fetchCart(this.props.user.id)
-      : this.props.getCart()
+    const {user, isLoggedIn, loadInitialData} = this.props
+    //sabira: if the user logged in?
+    console.log('app.js', 'is logged in?', isLoggedIn)
+    loadInitialData()
+    isLoggedIn ? await this.props.fetchCart(user.id) : this.props.getCart()
   }
+
   render() {
     return (
       <div>
@@ -56,15 +58,27 @@ class App extends Component {
     )
   }
 }
-//sabira: added user State
-const mapState = state => ({
-  user: state.user
-})
-//sabira: fetching user before anything else
-const mapDispatch = dispatch => ({
-  // fetchUser: () => dispatch(me()),
-  fetchCart: userId => dispatch(fetchCart(userId)),
-  getCart: () => dispatch(getCart())
-})
 
-export default connect(mapState, mapDispatch)(App)
+const mapState = state => {
+  return {
+    // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
+    // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    isLoggedIn: !!state.user.id
+  }
+}
+const mapDispatch = dispatch => {
+  return {
+    loadInitialData() {
+      dispatch(me())
+    },
+    fetchCart: userId => dispatch(fetchCart(userId)),
+    getCart: () => dispatch(getCart())
+  }
+}
+
+export default withRouter(connect(mapState, mapDispatch)(App))
+
+App.propTypes = {
+  loadInitialData: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
+}
