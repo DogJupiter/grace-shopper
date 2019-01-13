@@ -138,20 +138,52 @@ router.get('/:id/orders/:orderId', async (req, res, next) => {
 
 //sabira: add item to cart route
 router.post('/:id/orders/cart/', async (req, res, next) => {
+  console.log(req.body)
   try {
     //sabira: find the cart if it exists
-    let cart = await Order.findOne({where: {status: 'created'}})
+    let cart = await Order.findOne({
+      where: {status: 'created', userId: req.params.id}
+    })
+
+    let item = await Item.findAll({where: {orderId: cart.id}})
     //sabira: if we don't have a cart yet - create a cart
     if (!cart) {
       cart = await Order.create()
+
+      let newItem = await Item.create({
+        cartArray: [].push(req.body),
+        quantity: 1,
+        orderId: cart.id,
+        experienceId: Number(req.body.id)
+      })
+      let detailedItem = await Item.find({
+        where: {id: newItem.id},
+        include: [{model: Experience}]
+      })
+      console.log(detailedItem, 'ALL THE DETAILS HERE')
+      res.send(detailedItem)
+    } else {
+      // else if (item.experienceId === req.body.id) {
+      //   await item.addQuanity()
+      //   res.send(item)
+      // }
+      const newItem = await Item.create({
+        quantity: 1,
+        orderId: cart.id,
+        experienceId: req.body.id,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        name: req.body.name
+      })
+      res.send(newItem)
     }
-    //sabira: add item to the created/existing cart
-    await Item.create({
-      quantity: 1,
-      orderId: cart.id,
-      experienceId: req.body.experienceId
-    })
-    res.send(await Item.findAll())
+    // //sabira: add item to the created/existing cart
+    // await Item.create({
+    //   quantity: 1,
+    //   orderId: cart.id,
+    //   experienceId: req.body.id
+    // })
+    // res.send(await Item.findAll({where: {orderId: cart.id}}))
   } catch (err) {
     next(err)
   }

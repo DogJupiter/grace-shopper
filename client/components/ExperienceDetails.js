@@ -73,12 +73,8 @@ const styles = theme => ({
 
 class ExperienceDetails extends Component {
   handleAddToCart(experience) {
-    this.props.checkUser()
-    const userId = this.props.userId
     if (this.props.isLoggedIn) {
-      // POST request to backend to add cart item
-      // this.props.saveMemberCart() -> update DB CART
-      // then will update local state with added experiences
+      const userId = this.props.getUser.id
       this.props.updateMemberCart(experience, userId)
     } else {
       this.props.addToCart(experience)
@@ -89,13 +85,10 @@ class ExperienceDetails extends Component {
     console.log('mounted experience', this.props)
     await this.props.fetchExperience(this.props.match.params.id)
     await this.props.fetchUsers
+    await this.props.checkUser()
   }
 
   render() {
-    console.log(
-      'THESE ARE ALL THE PROPS BEING PASSED TO EXP-DETAILS?',
-      this.props.verifyUser
-    )
     const {classes, experience} = this.props
 
     return experience && experience.name ? (
@@ -206,14 +199,15 @@ const mapStateToProps = state => ({
   experience: state.experience.singleExperience,
   activeCart: state.cart,
   isLoggedIn: !!state.user.id,
-  getUser: state.getUser
+  getUser: state.user
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
   addToCart: exp => dispatch(addToCart(exp)),
   checkUser: () => dispatch(me()),
-  updateMemberCart: userId => dispatch(updateMemberCart(userId))
+  updateMemberCart: (experience, userId) =>
+    dispatch(updateMemberCart(experience, userId))
 })
 
 export default withStyles(styles)(

@@ -5,11 +5,14 @@ const Item = db.define('item', {
   quantity: {
     type: Sequelize.INTEGER,
     defaultValue: 0
+  },
+  cartArray: {
+    type: Sequelize.ARRAY(Sequelize.JSON)
   }
 })
 
-Item.prototype.addQuantity = function() {
-  this.quantity = this.quantity + 1
+Item.addQuantity = function() {
+  return (this.quantity = this.quantity + 1)
 }
 Item.prototype.decreaseQuantity = function() {
   this.quantity ? (this.quantity = this.quantity - 1) : (this.quantity = 0)

@@ -48,12 +48,10 @@ if (localStorage.getItem('cart')) {
 // THUNK CREATOR
 export const updateMemberCart = (experience, userId) => {
   return async dispatch => {
-    // GET ALL ITEMS FROM DB
-    const res = await axios.post(
-      `/api/user/${userId}/orders/cart`,
-      experience.id
-    )
+    const res = await axios.post(`/api/users/${userId}/orders/cart`, experience)
+    console.log('POST EXPERIENCE TO CART', res.data)
     const action = addToMemberCart(res.data)
+    console.log('THIS IS THE ACTION', action)
     dispatch(action)
   }
 }
@@ -129,8 +127,19 @@ const cartReducer = (state = activeCart, action) => {
       return newCart
 
     case ADD_TO_MEMBER_CART:
-      return {...state, experience: [...experience, action.payload]}
+      newCart = {...state, experiences: [...state.experiences, action.payload]}
+      console.log(newCart)
+      const addTotalQty = cart => {
+        let total = 0
+        cart.map(item => (total += item.quantity))
+        return total
+      }
+      if (newCart.experiences.length > 0) {
+        newCart.totalQty = addTotalQty(newCart.experiences)
+        // newCart.experiences =
+      }
 
+      return newCart
     default:
       return state
   }

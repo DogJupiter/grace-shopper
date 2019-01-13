@@ -25,7 +25,11 @@ class CartItemSummary extends React.Component {
     history.push('/cart')
   }
   render() {
-    let cartItem = this.props.cartItem.experience
+    let cartItem
+
+    this.props.getUser.id
+      ? (cartItem = this.props.cartItem)
+      : (cartItem = this.props.cartItem.experience)
     // console.log('CART ITEM', cartItem)
 
     return (
@@ -68,7 +72,8 @@ class CartItemSummary extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  activeCart: state.cart
+  activeCart: state.cart,
+  getUser: state.user
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
   getCart: () => dispatch(getCart()),

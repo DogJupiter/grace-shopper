@@ -12,7 +12,9 @@ class Cart extends React.Component {
   // }
   totalCost(cart) {
     let total = 0
-    cart.map(item => (total += item.experience.price * item.quantity))
+    this.props.getUser.id
+      ? (total = 0)
+      : cart.map(item => (total += item.experience.price * item.quantity))
     return `$${total}.00`
   }
 
@@ -45,8 +47,14 @@ class Cart extends React.Component {
           </div>
           {/* THERE WILL BE A MAP OF VALS HERE */}
           {currentCart.map(item => {
-            console.log(item)
-            return (
+            console.log('HELLLLLLO', item)
+            return this.props.getUser.id ? (
+              <CartItemSummary
+                key={item.experienceId}
+                cartItem={item}
+                cartState={this.props.activeCart}
+              />
+            ) : (
               <CartItemSummary
                 key={item.experience.id}
                 cartItem={item}
@@ -74,7 +82,8 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  activeCart: state.cart
+  activeCart: state.cart,
+  getUser: state.user
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
   getCart: () => {
