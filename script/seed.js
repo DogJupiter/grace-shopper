@@ -244,7 +244,7 @@ const seed = async () => {
       // console.log(categories);
       return Promise.all(
         categories.map(category => {
-          return category.addExperience(1)
+          return category.addExperience()
         })
       )
     })
