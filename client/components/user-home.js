@@ -23,7 +23,7 @@ class UserHome extends Component {
     if (!user.id) {
       return (
         <div className="landing-page-container">
-          <Redirect to="/experiences" />
+          <Redirect to="/" />
           <div className="overlay" />
           <video autoPlay loop className="video-background" muted plays-inline>
             <source
@@ -55,7 +55,7 @@ class UserHome extends Component {
     return (
       <div>
         <div classNmae="landing-page">
-          <h3>Welcome Back, {user.email}!</h3>
+          <Redirect to="/experiences" />
         </div>
       </div>
     )
@@ -75,4 +75,3 @@ export default withStyles(styles)(connect(mapStateToProps)(UserHome))
 UserHome.propTypes = {
   user: PropTypes.string
 }
-
