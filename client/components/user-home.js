@@ -21,6 +21,7 @@ class UserHome extends Component {
               type="video/mp4"
             />
           </video>
+          <h1>EXPERIENCE NEW YORK CITY WITH THE LOCAL</h1>
         </div>
       )
     }
