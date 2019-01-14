@@ -1,14 +1,30 @@
 const router = require('express').Router()
-const {Experience, Review, User} = require('../db/models')
+const {Experience, Review, User, Category} = require('../db/models')
 module.exports = router
 
 // GET /api/experiences
 router.get('/', async (req, res, next) => {
   try {
-    const experiences = await Experience.findAll({
-      include: [{model: Review}]
-    })
-    res.json(experiences)
+    if (req.query.category) {
+      const filterExperiences = await Experience.findAll({
+        include: [
+          {model: Review},
+          {
+            model: Category,
+            where: {
+              type: req.query.category
+            }
+          }
+        ]
+      })
+
+      res.json(filterExperiences)
+    } else {
+      const experiences = await Experience.findAll({
+        include: [{model: Review}, {model: Category}]
+      })
+      res.json(experiences)
+    }
   } catch (err) {
     next(err)
   }
@@ -30,25 +46,3 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
-
-//GET /api/experiences/category/:id
-router.get('/:category', async (req, res, next) => {
-  const requestedCategory = Number(req.params.id)
-  console.log(requestedCategory)
-  try {
-    const filteredExperiences = await Experience.findAll({
-      where: {
-        categoryId: requestedCategory
-      }
-    })
-    res.json(filteredExperiences)
-  } catch (err) {
-    next(err)
-  }
-})
-
-/*
-Corey's Code Review Notes
-[DONE] /:id GET route -- //CG: I'd specify findOne
-[DONE] / GET ROUTE -- //CG: Maybe cast to number, but not required.
-*/

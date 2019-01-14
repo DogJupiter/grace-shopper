@@ -2,7 +2,7 @@ import React from 'react'
 import {Grid} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
-
+import queryString from 'query-string'
 import SingleExperience from './singleExperience'
 import SideBar from './SideBar'
 
@@ -24,37 +24,42 @@ const styles = theme => ({
 
 class FilteredExperiences extends React.Component {
   async componentDidMount() {
-    await this.props.fetchFiltered(this.props.match.params.id)
+    const values = queryString.parse(this.props.location.search)
+    console.log('THESE ARE THE PARAMS PASSED TO FETCH FILTER:', values)
+    await this.props.fetchFiltered(values.category)
+  }
+
+  componentDidUpdate(prevProps) {
+    const values = queryString.parse(this.props.location.search)
+    const prevPropsValues = queryString.parse(prevProps.location.search)
+    if (values.category !== prevPropsValues.category) {
+      this.props.fetchFiltered(values.category)
+    }
   }
 
   render() {
     const {classes} = this.props
-    return (
-      // This style div adds space to the left of the Grid container so that sidebar can be added
-      // Anything non-material UI should be done stylistically in a CSS file (SCSS) and this should be given appropriate class/id.
-      this.props.filteredExperiences &&
-        this.props.filteredExperiences.length ? (
-        <div style={{marginLeft: '27%', justifyContent: 'center'}}>
-          <h1>THIS IS THE FILTERED EXPERIENCES VIEW!!!</h1>
-          <Grid item xs={3} className={classes.content}>
-            <SideBar />
+    return this.props.filteredExperiences &&
+      this.props.filteredExperiences.length ? (
+      <div style={{marginLeft: '27%', justifyContent: 'center'}}>
+        <Grid item xs={3} className={classes.content}>
+          <SideBar />
+        </Grid>
+        <Grid
+          container
+          justify="center"
+          style={{
+            flexGrow: 1
+          }}
+          spacing={40}
+        >
+          <Grid item xs={12}>
+            <SingleExperience experiences={this.props.filteredExperiences} />
           </Grid>
-          <Grid
-            container
-            justify="center"
-            style={{
-              flexGrow: 1
-            }}
-            spacing={40}
-          >
-            <Grid item xs={12}>
-              <SingleExperience experiences={this.props.filteredExperiences} />
-            </Grid>
-          </Grid>
-        </div>
-      ) : (
-        <div>Loading ...</div>
-      )
+        </Grid>
+      </div>
+    ) : (
+      <div>Loading ...</div>
     )
   }
 }
@@ -62,7 +67,8 @@ const mapStateToProps = state => ({
   filteredExperiences: state.experience.filteredExperiences
 })
 const mapDispatchToProps = dispatch => ({
-  fetchFiltered: id => dispatch(fetchFilteredExperiences(id))
+  fetchFiltered: categoryType =>
+    dispatch(fetchFilteredExperiences(categoryType))
 })
 
 export default withStyles(styles)(

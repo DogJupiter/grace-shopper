@@ -4,7 +4,6 @@ import history from '../history'
 const initState = {
   singleExperience: {},
   allExperiences: [],
-  selectedExperience: {},
   filteredExperiences: []
 }
 
@@ -47,10 +46,10 @@ export const fetchAllExperiences = () => {
   }
 }
 
-export const fetchFilteredExperiences = id => {
+export const fetchFilteredExperiences = categoryType => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/categories/${id}`)
-    console.log('HERE IS THE DATA!!!', data)
+    const {data} = await axios.get(`/api/experiences?category=${categoryType}`)
+    console.log('HERE IS THE QUERIED CATEGORIES', data)
     dispatch(getFilteredExperiences(data))
   }
 }
