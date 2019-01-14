@@ -33,9 +33,7 @@ const getFilteredExperiences = experiences => ({
 
 export const fetchExperience = id => {
   return async dispatch => {
-    console.log('data to be fetched')
     const {data} = await axios.get(`/api/experiences/${id}`)
-    console.log('data', data)
     dispatch(getExperince(data))
   }
 }
