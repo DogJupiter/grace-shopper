@@ -23,3 +23,12 @@ form div {
 .cart-view {
   text-align: center;
 }
+
+#background-video {
+  height: 100%;
+  width: 100%;
+  float: left;
+  top: 0;
+  padding: none;
+  position: fixed;
+}
