@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, fetchCart} from '../store'
 //materialUI
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
@@ -76,17 +76,28 @@ const styles = theme => ({
 })
 
 class Navbar extends Component {
-  componentDidMount() {
-    this.props.getCart()
+  constructor() {
+    super()
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
-  sumCart(cart) {
-    let total = 0
-    cart.experiences.map(item => (total += item.quantity))
-    return total
+  async componentDidMount() {
+    // this.props.getCart()
+    this.props.user.id
+      ? await this.props.fetchCart(this.props.user.id)
+      : this.props.getCart()
   }
+  //sabira: refactored function
+  sumCart(cart) {
+    return cart.experiences.reduce((accum, item) => accum + item.quantity, 0)
+  }
+
+  async handleLogout() {
+    await this.props.logout()
+  }
+
   render() {
-    const {handleClick, isLoggedIn, classes, activeCart} = this.props
+    const {isLoggedIn, classes, activeCart} = this.props
     return (
       <div className={classes.root}>
         <AppBar position="static" color="secondary" className={classes.appBar}>
@@ -96,9 +107,6 @@ class Navbar extends Component {
                 <img src="/logo.svg" style={{height: 50}} />
               </Link>
             </div>
-            {/* <Typography variant="h6" color="inherit" className={classes.grow}>
-              Logo
-            </Typography> */}
             <div className={classes.grow} />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -114,7 +122,7 @@ class Navbar extends Component {
             </div>
             <div className={classes.sectionDesktop}>
               {isLoggedIn ? (
-                <a onClick={handleClick}>
+                <a onClick={this.handleLogout}>
                   <Button color="primary">Logout</Button>
                 </a>
               ) : (
@@ -128,7 +136,33 @@ class Navbar extends Component {
                 </div>
               )}
             </div>
-            {activeCart.experiences ? (
+            {isLoggedIn ? (
+              this.props.cartServer.items ? (
+                <Link to="/cart">
+                  <IconButton color="primary">
+                    <Badge
+                      className={classes.margin}
+                      badgeContent={this.props.cartServer.items.length}
+                      color="primary"
+                    >
+                      <ShoppingCartIcon color="inherit" />
+                    </Badge>
+                  </IconButton>
+                </Link>
+              ) : (
+                <Link to="/cart">
+                  <IconButton color="primary">
+                    <Badge
+                      className={classes.margin}
+                      badgeContent={0}
+                      color="primary"
+                    >
+                      <ShoppingCartIcon color="inherit" />
+                    </Badge>
+                  </IconButton>
+                </Link>
+              )
+            ) : activeCart.experiences.length ? (
               <Link to="/cart">
                 <IconButton color="primary">
                   <Badge
@@ -165,15 +199,20 @@ class Navbar extends Component {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    activeCart: state.cart
+    activeCart: state.cart,
+    cartServer: state.cartServer,
+    user: state.user
   }
 }
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
-      dispatch(logout())
-    },
-    getCart: () => dispatch(getCart())
+    // sabira: handleClick is now handle logout, if you scroll up you'll see
+    // handleClick() {
+    //   dispatch(logout())
+    // },
+    logout: () => dispatch(logout()),
+    getCart: () => dispatch(getCart()),
+    fetchCart: userId => dispatch(fetchCart(userId))
   }
 }
 export default withStyles(styles)(connect(mapState, mapDispatch)(Navbar))
