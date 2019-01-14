@@ -13,6 +13,7 @@ const {
 //Experiences Data
 const experiences = [
   {
+    //id: 1
     name: 'Hip Hop Lesson with the Showtime Kids',
     imageUrl: 'https://i.imgur.com/WeB146l.jpg',
     duration: '3 hours',
@@ -21,6 +22,7 @@ const experiences = [
     inventory: 50
   },
   {
+    //id: 2
     name: 'Driving Around in Circles for Fun with BigBus New York',
     imageUrl: 'https://i.imgur.com/mKxIXz6.png',
     duration: '149 hours',
@@ -29,6 +31,7 @@ const experiences = [
     inventory: 50
   },
   {
+    //id: 3
     name: 'Pizza Tour with Pizza Rat',
     imageUrl: 'https://i.imgur.com/7VzWLko.jpg',
     duration: '2 hours',
@@ -37,11 +40,12 @@ const experiences = [
     inventory: 50
   },
   {
+    //id: 4
     name: 'Union Square Drum Circle',
     imageUrl: 'https://i.imgur.com/3hBOGrS.jpg',
     duration: '2 hours',
-    price: 10,
-    description: `TO-DO`,
+    price: 107,
+    description: `Find YOUR Bohemian rhapsody and inner zen by joining Union Square's premier drummer hippies. One ticket to their drum circle will leave you feeling totally at peace and ready to protest the establishment. Every participant is provided with a pair of hemp pants and Birkenstocks. Event is BYOD - bring your own drum (or tambourine!) Peace and love, maaaan!`,
     inventory: 50
   }
 ]
@@ -111,6 +115,15 @@ const users = [
     password: '123',
     imageUrl: 'https://i.imgur.com/Becyu42.jpg',
     googleId: null
+  },
+  {
+    // id: 8,
+    firstName: 'Elliot',
+    lastName: 'Stabler',
+    email: 'especiallyHeinous@email.com',
+    password: '123',
+    imageUrl: 'https://i.imgur.com/G7P2eEO.png',
+    googleId: null
   }
 ]
 
@@ -151,7 +164,7 @@ const reviews = [
   {
     description: `It was all fun and games until somebody mentioned Pineapple. Can't we all just get along!?`,
     experienceId: 3,
-    stars: 5,
+    stars: 4,
     userId: 7
   },
   {
@@ -159,6 +172,18 @@ const reviews = [
     experienceId: 3,
     stars: 5,
     userId: 2
+  },
+  {
+    description: `This is the closest I'll ever get to re-living Woodstock. Having peaked in the 60s, this kick to the nostalgia-bone was exactly what I needed to get my mojo back! Five stars!`,
+    experienceId: 4,
+    stars: 5,
+    userId: 8
+  },
+  {
+    description: `Not sure I'm ready to buy into the whole peace-love-and-harmony thing. But the free hemp pants were cool.`,
+    experienceId: 4,
+    stars: 3,
+    userId: 1
   }
 ]
 
