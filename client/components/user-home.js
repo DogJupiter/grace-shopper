@@ -1,15 +1,24 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {Button} from '@material-ui/core'
+import {withStyles} from '@material-ui/core/styles'
 
-/**
- * COMPONENT
- */
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: 'none'
+  }
+})
+
 class UserHome extends Component {
   //export const UserHome = props => {
   render() {
     const {user} = this.props
+    const {classes} = this.props
     if (!user.id) {
       return (
         <div className="landing-page-container">
@@ -21,21 +30,32 @@ class UserHome extends Component {
               type="video/mp4"
             />
           </video>
-          <h1>EXPERIENCE NEW YORK CITY WITH THE LOCAL</h1>
+
+          <div className="row">
+            <h1>EXPERIENCE NEW YORK CITY</h1>
+            <h1>WITH THE LOCAL</h1>
+            <label htmlFor="outlined-button-file">
+              <Button
+                variant="outlined"
+                component="span"
+                className={classes.button}
+                color="primary"
+                Large
+                component={Link}
+                to="/experiences"
+              >
+                START EXPOLORING
+              </Button>
+            </label>
+          </div>
         </div>
       )
     }
     return (
       <div>
         <div classNmae="landing-page">
-          <h3>Welcome {user.email}</h3>
+          <h3>Welcome Back, {user.email}!</h3>
         </div>
-        <video autoPlay loop id="video-background" muted plays-inline>
-          <source
-            src="http://techslides.com/demos/sample-videos/small.mp4"
-            type="video/mp4"
-          />
-        </video>
       </div>
     )
   }
@@ -46,7 +66,7 @@ const mapStateToProps = state => {
     user: state.user
   }
 }
-export default connect(mapStateToProps)(UserHome)
+export default withStyles(styles)(connect(mapStateToProps)(UserHome))
 
 UserHome.propTypes = {
   user: PropTypes.string
