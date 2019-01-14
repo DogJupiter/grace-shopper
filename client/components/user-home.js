@@ -2,29 +2,22 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+
 /**
  * COMPONENT
  */
 class UserHome extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      videoUrl: '/media/SampleVideo1',
-      user: ''
-    }
-  }
-
   //export const UserHome = props => {
   render() {
     const {user} = this.props
-    console.log('whats this.props', this.props)
     if (!user.id) {
       return (
-        <div>
+        <div className="landing-page-container">
           <Redirect to="/" />
-          <video autoPlay loop id="video-background" muted plays-inline>
+          <div className="overlay" />
+          <video autoPlay loop className="video-background" muted plays-inline>
             <source
-              src="http://techslides.com/demos/sample-videos/small.mp4"
+              src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
               type="video/mp4"
             />
           </video>
@@ -46,18 +39,14 @@ class UserHome extends Component {
     )
   }
 }
-/**
- * CONTAINER
- */
+
 const mapStateToProps = state => {
   return {
     user: state.user
   }
 }
 export default connect(mapStateToProps)(UserHome)
-/**
- * PROP TYPES
- */
+
 UserHome.propTypes = {
   user: PropTypes.string
 }
