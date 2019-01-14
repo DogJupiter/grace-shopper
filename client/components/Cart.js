@@ -1,22 +1,18 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import CartItemSummary from './Cart-Item-Summary'
+import Stripe from './Stripe'
 import {
   Grid,
   Typography,
   Button,
   Card,
   CardContent,
-  List,
-  ListItem,
   Divider
 } from '@material-ui/core'
 import ContinueIcon from '@material-ui/icons/DirectionsWalk'
 
 import {withStyles} from '@material-ui/core/styles'
-// import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
-
 import {connect} from 'react-redux'
 import {getCart} from '../store/cart'
 
@@ -60,12 +56,13 @@ class Cart extends React.Component {
   totalCost(cart) {
     let total = 0
     cart.map(item => (total += item.experience.price * item.quantity))
-    return `$${total}.00`
+    return total
   }
 
   render() {
-    const {classes, theme} = this.props
+    const {classes, theme, user} = this.props
     let currentCart = this.props.activeCart.experiences
+
     if (!currentCart || currentCart.length < 1) {
       return (
         <Typography className={classes.pageHeader}>
@@ -116,11 +113,9 @@ class Cart extends React.Component {
             </Grid>
           </Grid>
         </div>
-        {/* THERE WILL BE A MAP OF VALS HERE */}
         {currentCart.map(item => {
           return (
             <div key={item.experience.id}>
-              {/* <ListItem> */}
               <CartItemSummary
                 cartItem={item}
                 cartState={this.props.activeCart}
@@ -129,21 +124,30 @@ class Cart extends React.Component {
             </div>
           )
         })}
-        {/* CART SUBTOTAL IS CALCULATED HERE */}
         <Card className={classes.cart} align="right">
           <CardContent>
             <Typography className={classes.subtotal} color="textSecondary">
-              Subtotal: {this.totalCost(currentCart)}
+              Subtotal: ${this.totalCost(currentCart)}.00
             </Typography>
             <p>
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={classes.button}
-                align="right"
-              >
-                Continue &nbsp;<ContinueIcon />
-              </Button>
+              {user.id ? (
+                <Stripe
+                  name="Confirm purchase"
+                  description="Test only"
+                  amount={this.totalCost(currentCart)}
+                />
+              ) : (
+                <Link to="/checkout">
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    className={classes.button}
+                    align="right"
+                  >
+                    Continue &nbsp;<ContinueIcon />
+                  </Button>
+                </Link>
+              )}
             </p>
           </CardContent>
         </Card>
@@ -153,7 +157,8 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  activeCart: state.cart
+  activeCart: state.cart,
+  user: state.user
 })
 const mapDispatchToProps = dispatch => ({
   getCart: () => {

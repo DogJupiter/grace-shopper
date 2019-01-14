@@ -1,21 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Stripe from './Stripe'
-import {Link} from 'react-router-dom'
-import CartItemSummary from './Cart-Item-Summary'
+import {Link, Redirect} from 'react-router-dom'
 import {getCart} from '../store/cart'
-/* Material Ui style*/
-import {
-  Grid,
-  Typography,
-  Avatar,
-  Button,
-  ListItemText,
-  ListItem,
-  List
-} from '@material-ui/core'
+import {Grid, Typography} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
-import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 
 const styles = theme => ({
@@ -95,86 +84,93 @@ class Checkout extends React.Component {
     event.preventDefault()
   }
   totalCost(cart) {
+    console.log('this is the current cart', cart)
     let total = 0
     cart.map(item => (total += item.experience.price * item.quantity))
-    return `$${total}.00`
+    return total
   }
   render() {
     const {firstName, lastName, email} = this.state
+    const {user} = this.props
     let currentCart = this.props.activeCart.experiences
-    return (
-      <Grid container spacing={24}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6">New Customer</Typography>
-          <Link to="/login">Already have an account?</Link>
-          <Typography variant="body1" style={{marginTop: 10}}>
-            You can complete your purchase as a guest and will be able to sign
-            up and save your details for future purchases at the end of the
-            order process
-          </Typography>
-          <form onSubmit={this.handleSubmit}>
-            <TextField
-              id="outlined-full-width"
-              label="First Name"
-              style={{margin: 8}}
-              margin="normal"
-              variant="outlined"
-              type="text"
-              name={firstName}
-              fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-            <TextField
-              id="outlined-full-width"
-              label="Last Name"
-              style={{margin: 8}}
-              margin="normal"
-              variant="outlined"
-              type="text"
-              name={lastName}
-              fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-            <TextField
-              id="outlined-full-width"
-              label="Email"
-              style={{margin: 8}}
-              margin="normal"
-              variant="outlined"
-              type="text"
-              name={email}
-              helperText="We will send confirmation to this email"
-              fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-            <Stripe
-              name="Confirm purchase"
-              description="Test only"
-              amount={this.totalCost(currentCart)}
-            />
-          </form>
-        </Grid>
 
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6">
-            Total:{this.totalCost(currentCart)}
-          </Typography>
+    if (!user.id) {
+      return (
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h6">New Customer</Typography>
+            <Link to="/login">Already have an account?</Link>
+            <Typography variant="body1" style={{marginTop: 10}}>
+              You can complete your purchase as a guest and will be able to sign
+              up and save your details for future purchases at the end of the
+              order process
+            </Typography>
+            <form onSubmit={this.handleSubmit}>
+              <TextField
+                id="outlined-full-width"
+                label="First Name"
+                style={{margin: 8}}
+                margin="normal"
+                variant="outlined"
+                type="text"
+                name={firstName}
+                fullWidth
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+              <TextField
+                id="outlined-full-width"
+                label="Last Name"
+                style={{margin: 8}}
+                margin="normal"
+                variant="outlined"
+                type="text"
+                name={lastName}
+                fullWidth
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+              <TextField
+                id="outlined-full-width"
+                label="Email"
+                style={{margin: 8}}
+                margin="normal"
+                variant="outlined"
+                type="text"
+                name={email}
+                helperText="We will send confirmation to this email"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+              <Stripe
+                name="Confirm purchase"
+                description="Test only"
+                amount={this.totalCost(currentCart)}
+              />
+            </form>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h6">
+              Total:${this.totalCost(currentCart)}.00
+            </Typography>
+          </Grid>
         </Grid>
-      </Grid>
-    )
+      )
+    } else {
+      return <Redirect to="/cart" />
+    }
   }
 }
 
-//mapStateToProps
 const mapStateToProps = state => {
   return {
-    activeCart: state.cart
+    activeCart: state.cart,
+    user: state.user
   }
 }
 
