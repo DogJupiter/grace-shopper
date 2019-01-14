@@ -33,6 +33,8 @@ export const deleteAllFromCart = experience => ({
 export const fetchCart = userId => {
   return async dispatch => {
     const {data} = await axios.get(`/api/users/${userId}/orders/cart`)
+    // CG: How you use data is different than how you store data which is different than how you access data.
+    // CG: Remove console.logs
     console.log(data, 'kevins cart from cartServer reducer')
     dispatch(getCart(data))
   }

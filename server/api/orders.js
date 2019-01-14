@@ -13,6 +13,7 @@ router.get('/', async (req, res, next) => {
 })
 
 // GET /api/orders/:customerId
+// /api/users/:userId/orders
 router.get('/:customerId', async (req, res, next) => {
   // if (req.user && req.user.id === userId) {
   try {

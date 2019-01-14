@@ -12,6 +12,7 @@ export const getCart = () => ({
   type: GET_CART
 })
 
+//CG: These decisions of how to add (server or local storage) should be done by the cart.
 export const addToCart = (experience, history) => ({
   type: ADD_TO_CART,
   payload: experience,
@@ -42,13 +43,16 @@ if (localStorage.getItem('cart')) {
 
 //REDUCER STUFF
 
+//CG: NO LOGIC SHOULD BE HANDLED BY REDUCER
 const cartReducer = (state = activeCart, action) => {
   let newCart
 
   switch (action.type) {
+    //CG: WHAT IS THIS!??!?! :O
     case GET_CART:
       return state
     case ADD_TO_CART:
+      //CG: Might as well do this up front.
       newCart = {...state}
       if (state.experiences) {
         let duplicateItemIdx = state.experiences.findIndex(

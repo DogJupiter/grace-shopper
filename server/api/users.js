@@ -41,11 +41,17 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/orders', async (req, res, next) => {
   const userId = Number(req.params.id)
+  const whereObj = {
+    userId
+  }
+  if (req.query.completed) {
+    whereObj.completed = true
+  }
   // sabira: commented out security to test routes
   // if (req.user && req.user.id === userId) {
   try {
     const order = await Order.findAll({
-      where: {userId},
+      where: whereObj,
       include: [{model: Item, include: [{model: Experience}]}]
     })
     if (!order) {
@@ -61,6 +67,7 @@ router.get('/:id/orders', async (req, res, next) => {
 })
 
 //sabira: fetch all completed orders
+// cg: ?completed=true
 router.get('/:id/orders/completed', async (req, res, next) => {
   const userId = Number(req.params.id)
   // sabira: commented out security to test route
@@ -136,6 +143,7 @@ router.get('/:id/orders/:orderId', async (req, res, next) => {
   }
 })
 
+//CG: This looks like it only exists in a world where the url bar is the only thing that can have info.
 router.put('/:id/orders/cart/items/:itemId/add', async (req, res, next) => {
   try {
     const cart = await Order.findOne({where: {status: 'created'}})

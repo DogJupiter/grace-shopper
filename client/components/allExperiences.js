@@ -25,7 +25,11 @@ const styles = theme => ({
 class AllExperiences extends React.Component {
   async componentDidMount() {
     this.props.fetchAllExperiences()
-    //sabira: if the user logged in fetchServerCart
+    //CG: Explaining code okay generally if it's complex.
+    //Sabira: if the user logged in fetchServerCart
+
+    //CG: Poor naming of fetchCart vs getCart.
+    //CG: Doing this fetching of cart before initial data load is probalby causing this problem.
     this.props.user.id
       ? await this.props.fetchCart(this.props.user.id)
       : this.props.getCart()

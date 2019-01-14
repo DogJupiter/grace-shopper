@@ -13,6 +13,9 @@ router.get('/', async (req, res, next) => {
 })
 
 // GET /api/categories/:id
+
+// /api/experiences?category=asfmkk
+// if(req.query.category) ... add to where clause.
 router.get('/:id', async (req, res, next) => {
   try {
     const requestedCategory = Number(req.params.id)

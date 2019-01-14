@@ -41,8 +41,10 @@ class App extends Component {
   async componentDidMount() {
     const {user, isLoggedIn, loadInitialData} = this.props
     //sabira: if the user logged in?
-    console.log('app.js', 'is logged in?', isLoggedIn)
-    loadInitialData()
+    console.log('app.js', 'is logged in?', isLoggedIn) //CG: remove console.logs
+    loadInitialData() //CG: option 1 is this also loads in the cart.
+    //CG: option 2 is turn loadInitialData into a promise and await it
+    //CG: option 3 update fetching cart into componentDidUpdate nad chek to see if the userId has been set or it has not been found.
     isLoggedIn ? await this.props.fetchCart(user.id) : this.props.getCart()
   }
 
