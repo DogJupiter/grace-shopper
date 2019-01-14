@@ -39,3 +39,7 @@ const Order = db.define('order', {
 })
 
 module.exports = Order
+
+// Order.prototype.checkInventory = function (qty){
+//   return (this.inventory-qty>=0)
+// }

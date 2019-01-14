@@ -3,41 +3,65 @@ const {Order, User, Experience} = require('../db/models')
 module.exports = router
 
 // GET /api/orders/
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const customerOrders = await Order.findAll({})
+//     res.json(customerOrders)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
 router.get('/', async (req, res, next) => {
   try {
-    const customerOrders = await Order.findAll({})
-    res.json(customerOrders)
+    if (req.user) {
+      let customerOrders = await Order.findAll({where: {userId: req.user.id}})
+      res.send(customerOrders)
+    } else res.status(403).send('Forbidden')
   } catch (err) {
     next(err)
   }
 })
 
 // GET /api/orders/:customerId
-router.get('/:customerId', async (req, res, next) => {
-  // if (req.user && req.user.id === userId) {
-  try {
-    const customerId = Number(req.params.id)
-    const customerOrders = await Order.findAll({
-      // where: {
-      //   customerId: customer
-      // },
-      include: [{model: User}]
-    })
-    res.json(customerOrders)
-  } catch (err) {
-    console.log('hit error')
-    next(err)
-  }
-  // } else {
-  //   res.status(403).send('Forbidden')
-  // }
-})
+// router.get('/:customerId', async (req, res, next) => {
+//   // if (req.user && req.user.id === userId) {
+//   try {
+//     const customerId = Number(req.params.id)
+//     const customerOrders = await Order.findAll({
+//       // where: {
+//       //   customerId: customer
+//       // },
+//       include: [{model: User}]
+//     })
+//     res.json(customerOrders)
+//   } catch (err) {
+//     console.log('hit error')
+//     next(err)
+//   }
+//   // } else {
+//   //   res.status(403).send('Forbidden')
+//   // }
+// })
 
 router.post('/', async (req, res, next) => {
   try {
     const order = Order.create(req.body)
-    res.send(order)
-    // res.send(Order.findOne({where: {orderId: order.id}}))
+    // res.send(order)
+    res.send(await Order.findOne({where: {id: order.id}}))
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:orderId', async (req, res, next) => {
+  try {
+    const requestedOrder = await Order.findOne({
+      where: {id: req.params.orderId}
+    })
+    if (req.user && requestedOrder.userId === req.user.id)
+      res.send(requestedOrder)
+    else res.status(403).send('Forbidden')
   } catch (err) {
     next(err)
   }

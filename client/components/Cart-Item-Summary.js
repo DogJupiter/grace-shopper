@@ -20,7 +20,8 @@ import {
   removeFromCart,
   getCart,
   addToCart,
-  deleteAllFromCart
+  deleteAllFromCart,
+  inStockCheck
 } from '../store/cart'
 import history from '../history'
 
@@ -54,8 +55,13 @@ const styles = theme => ({
 })
 
 class CartItemSummary extends React.Component {
-  handleQtyIncrease() {
-    this.props.addToCart(this.props.cartItem.experience)
+  async handleQtyIncrease() {
+    console.log('increasing qty', this.props.cartItem.experience)
+    await this.props.checkInventory(
+      this.props.cartItem.experience,
+      this.props.cartItem.quantity
+    )
+    // this.props.addToCart(this.props.cartItem.experience)
     history.push('/cart')
   }
 
@@ -163,7 +169,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   deleteAllFromCart: exp => {
     dispatch(deleteAllFromCart(exp))
-  }
+  },
+  checkInventory: (id, qty) => dispatch(inStockCheck(id, qty))
 })
 
 export default withStyles(styles)(

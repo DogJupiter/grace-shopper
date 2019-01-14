@@ -10,6 +10,7 @@ const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const DELETE_ALL_FROM_CART = 'DELETE_ALL_FROM_CART'
+const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER'
 //ACTION CREATORS
 export const getCart = () => ({
   type: GET_CART
@@ -27,6 +28,36 @@ export const deleteAllFromCart = experience => ({
   type: DELETE_ALL_FROM_CART,
   payload: experience
 })
+
+const createNewOrder = order => ({
+  type: CREATE_NEW_ORDER,
+  payload: order
+})
+
+//thunk
+
+export const makeNewOrder = (userId, order) => {
+  return async dispatch => {
+    const {data} = await axios.post('/api/orders', order)
+    console.log('posted data', data)
+    localStorage.clear()
+    dispatch(createNewOrder())
+  }
+}
+export const inStockCheck = (experience, qty) => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/experiences/${experience.id}`)
+    console.log('data from server', data)
+    console.log(data.inventory, 'inventory')
+    if (data.inventory > qty) dispatch(addToCart(experience))
+    else {
+      window.alert(
+        `Sorry there are only ${data.inventory} tickets left in stock`
+      )
+    }
+  }
+}
+
 //Initial State
 let activeCart
 if (localStorage.getItem('cart')) {
@@ -49,8 +80,11 @@ const cartReducer = (state = activeCart, action) => {
       return removeItemFromCartFunc(state, action.payload)
     case DELETE_ALL_FROM_CART:
       return deleteAllFromCartFunc(state, action.payload)
+    case CREATE_NEW_ORDER:
+      return activeCart
     default:
       return state
   }
 }
+
 export default cartReducer

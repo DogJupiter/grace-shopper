@@ -23,7 +23,6 @@ export const addItemToCartFunc = (state, payload) => {
       newCart.totalQty += 1
     }
   }
-  newCart.subTotal += payload.price
   localStorage.setItem('cart', JSON.stringify(newCart))
   if (newCart.totalQty === 0) {
     localStorage.clear()
@@ -43,7 +42,6 @@ export const removeItemFromCartFunc = (state, payload) => {
       newCart.experiences.splice(removalIndex, 1)
     }
   }
-  newCart.subTotal -= payload.price
   localStorage.setItem('cart', JSON.stringify(newCart))
   if (newCart.totalQty === 0) {
     localStorage.clear()
@@ -60,12 +58,13 @@ export const deleteAllFromCartFunc = (state, payload) => {
     let totalQtyDecrement = newCart.experiences[removalIndex].quantity
     newCart.experiences = state.experiences.slice()
     newCart.experiences.splice(removalIndex, 1)
+    console.log('NEWCART EXPERIENCES--->', newCart.experiences)
     newCart.totalQty -= totalQtyDecrement
+    localStorage.setItem('cart', JSON.stringify(newCart))
   }
   if (newCart.totalQty === 0) {
     localStorage.clear()
   }
-  newCart.subTotal -= payload.price * payload.quantity
   return newCart
 }
 module.exports = {
