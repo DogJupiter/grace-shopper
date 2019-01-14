@@ -81,11 +81,8 @@ class Navbar extends Component {
     this.handleLogout = this.handleLogout.bind(this)
   }
 
-  async componentDidMount() {
-    // this.props.getCart()
-    this.props.user.id
-      ? await this.props.fetchCart(this.props.user.id)
-      : this.props.getCart()
+  componentDidMount() {
+    this.props.getCart()
   }
   //sabira: refactored function
   sumCart(cart) {
@@ -136,57 +133,17 @@ class Navbar extends Component {
                 </div>
               )}
             </div>
-            {isLoggedIn ? (
-              this.props.cartServer.items ? (
-                <Link to="/cart">
-                  <IconButton color="primary">
-                    <Badge
-                      className={classes.margin}
-                      badgeContent={this.props.cartServer.items.length}
-                      color="primary"
-                    >
-                      <ShoppingCartIcon color="inherit" />
-                    </Badge>
-                  </IconButton>
-                </Link>
-              ) : (
-                <Link to="/cart">
-                  <IconButton color="primary">
-                    <Badge
-                      className={classes.margin}
-                      badgeContent={0}
-                      color="primary"
-                    >
-                      <ShoppingCartIcon color="inherit" />
-                    </Badge>
-                  </IconButton>
-                </Link>
-              )
-            ) : activeCart.experiences.length ? (
-              <Link to="/cart">
-                <IconButton color="primary">
-                  <Badge
-                    className={classes.margin}
-                    badgeContent={this.sumCart(activeCart)}
-                    color="primary"
-                  >
-                    <ShoppingCartIcon color="inherit" />
-                  </Badge>
-                </IconButton>
-              </Link>
-            ) : (
-              <Link to="/cart">
-                <IconButton color="primary">
-                  <Badge
-                    className={classes.margin}
-                    badgeContent={0}
-                    color="primary"
-                  >
-                    <ShoppingCartIcon color="inherit" />
-                  </Badge>
-                </IconButton>
-              </Link>
-            )}
+            <Link to="/cart">
+              <IconButton color="primary">
+                <Badge
+                  className={classes.margin}
+                  badgeContent={this.props.activeCart.totalQty || 0}
+                  color="primary"
+                >
+                  <ShoppingCartIcon color="inherit" />
+                </Badge>
+              </IconButton>
+            </Link>
           </Toolbar>
         </AppBar>
       </div>
@@ -200,7 +157,6 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
     activeCart: state.cart,
-    cartServer: state.cartServer,
     user: state.user
   }
 }
@@ -223,12 +179,4 @@ Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired
-}
-{
-  /* <AppBar>
-        <h1>DOG JUPITER</h1>
-        <Typography variant='display1' align='center' gutterBottom>
-          Exercises
-      </Typography>
-      </AppBar> */
 }
