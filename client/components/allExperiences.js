@@ -5,7 +5,7 @@ import {withStyles} from '@material-ui/core/styles'
 import SingleExperience from './singleExperience'
 import SideBar from './SideBar'
 import {connect} from 'react-redux'
-import {fetchAllExperiences} from '../store'
+import {fetchAllExperiences, fetchCart} from '../store'
 import {getCart} from '../store/cart'
 
 const styles = theme => ({
@@ -23,9 +23,12 @@ const styles = theme => ({
 })
 
 class AllExperiences extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     this.props.fetchAllExperiences()
-    this.props.getCart()
+    //sabira: if the user logged in fetchServerCart
+    this.props.user.id
+      ? await this.props.fetchCart(this.props.user.id)
+      : this.props.getCart()
   }
 
   render() {
@@ -50,11 +53,13 @@ class AllExperiences extends React.Component {
 }
 const mapStateToProps = state => ({
   allExperiences: state.experience.allExperiences,
-  currentCart: state.cart
+  currentCart: state.cart,
+  user: state.user
 })
 const mapDispatchToProps = dispatch => ({
   fetchAllExperiences: () => dispatch(fetchAllExperiences()),
-  getCart: () => dispatch(getCart())
+  getCart: () => dispatch(getCart()),
+  fetchCart: userId => dispatch(fetchCart(userId))
 })
 
 export default withStyles(styles)(

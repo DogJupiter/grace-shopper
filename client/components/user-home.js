@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Redirect, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+
 import {Button} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
 
@@ -22,7 +23,7 @@ class UserHome extends Component {
     if (!user.id) {
       return (
         <div className="landing-page-container">
-          <Redirect to="/" />
+          <Redirect to="/experiences" />
           <div className="overlay" />
           <video autoPlay loop className="video-background" muted plays-inline>
             <source
@@ -33,7 +34,7 @@ class UserHome extends Component {
 
           <div className="row">
             <h1>EXPERIENCE NEW YORK CITY</h1>
-            <h1>WITH THE LOCAL</h1>
+            <h1>WITH THE LOCALS</h1>
             <label htmlFor="outlined-button-file">
               <Button
                 variant="outlined"
@@ -63,11 +64,15 @@ class UserHome extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    //sabira - checks if the user loggedIn
+    isLoggedIn: !!state.user.id
   }
 }
+
 export default withStyles(styles)(connect(mapStateToProps)(UserHome))
 
 UserHome.propTypes = {
   user: PropTypes.string
 }
+
