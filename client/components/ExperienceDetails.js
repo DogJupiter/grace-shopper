@@ -77,10 +77,7 @@ class ExperienceDetails extends Component {
   async componentDidMount() {
     await this.props.fetchExperience(this.props.match.params.id)
 
-    //sabira: if the user logged in fetchServerCart
-    this.props.user.id
-      ? await this.props.fetchCart(this.props.user.id)
-      : this.props.getCart()
+    this.props.getCart()
   }
 
   render() {
@@ -186,17 +183,13 @@ ExperienceDetails.propTypes = {
 const mapStateToProps = state => ({
   experience: state.experience.singleExperience,
   activeCart: state.cart,
-  user: state.user,
-  cartServer: state.cartServer
+  user: state.user
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
   addToCart: exp => dispatch(addToCart(exp)),
-  fetchCart: userId => dispatch(fetchCart(userId)),
-  getCart: () => dispatch(getCart()),
-  addItemToCart: (userId, experience) =>
-    dispatch(addItemToCart(userId, experience))
+  getCart: () => dispatch(getCart())
 })
 
 export default withStyles(styles)(

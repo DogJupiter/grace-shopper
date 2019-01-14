@@ -140,7 +140,6 @@ class Cart extends React.Component {
                 variant="outlined"
                 color="secondary"
                 className={classes.button}
-                onClick={console.log('leads to checkout')}
                 align="right"
               >
                 Continue &nbsp;<ContinueIcon />
