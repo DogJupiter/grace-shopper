@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 
 import {addToCart} from '../store/cart'
+import {fetchCart, addItemToCart, getCart} from '../store/'
 
 import {
   Grid,
@@ -11,14 +12,8 @@ import {
   Button,
   ListItemText,
   ListItem,
-  List,
-  Divider
+  List
 } from '@material-ui/core'
-// import Grid from '@material-ui/core/Grid'
-
-// import Typography from '@material-ui/core/Typography'
-// import Avatar from '@material-ui/core/Avatar'
-// import Button from '@material-ui/core/Button'
 
 import {
   WatchLater,
@@ -80,9 +75,12 @@ class ExperienceDetails extends Component {
   }
 
   async componentDidMount() {
-    console.log('mounted experience', this.props)
     await this.props.fetchExperience(this.props.match.params.id)
-    await this.props.fetchUsers
+
+    //sabira: if the user logged in fetchServerCart
+    this.props.user.id
+      ? await this.props.fetchCart(this.props.user.id)
+      : this.props.getCart()
   }
 
   render() {
@@ -90,7 +88,7 @@ class ExperienceDetails extends Component {
 
     return experience && experience.name ? (
       <div
-        container
+        container="true"
         classes={{root: classes.root, margin: classes.margin}}
         color="font"
         className={classes.singleViewContainer}
@@ -147,10 +145,6 @@ class ExperienceDetails extends Component {
                   Reviews from people who took this experience
                 </Typography>
 
-                {/* <Typography variant="subtitle1">
-                    What guests are saying
-                  </Typography> */}
-
                 {experience.reviews.map(review => (
                   <List className={classes.root} key={review.id}>
                     <ListItem>
@@ -169,9 +163,6 @@ class ExperienceDetails extends Component {
                       />
                     </ListItem>
                     <ListItemText>{review.description}</ListItemText>
-
-                    {/* for possible use in the future */}
-                    {/* <Divider variant="light" /> */}
                   </List>
                 ))}
               </div>
@@ -194,12 +185,18 @@ ExperienceDetails.propTypes = {
 
 const mapStateToProps = state => ({
   experience: state.experience.singleExperience,
-  activeCart: state.cart
+  activeCart: state.cart,
+  user: state.user,
+  cartServer: state.cartServer
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
-  addToCart: exp => dispatch(addToCart(exp))
+  addToCart: exp => dispatch(addToCart(exp)),
+  fetchCart: userId => dispatch(fetchCart(userId)),
+  getCart: () => dispatch(getCart()),
+  addItemToCart: (userId, experience) =>
+    dispatch(addItemToCart(userId, experience))
 })
 
 export default withStyles(styles)(
