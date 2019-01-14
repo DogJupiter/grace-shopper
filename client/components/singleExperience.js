@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 const styles = theme => ({
   image: {
-    height: 45,
+    height: 65,
     paddingTop: '56.25%',
     objectFit: 'cover'
   },

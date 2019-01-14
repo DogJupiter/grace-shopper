@@ -43,6 +43,15 @@ const experiences = [
     price: 10,
     description: `TO-DO`,
     inventory: 50
+  },
+  {
+    name: 'Grace Hopper Coding BootCamp Tour',
+    imageUrl:
+      'https://cdn-images-1.medium.com/max/839/1*5e9i0qxE7-d3CGM-5g7Erw.jpeg',
+    duration: '1 hour',
+    price: 1,
+    description: `The Grace Hopper Program at Fullstack Academy is an immersive software engineering program for women in New York City. Are you interested in learning coding? Come join us every Friday at 1 p.m. for an one hour tour and our current students will share their education experience with you.`,
+    inventory: 50
   }
 ]
 //User Data
