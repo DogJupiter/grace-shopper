@@ -4,7 +4,15 @@ const db = require('../db')
 const Item = db.define('item', {
   quantity: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    allowNull: false
+  },
+  price: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  experienceName: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 })
 

@@ -33,6 +33,16 @@ router.get('/:customerId', async (req, res, next) => {
   // }
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    const order = Order.create(req.body)
+    res.send(order)
+    // res.send(Order.findOne({where: {orderId: order.id}}))
+  } catch (err) {
+    next(err)
+  }
+})
+
 /*
 Corey's Code Review Notes
 [DONE] Orders GET route -- // CG: Anyone logged in or not, the user in question or not, can find the orders for every person.
