@@ -1,7 +1,10 @@
 const router = require('express').Router()
 
 const configureStripe = require('stripe')
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY
+const STRIPE_SECRET_KEY =
+  process.env.NODE_ENV === 'production'
+    ? 'sk_live_MY_SECRET_KEY'
+    : 'sk_test_cbnHrkmGPWCX4LBPbqh5E2KB'
 const stripe = configureStripe(STRIPE_SECRET_KEY)
 const postStripeCharge = res => (stripeErr, stripeRes) => {
   if (stripeErr) {
@@ -18,7 +21,7 @@ router.get('/', (req, res) => {
   })
 })
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   stripe.charges.create(req.body, postStripeCharge(res))
 })
 
