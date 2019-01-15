@@ -42,7 +42,7 @@ const onToken = (amount, description) => token =>
     .then(completeOrder())
     .catch(errorPayment)
 
-const Stripe = ({name, description, amount, cartInfo}) => (
+const Stripe = ({name, description, amount}) => (
   <StripeCheckout
     name={name}
     description={description}
@@ -50,7 +50,6 @@ const Stripe = ({name, description, amount, cartInfo}) => (
     token={onToken(amount, description)}
     currency={CURRENCY}
     stripeKey={STRIPE_PUBLISHABLE}
-    cartInfo={cartInfo}
   />
 )
 
