@@ -46,3 +46,17 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
+router.get('/:id', async (req, res, next) => {
+  try {
+    const experienceId = Number(req.params.id)
+    const requestedExperience = await Experience.findOne({
+      where: {
+        id: experienceId
+      },
+      include: [{model: Review, include: [{model: User}]}]
+    })
+    res.json(requestedExperience)
+  } catch (err) {
+    next(err)
+  }
+})

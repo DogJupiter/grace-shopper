@@ -27,10 +27,8 @@ export const addItemToCartFunc = (state, payload) => {
   if (newCart.totalQty === 0) {
     localStorage.clear()
   }
-
   return newCart
 }
-
 export const removeItemFromCartFunc = (state, payload) => {
   let newCart = {...state}
   if (state.experiences) {
@@ -50,7 +48,6 @@ export const removeItemFromCartFunc = (state, payload) => {
   }
   return newCart
 }
-
 export const deleteAllFromCartFunc = (state, payload) => {
   console.log('ARRIVED AT DELETE ALL FROM CART')
   let newCart = {...state}
@@ -61,14 +58,15 @@ export const deleteAllFromCartFunc = (state, payload) => {
     let totalQtyDecrement = newCart.experiences[removalIndex].quantity
     newCart.experiences = state.experiences.slice()
     newCart.experiences.splice(removalIndex, 1)
+    console.log('NEWCART EXPERIENCES--->', newCart.experiences)
     newCart.totalQty -= totalQtyDecrement
+    localStorage.setItem('cart', JSON.stringify(newCart))
   }
   if (newCart.totalQty === 0) {
     localStorage.clear()
   }
   return newCart
 }
-
 module.exports = {
   addItemToCartFunc,
   removeItemFromCartFunc,
