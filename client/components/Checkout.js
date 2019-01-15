@@ -99,7 +99,6 @@ class Checkout extends React.Component {
           quantity: item.quantity,
           price: item.experience.price
         }
-        console.log(itemObj, 'itemObj')
 
         return itemObj
       })
@@ -179,6 +178,7 @@ class Checkout extends React.Component {
               name="Confirm purchase"
               description="Test only"
               amount={this.totalCost(currentCart)}
+              cartInfo={currentCart}
             />
           </form>
         </Grid>

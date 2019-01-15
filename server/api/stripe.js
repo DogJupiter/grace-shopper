@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const {Order} = require('../db/models')
 
 const configureStripe = require('stripe')
 const STRIPE_SECRET_KEY =
@@ -15,14 +16,13 @@ const postStripeCharge = res => (stripeErr, stripeRes) => {
 }
 
 router.get('/', (req, res) => {
-  console.log(req.body, 'from stripe')
   res.send({
     message: 'Hello Stripe checkout server!',
     timestamp: new Date().toISOString()
   })
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   stripe.charges.create(req.body, postStripeCharge(res))
 })
 

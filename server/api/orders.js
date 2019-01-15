@@ -41,14 +41,15 @@ router.get('/', async (req, res, next) => {
 //   }
 //   // } else {
 //   //   res.status(403).send('Forbidden')
-//   // }
+//   /
 // })
 
 router.post('/', async (req, res, next) => {
   try {
-    const order = Order.create(req.body)
+    // const order = Order.create(req.body)
+    const order = await Order.create(req.body)
     // res.send(order)
-    res.send(await Order.findOne({where: {id: order.id}}))
+    res.send(order)
   } catch (err) {
     next(err)
   }
@@ -73,7 +74,8 @@ router.put('/:orderId', async (req, res, next) => {
     })
     // if (req.user && requestedOrder.userId === req.user.id)
     requestedOrder.status = 'completed'
-    res.sendStatus(200)
+    requestedOrder.save(() => console.log('REQUESTED ORDER UPDATED'))
+    res.send(requestedOrder)
     // else res.status(403).send('Forbidden')
   } catch (err) {
     next(err)
