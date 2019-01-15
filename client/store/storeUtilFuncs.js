@@ -61,7 +61,9 @@ export const deleteAllFromCartFunc = (state, payload) => {
     let totalQtyDecrement = newCart.experiences[removalIndex].quantity
     newCart.experiences = state.experiences.slice()
     newCart.experiences.splice(removalIndex, 1)
+    console.log('NEWCART EXPERIENCES--->', newCart.experiences)
     newCart.totalQty -= totalQtyDecrement
+    localStorage.setItem('cart', JSON.stringify(newCart))
   }
   if (newCart.totalQty === 0) {
     localStorage.clear()
