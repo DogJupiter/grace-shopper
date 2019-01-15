@@ -7,24 +7,22 @@ import {
   Button,
   Card,
   CardContent,
-  Divider
+  Divider,
+  CardMedia,
+  CardHeader
 } from '@material-ui/core'
-import ContinueIcon from '@material-ui/icons/DirectionsWalk'
 
 import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
-import {purchaseComplete} from '../store/cart'
+
+import history from '../history'
+import {clearCart} from '../store/cart'
 
 const styles = theme => ({
   content: {
     flexGrow: 1,
-    marginTop: '45px'
-  },
-  loader: {
-    fontSize: '35px',
     marginTop: '50px',
-    display: 'flex',
-    alignItems: 'center',
+    marginLeft: '50px',
     justifyContent: 'center'
   },
   pageHeader: {
@@ -35,19 +33,11 @@ const styles = theme => ({
     marginTop: '50px',
     fontFamily: '-apple-system'
   },
-  cartHeader: {
-    font: 'Avant Garde',
-    fontSize: '16px',
-    textAlign: 'center',
-    fontWeight: 300
-  },
-  singleItemView: {
+  button: {
+    justifyContent: 'center',
+    justify: 'center',
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  subtotal: {
-    fontSize: '15px',
-    fontWeight: 500
+    alignText: 'center'
   }
 })
 
@@ -58,64 +48,57 @@ class ThankYou extends React.Component {
     return total
   }
 
+  handleClick() {
+    this.props.clearCart()
+    history.push('/')
+  }
+
   render() {
     const {classes, theme, user} = this.props
     let currentOrder = localStorage.getItem('cart')
-    console.log('CURRENT CART----->', currentCart)
-
-    if (!currentCart || currentCart.length < 1) {
-      return (
-        <Typography className={classes.pageHeader}>
-          Thanks for your order!
-        </Typography>
-      )
-    }
+    let orderObj = JSON.parse(currentOrder)
 
     return (
       <div>
         <Typography className={classes.pageHeader}>
           Thanks for your order!
         </Typography>
+        <Button
+          variant="outlined"
+          color="secondary"
+          className={classes.button}
+          onClick={() => this.handleClick()}
+        >
+          Back to Home
+        </Button>
         <Divider variant="middle" />
+        <Grid container justify="center" spacing={40}>
+          {orderObj.experiences.map(item => {
+            console.log(item)
+            return (
+              <div key={item.experience.id}>
+                <Grid item xs={3} className={classes.content}>
+                  <Card container justify="center">
+                    <Link to={`/experiences/${item.experience.id}`}>
+                      <CardHeader
+                        title={item.experience.name}
+                        subheader={'Quantity: ' + item.quantity}
+                      />
 
-        {currentCart.map(item => {
-          return (
-            <div key={item.experience.id}>
-              <CartItemSummary
-                cartItem={item}
-                cartState={this.props.activeCart}
-              />
-              <Divider variant="middle" />
-            </div>
-          )
-        })}
-        <Card className={classes.cart} align="right">
-          <CardContent>
-            <Typography className={classes.subtotal} color="textSecondary">
-              Subtotal: ${this.totalCost(currentCart)}.00
-            </Typography>
-            <p>
-              {/* {user.id ? (
-                <Stripe
-                  name="Confirm purchase"
-                  description="Test only"
-                  amount={this.totalCost(currentCart)}
-                />
-              ) : ( */}
-              <Link to="/checkout">
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  className={classes.button}
-                  align="right"
-                >
-                  Continue &nbsp;<ContinueIcon />
-                </Button>
-              </Link>
-              {/* )} */}
-            </p>
-          </CardContent>
-        </Card>
+                      <CardMedia
+                        component="img"
+                        alt={item.experience.name}
+                        // width="200"
+                        // height="150"
+                        image={item.experience.imageUrl}
+                      />
+                    </Link>
+                  </Card>
+                </Grid>
+              </div>
+            )
+          })}
+        </Grid>
       </div>
     )
   }
@@ -126,8 +109,8 @@ const mapStateToProps = state => ({
   user: state.user
 })
 const mapDispatchToProps = dispatch => ({
-  purchaseComplete: id => {
-    dispatch(purchaseComplete(id))
+  clearCart: () => {
+    dispatch(clearCart())
   }
 })
 

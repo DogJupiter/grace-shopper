@@ -10,6 +10,7 @@ import ExperienceDetails from './components/ExperienceDetails'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
 import FilteredExperiences from './components/filteredExperiences'
+
 /**
  * COMPONENT
  */
