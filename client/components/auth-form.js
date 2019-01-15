@@ -4,23 +4,38 @@ import PropTypes from 'prop-types'
 import {auth, fetchCart, getCart} from '../store'
 import {Grid, TextField, Button} from '@material-ui/core'
 
-//sabira: changing to class component
 class AuthForm extends Component {
   constructor() {
     super()
+    this.state = {
+      firstName: '',
+      lastName: '',
+      password: '',
+      email: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  //sabira: placing handle submit here, because previous code i didn't understand (ps handleSubmit nested in mapDispatch) and the code below seems like working
+
+  hanldeChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
+
   async handleSubmit(evt) {
     evt.preventDefault()
     const formName = evt.target.name
     const email = evt.target.email.value
     const password = evt.target.password.value
+    const firstName = evt.target.firstName.value
+    const lastName = evt.target.lastName.value
     await this.props.auth(email, password, formName)
     await this.props.fetchCart(this.props.user.id)
   }
   render() {
-    const {name, displayName, error} = this.props
+    const {formName, displayName, error} = this.props
+    const {firstName, lastName, password, email} = this.state
     return (
       <div>
         <Grid
@@ -45,12 +60,38 @@ class AuthForm extends Component {
               </Button>
             </form>
             <form onSubmit={this.handleSubmit} name={name}>
+              {formName !== 'login' && (
+                <div>
+                  <TextField
+                    name="firstName"
+                    label="First Name"
+                    margin="normal"
+                    id="standard-full-width"
+                    style={{margin: 8}}
+                    onChange={this.handleChange}
+                    value={firstName}
+                    fullWidth
+                  />
+                  <TextField
+                    name="lastName"
+                    label="Last Name"
+                    margin="normal"
+                    id="standard-full-width"
+                    style={{margin: 8}}
+                    onChange={this.handleChange}
+                    value={lastName}
+                    fullWidth
+                  />
+                </div>
+              )}
               <TextField
                 name="email"
                 label="Email"
                 margin="normal"
                 id="standard-full-width"
                 style={{margin: 8}}
+                onChange={this.handleChange}
+                value={email}
                 fullWidth
               />
               <TextField
@@ -59,8 +100,11 @@ class AuthForm extends Component {
                 margin="normal"
                 id="standard-full-width"
                 style={{margin: 8}}
+                onChange={this.handleChange}
+                value={password}
                 fullWidth
               />
+
               <Button
                 type="submit"
                 color="primary"
@@ -82,7 +126,7 @@ class AuthForm extends Component {
 
 const mapLoginToProps = state => {
   return {
-    name: 'login',
+    formName: 'login',
     displayName: 'Login',
     error: state.user.error,
     user: state.user
@@ -91,7 +135,7 @@ const mapLoginToProps = state => {
 
 const mapSignupToProps = state => {
   return {
-    name: 'signup',
+    formName: 'signup',
     displayName: 'Sign Up',
     error: state.user.error,
     user: state.user
@@ -103,16 +147,6 @@ const mapDispatchToProps = dispatch => {
     auth: (email, password, formName) =>
       dispatch(auth(email, password, formName)),
     fetchCart: userId => dispatch(fetchCart(userId))
-    //sabira: this is a code I mentioned earlier. Couldn't figure out how to place fetchCart function
-    //  handleSubmit(evt) {
-    //     evt.preventDefault()
-    //     const formName = evt.target.name
-    //     const email = evt.target.email.value
-    //     const password = evt.target.password.value
-
-    //     await dispatch(auth(email, password, formName))
-
-    //   }
   }
 }
 
