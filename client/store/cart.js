@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 import {
   addItemToCartFunc,
   removeItemFromCartFunc,
@@ -37,26 +36,22 @@ const createNewOrder = order => ({
 })
 
 //thunk
-export const purchaseComplete = order => {
+export const purchaseComplete = orderId => {
   return async dispatch => {
-    const {data} = await axios.put(`/api/orders/${order.id}`)
+    const {data} = await axios.put(`/api/orders/${orderId}`)
     dispatch(clearCart())
   }
 }
 export const makeNewOrder = order => {
   return async dispatch => {
-    console.log(order, 'order to be sent')
     const {data} = await axios.post('/api/orders', order)
-    console.log('posted data', data)
-    localStorage.clear()
-    dispatch(createNewOrder())
+    dispatch(createNewOrder(data))
+    localStorage.setItem('orderId', data.id)
   }
 }
 export const inStockCheck = (experience, qty) => {
   return async dispatch => {
     const {data} = await axios.get(`/api/experiences/${experience.id}`)
-    console.log('data from server', data)
-    console.log(data.inventory, 'inventory')
     if (data.inventory > qty) dispatch(addToCart(experience))
     else {
       window.alert(
@@ -89,11 +84,10 @@ const cartReducer = (state = activeCart, action) => {
     case DELETE_ALL_FROM_CART:
       return deleteAllFromCartFunc(state, action.payload)
     case CREATE_NEW_ORDER:
-      return activeCart
+      return state
     case CLEAR_CART:
       console.log('thank you message')
-      history.push('/thankyou')
-      localStorage.setItem('cart', activeCart)
+      localStorage.clear()
       return []
     default:
       return state

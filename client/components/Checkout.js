@@ -99,7 +99,6 @@ class Checkout extends React.Component {
           quantity: item.quantity,
           price: item.experience.price
         }
-        console.log(itemObj, 'itemObj')
 
         return itemObj
       })
@@ -118,11 +117,8 @@ class Checkout extends React.Component {
   }
 
   render() {
-    // const {firstName, lastName, email} = this.state
-    // const {user} = this.props
     let currentCart = this.props.activeCart.experiences
 
-    // if (!user.id) {
     return (
       <Grid container spacing={24}>
         <Grid item xs={12} sm={6}>
@@ -192,9 +188,6 @@ class Checkout extends React.Component {
         </Grid>
       </Grid>
     )
-    // } else {
-    //   return <Redirect to="/cart" />
-    // }
   }
 }
 
