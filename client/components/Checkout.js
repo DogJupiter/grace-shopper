@@ -178,7 +178,6 @@ class Checkout extends React.Component {
               name="Confirm purchase"
               description="Test only"
               amount={this.totalCost(currentCart)}
-              cartInfo={currentCart}
             />
           </form>
         </Grid>
