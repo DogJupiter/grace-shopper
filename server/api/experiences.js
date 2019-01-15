@@ -55,7 +55,12 @@ router.get('/:id', async (req, res, next) => {
       },
       include: [{model: Review, include: [{model: User}]}]
     })
-    res.json(requestedExperience)
+
+    if (requestedExperience) {
+      res.json(requestedExperience)
+    } else {
+      res.status(404).send()
+    }
   } catch (err) {
     next(err)
   }

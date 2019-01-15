@@ -15,23 +15,38 @@ beforeEach(function() {
     imageUrl:
       'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg',
     category: 'drink',
-    duration: '2 hours',
+    duration: '2 hour',
     price: 50,
     description: 'night out'
   })
 })
 
 describe('Experience', function() {
-  xit('includes all the fields', function() {
+  it('includes all the fields', function() {
     return cheapFunThing.save().then(function(savedExperience) {
       expect(savedExperience.name).to.equal('Jane Hotel After Midnight')
       expect(savedExperience.imageUrl).to.equal(
         'https://static.urbandaddy.com/uploads/assets/image/articles/standard/cf4eb440aea70a5e56c2453b9e3ce2101debb11e.jpg'
       )
-      expect(savedExperience.category).to.equal('drink')
+      // expect(savedExperience.category).to.equal('drink')
       expect(savedExperience.duration).to.equal('2 hour')
       expect(savedExperience.description).to.equal('night out')
       expect(savedExperience.price).to.equal(50)
     })
+  })
+
+  it('requires `name`', async () => {
+    cheapFunThing.name = null
+
+    let result, error
+    try {
+      result = await cheapFunThing.validate()
+    } catch (err) {
+      error = err
+    }
+
+    if (result) throw Error('validation should fail when name is null')
+
+    expect(error).to.be.an.instanceOf(Error)
   })
 })
