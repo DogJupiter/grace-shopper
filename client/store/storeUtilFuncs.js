@@ -27,10 +27,8 @@ export const addItemToCartFunc = (state, payload) => {
   if (newCart.totalQty === 0) {
     localStorage.clear()
   }
-
   return newCart
 }
-
 export const removeItemFromCartFunc = (state, payload) => {
   let newCart = {...state}
   if (state.experiences) {
@@ -50,7 +48,6 @@ export const removeItemFromCartFunc = (state, payload) => {
   }
   return newCart
 }
-
 export const deleteAllFromCartFunc = (state, payload) => {
   console.log('ARRIVED AT DELETE ALL FROM CART')
   let newCart = {...state}
@@ -70,7 +67,6 @@ export const deleteAllFromCartFunc = (state, payload) => {
   }
   return newCart
 }
-
 module.exports = {
   addItemToCartFunc,
   removeItemFromCartFunc,

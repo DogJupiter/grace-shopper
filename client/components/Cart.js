@@ -130,24 +130,24 @@ class Cart extends React.Component {
               Subtotal: ${this.totalCost(currentCart)}.00
             </Typography>
             <p>
-              {user.id ? (
+              {/* {user.id ? (
                 <Stripe
                   name="Confirm purchase"
                   description="Test only"
                   amount={this.totalCost(currentCart)}
                 />
-              ) : (
-                <Link to="/checkout">
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    className={classes.button}
-                    align="right"
-                  >
-                    Continue &nbsp;<ContinueIcon />
-                  </Button>
-                </Link>
-              )}
+              ) : ( */}
+              <Link to="/checkout">
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.button}
+                  align="right"
+                >
+                  Continue &nbsp;<ContinueIcon />
+                </Button>
+              </Link>
+              {/* )} */}
             </p>
           </CardContent>
         </Card>
