@@ -11,6 +11,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const DELETE_ALL_FROM_CART = 'DELETE_ALL_FROM_CART'
 const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER'
+const CLEAR_CART = 'CLEAR_CART'
 //ACTION CREATORS
 export const getCart = () => ({
   type: GET_CART
@@ -29,15 +30,23 @@ export const deleteAllFromCart = experience => ({
   payload: experience
 })
 
+const clearCart = () => ({type: CLEAR_CART})
+
 const createNewOrder = order => ({
   type: CREATE_NEW_ORDER,
   payload: order
 })
 
 //thunk
-
-export const makeNewOrder = (userId, order) => {
+export const purchaseComplete = order => {
   return async dispatch => {
+    const {data} = await axios.put(`/api/orders/${order.id}`)
+    dispatch(clearCart())
+  }
+}
+export const makeNewOrder = order => {
+  return async dispatch => {
+    console.log(order, 'order to be sent')
     const {data} = await axios.post('/api/orders', order)
     console.log('posted data', data)
     localStorage.clear()
@@ -82,6 +91,11 @@ const cartReducer = (state = activeCart, action) => {
       return deleteAllFromCartFunc(state, action.payload)
     case CREATE_NEW_ORDER:
       return activeCart
+    case CLEAR_CART:
+      console.log('thank you message')
+      history.push('/thankyou')
+      localStorage.setItem('cart', activeCart)
+      return []
     default:
       return state
   }

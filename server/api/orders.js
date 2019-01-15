@@ -66,6 +66,19 @@ router.get('/:orderId', async (req, res, next) => {
     next(err)
   }
 })
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    const requestedOrder = await Order.findOne({
+      where: {id: req.params.orderId}
+    })
+    // if (req.user && requestedOrder.userId === req.user.id)
+    requestedOrder.status = 'completed'
+    res.sendStatus(200)
+    // else res.status(403).send('Forbidden')
+  } catch (err) {
+    next(err)
+  }
+})
 
 /*
 Corey's Code Review Notes
