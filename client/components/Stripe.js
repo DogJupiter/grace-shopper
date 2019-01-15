@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import StripeCheckout from 'react-stripe-checkout'
+import {purchaseComplete} from '../store/cart'
+import store from '../store'
 
 const STRIPE_PUBLISHABLE =
   process.env.NODE_ENV === 'production'
@@ -23,6 +25,11 @@ const errorPayment = data => {
   alert('Payment Error')
 }
 
+const completeOrder = () => {
+  let orderId = localStorage.getItem('orderId')
+  store.dispatch(purchaseComplete(orderId))
+}
+
 const onToken = (amount, description) => token =>
   axios
     .post(PAYMENT_SERVER_URL, {
@@ -32,6 +39,7 @@ const onToken = (amount, description) => token =>
       amount: fromDollarsToCent(amount)
     })
     .then(successPayment)
+    .then(completeOrder())
     .catch(errorPayment)
 
 const Stripe = ({name, description, amount}) => (
@@ -45,9 +53,4 @@ const Stripe = ({name, description, amount}) => (
   />
 )
 
-// const mapDispatchToProps = ({
-//   purchaseComplete: (orderId) =>  purchaseComplete(orderId)
-// })
-
-// export default connect(null, mapDispatchToProps) (Stripe)
 export default Stripe

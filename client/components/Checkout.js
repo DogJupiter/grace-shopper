@@ -99,7 +99,6 @@ class Checkout extends React.Component {
           quantity: item.quantity,
           price: item.experience.price
         }
-        console.log(itemObj, 'itemObj')
 
         return itemObj
       })
