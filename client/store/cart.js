@@ -16,10 +16,9 @@ const CLEAR_CART = 'CLEAR_CART'
 export const getCart = () => ({
   type: GET_CART
 })
-export const addToCart = (experience, history) => ({
+export const addToCart = experience => ({
   type: ADD_TO_CART,
-  payload: experience,
-  history
+  payload: experience
 })
 export const removeFromCart = experience => ({
   type: REMOVE_FROM_CART,

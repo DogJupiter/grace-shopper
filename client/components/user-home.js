@@ -16,10 +16,8 @@ const styles = theme => ({
 })
 
 class UserHome extends Component {
-  //export const UserHome = props => {
   render() {
-    const {user} = this.props
-    const {classes} = this.props
+    const {user, classes} = this.props
     if (!user.id) {
       return (
         <div className="landing-page-container">
@@ -65,7 +63,6 @@ class UserHome extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    //sabira - checks if the user loggedIn
     isLoggedIn: !!state.user.id
   }
 }

@@ -8,7 +8,7 @@ import {connect} from 'react-redux'
 import {fetchAllExperiences, fetchCart} from '../store'
 import {getCart} from '../store/cart'
 
-const styles = theme => ({
+const styles = () => ({
   content: {
     flexGrow: 1,
     marginTop: '45px'

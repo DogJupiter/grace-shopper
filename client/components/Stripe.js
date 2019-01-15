@@ -45,9 +45,4 @@ const Stripe = ({name, description, amount}) => (
   />
 )
 
-// const mapDispatchToProps = ({
-//   purchaseComplete: (orderId) =>  purchaseComplete(orderId)
-// })
-
-// export default connect(null, mapDispatchToProps) (Stripe)
 export default Stripe

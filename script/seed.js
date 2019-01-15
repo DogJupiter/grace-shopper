@@ -6,8 +6,7 @@ const {
   Experience,
   Review,
   Order,
-  Category,
-  Item
+  Category
 } = require('../server/db/models')
 
 //Experiences Data
@@ -177,13 +176,7 @@ const orders = [
   {status: 'created', items: [], userId: 1, subtotal: 0},
   {status: 'created', items: [], userId: 3, subtotal: 0}
 ]
-// //sabira: new model needs to be seeded
-// const items = [
-//   {quantity: 1, experienceId: 1, orderId: 1},
-//   {quantity: 5, experienceId: 2, orderId: 2},
-//   {quantity: 2, experienceId: 3, orderId: 3}
-// ]
-//sabira: seeding joining table
+
 const expCats = [
   {experienceId: 1, categoryId: 2},
   {experienceId: 1, categoryId: 3},
@@ -226,13 +219,6 @@ const seed = async () => {
         })
       )
     })
-    // .then(() => {
-    //   return Promise.all(
-    //     items.map(item => {
-    //       return Item.create(item)
-    //     })
-    //   )
-    // })
     .then(() => {
       return Promise.all(
         categories.map(category => {
@@ -240,10 +226,9 @@ const seed = async () => {
         })
       )
     })
-    .then(categories => {
-      // console.log(categories);
+    .then(promisedcategories => {
       return Promise.all(
-        categories.map(category => {
+        promisedcategories.map(category => {
           return category.addExperience()
         })
       )

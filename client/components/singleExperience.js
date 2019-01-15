@@ -5,7 +5,7 @@ import {withStyles} from '@material-ui/core/styles'
 import {CardMedia, Grid, Card, Typography, CardContent} from '@material-ui/core'
 import PropTypes from 'prop-types'
 
-const styles = theme => ({
+const styles = () => ({
   image: {
     height: 65,
     paddingTop: '56.25%',
