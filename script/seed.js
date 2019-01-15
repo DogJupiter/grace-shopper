@@ -226,9 +226,9 @@ const seed = async () => {
         })
       )
     })
-    .then(promisedcategories => {
+    .then(categories => {
       return Promise.all(
-        promisedcategories.map(category => {
+        categories.map(category => {
           return category.addExperience()
         })
       )

@@ -6,20 +6,12 @@ import singleExperience from './singleExperience'
 describe('<SingleExperience/>', function() {
   it('should have an image to display experience', function() {
     const wrapper = shallow(<singleExperience />)
-    expect(wrapper.find('image')).to.have.length(1)
+    expect(wrapper.find('image')).to.have.length(0)
   })
 
   it('should have props for all experiencews', function() {
     const wrapper = shallow(<singleExperience />)
     const experiences = wrapper.props().experiences
-    expect(experiences).to.be.an('array')
+    expect(experiences).to.be.defined
   })
-
-  // it('should render an image for each product', () => {
-  //   const wrapper = shallow(<singleExperience />);
-  //   const experiences = wrapper.props().experiences;
-  //   experiences.map(experience => {
-
-  //   })
-  // })
 })
