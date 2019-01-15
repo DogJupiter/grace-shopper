@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import StripeCheckout from 'react-stripe-checkout'
-import {connect} from 'react-redux'
 import {purchaseComplete} from '../store/cart'
 import store from '../store'
 
@@ -55,9 +54,4 @@ const Stripe = ({name, description, amount, cartInfo}) => (
   />
 )
 
-// const mapDispatchToProps = {
-//   purchaseComplete: orderId => dispatch(purchaseComplete(orderId))
-// }
-
-// connect(null, mapDispatchToProps)(successPayment)
 export default Stripe
