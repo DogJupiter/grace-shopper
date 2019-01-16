@@ -28,7 +28,7 @@ export const deleteAllFromCart = experience => ({
   payload: experience
 })
 
-const clearCart = () => ({type: CLEAR_CART})
+export const clearCart = () => ({type: CLEAR_CART})
 
 const createNewOrder = order => ({
   type: CREATE_NEW_ORDER,
@@ -39,7 +39,8 @@ const createNewOrder = order => ({
 export const purchaseComplete = orderId => {
   return async dispatch => {
     const {data} = await axios.put(`/api/orders/${orderId}`)
-    dispatch(clearCart())
+    history.push(`/thanks/`)
+    // dispatch(clearCart())
   }
 }
 export const makeNewOrder = order => {
