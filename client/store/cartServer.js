@@ -13,7 +13,7 @@ export const getCart = cart => ({
   payload: cart
 })
 
-export const addToCart = (experience, history) => ({
+export const addToCart = experience => ({
   type: ADD_TO_CART,
   payload: experience,
   history

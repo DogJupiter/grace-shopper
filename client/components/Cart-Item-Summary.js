@@ -25,7 +25,7 @@ import {
 } from '../store/cart'
 import history from '../history'
 
-const styles = theme => ({
+const styles = () => ({
   content: {
     textAlign: 'center',
     justify: 'center',
@@ -153,7 +153,7 @@ class CartItemSummary extends React.Component {
 const mapStateToProps = state => ({
   activeCart: state.cart
 })
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   getCart: () => dispatch(getCart()),
   removeFromCart: exp => {
     dispatch(removeFromCart(exp))

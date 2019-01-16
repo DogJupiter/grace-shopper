@@ -1,5 +1,4 @@
 import React from 'react'
-// Material UI
 import {withStyles} from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -10,7 +9,7 @@ import {Link} from 'react-router-dom'
 
 const drawerWidth = 246
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: 'flex'
   },

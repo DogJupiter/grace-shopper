@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Stripe from './Stripe'
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {getCart, makeNewOrder} from '../store/cart'
 import {Grid, Typography} from '@material-ui/core'
 import {
@@ -89,7 +89,9 @@ class Checkout extends React.Component {
 
   totalCost(cart) {
     let total = 0
-    cart.map(item => (total += item.experience.price * item.quantity))
+    cart.forEach(item => {
+      total += item.experience.price * item.quantity
+    })
     return total
   }
 
@@ -97,7 +99,6 @@ class Checkout extends React.Component {
     const {user, classes} = this.props
     let currentCart = this.props.activeCart.experiences
 
-    // if (!user.id) {
     return (
       <div className={classes.container}>
         <Grid className={classes.container}>

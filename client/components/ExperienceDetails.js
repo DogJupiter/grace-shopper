@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 
 import {addToCart} from '../store/cart'
-import {fetchCart, addItemToCart, getCart} from '../store/'
+import {getCart} from '../store/'
 
 import {
   Grid,
@@ -186,7 +186,7 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
   addToCart: exp => dispatch(addToCart(exp)),
   getCart: () => dispatch(getCart())

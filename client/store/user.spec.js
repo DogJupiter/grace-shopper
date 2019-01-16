@@ -28,7 +28,7 @@ describe('thunk creators', () => {
   })
 
   describe('me', () => {
-    xit('eventually dispatches the GET USER action', async () => {
+    it('eventually dispatches the GET USER action', async () => {
       const fakeUser = {email: 'Cody'}
       mockAxios.onGet('/auth/me').replyOnce(200, fakeUser)
       await store.dispatch(me())
@@ -39,7 +39,7 @@ describe('thunk creators', () => {
   })
 
   describe('logout', () => {
-    xit('logout: eventually dispatches the REMOVE_USER action', async () => {
+    it('logout: eventually dispatches the REMOVE_USER action', async () => {
       mockAxios.onPost('/auth/logout').replyOnce(204)
       await store.dispatch(logout())
       const actions = store.getActions()

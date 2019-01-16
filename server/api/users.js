@@ -6,9 +6,6 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
       attributes: ['id', 'email', 'firstName', 'lastName']
     })
     res.json(users)
@@ -32,57 +29,48 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-/**
- * GET/POST/PUT/DELETE ORDERS
- */
-
 // Get /api/users/:id/orders
-// sabira: fetch all orders including cart (eager load for calculating subtotal and displaying all items what are inside of it)
-
 router.get('/:id/orders', async (req, res, next) => {
   const userId = Number(req.params.id)
-  // sabira: commented out security to test routes
-  // if (req.user && req.user.id === userId) {
-  try {
-    const order = await Order.findAll({
-      where: {userId},
-      include: [{model: Item, include: [{model: Experience}]}]
-    })
-    if (!order) {
-      return res.status(401).send('Unauthorized')
+  if (req.user && req.user.id === userId) {
+    try {
+      const order = await Order.findAll({
+        where: {userId},
+        include: [{model: Item, include: [{model: Experience}]}]
+      })
+      if (!order) {
+        return res.status(401).send('Unauthorized')
+      }
+      return res.json(order)
+    } catch (error) {
+      next(error)
     }
-    return res.json(order)
-  } catch (error) {
-    next(error)
+  } else {
+    res.status(403).send('Forbidden')
   }
-  // } else {
-  //   res.status(403).send('Forbidden')
-  // }
 })
 
-//sabira: fetch all completed orders
 router.get('/:id/orders/completed', async (req, res, next) => {
   const userId = Number(req.params.id)
-  // sabira: commented out security to test route
-  // if (req.user && req.user.id === userId) {
-  try {
-    const order = await Order.findAll({
-      where: {userId, status: 'completed'},
-      include: [{model: Item, include: [{model: Experience}]}]
-    })
-    if (!order) {
-      return res.status(401).send('Unauthorized')
+
+  if (req.user && req.user.id === userId) {
+    try {
+      const order = await Order.findAll({
+        where: {userId, status: 'completed'},
+        include: [{model: Item, include: [{model: Experience}]}]
+      })
+      if (!order) {
+        return res.status(401).send('Unauthorized')
+      }
+      return res.json(order)
+    } catch (error) {
+      next(error)
     }
-    return res.json(order)
-  } catch (error) {
-    next(error)
+  } else {
+    res.status(403).send('Forbidden')
   }
-  // } else {
-  //   res.status(403).send('Forbidden')
-  // }
 })
 
-//sabira: get cart (if status set to 'created' it means it cart, otherwise it's comleted order)
 router.get('/:id/orders/cart', async (req, res, next) => {
   const userId = Number(req.params.id)
   if (req.user && req.user.id === userId) {
