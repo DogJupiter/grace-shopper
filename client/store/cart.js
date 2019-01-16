@@ -42,11 +42,14 @@ export const purchaseComplete = orderId => {
     const {data} = await axios.put(`/api/orders/${orderId}`)
     history.push(`/thanks/`)
     localStorage.clear()
+    dispatch(clearCart())
   }
 }
 export const makeNewOrder = order => {
   return async dispatch => {
     const {data} = await axios.post('/api/orders', order)
+    console.log('ORDER IN MAKENEWORDER--->', data)
+    localStorage.setItem('orderId', data.id)
     dispatch(createNewOrder(data))
   }
 }

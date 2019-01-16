@@ -16,7 +16,6 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const order = await Order.create(req.body)
-
     res.send(order)
   } catch (err) {
     next(err)
