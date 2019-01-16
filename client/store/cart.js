@@ -40,7 +40,6 @@ export const purchaseComplete = orderId => {
   return async dispatch => {
     const {data} = await axios.put(`/api/orders/${orderId}`)
     history.push(`/thanks/`)
-    // dispatch(clearCart())
   }
 }
 export const makeNewOrder = order => {
@@ -73,6 +72,7 @@ if (localStorage.getItem('cart')) {
     subtotal: 0
   }
 }
+
 //REDUCER STUFF
 const cartReducer = (state = activeCart, action) => {
   switch (action.type) {
@@ -87,7 +87,6 @@ const cartReducer = (state = activeCart, action) => {
     case CREATE_NEW_ORDER:
       return state
     case CLEAR_CART:
-      console.log('thank you message')
       localStorage.clear()
       return []
     default:

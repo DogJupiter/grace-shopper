@@ -59,7 +59,6 @@ class Checkout extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log(this.state)
   }
 
   handleSubmit(event) {
@@ -89,7 +88,6 @@ class Checkout extends React.Component {
   }
 
   totalCost(cart) {
-    console.log('this is the current cart', cart)
     let total = 0
     cart.forEach(item => {
       total += item.experience.price * item.quantity

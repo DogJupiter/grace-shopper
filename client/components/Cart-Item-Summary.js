@@ -56,12 +56,10 @@ const styles = () => ({
 
 class CartItemSummary extends React.Component {
   async handleQtyIncrease() {
-    console.log('increasing qty', this.props.cartItem.experience)
     await this.props.checkInventory(
       this.props.cartItem.experience,
       this.props.cartItem.quantity
     )
-    // this.props.addToCart(this.props.cartItem.experience)
     history.push('/cart')
   }
 
@@ -83,7 +81,6 @@ class CartItemSummary extends React.Component {
         <div>
           <Grid container justify="center" spacing={16}>
             <Grid item xs={2} mr={100} px="auto">
-              {/* CART ITEM IMAGE HERE */}
               <Card className={classes.cartItemImage}>
                 <Link to={`/experiences/${cartItem.id}`}>
                   <CardMedia
@@ -97,7 +94,6 @@ class CartItemSummary extends React.Component {
               </Card>
             </Grid>
             <Grid item xs={2} mx="auto" px="auto" className={classes.content}>
-              {/* CART ITEM NAME HERE */}
               <Typography
                 style={{color: '#627264'}}
                 className={classes.productName}
@@ -106,7 +102,6 @@ class CartItemSummary extends React.Component {
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.content}>
-              {/* CART ITEM QUANTITY HERE */}
               <Typography
                 style={{color: '#627264'}}
                 className={classes.productQty}
@@ -139,7 +134,6 @@ class CartItemSummary extends React.Component {
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.content}>
-              {/* CART ITEM DELETE BUTTON HERE */}
               <Button
                 variant="outlined"
                 color="secondary"
