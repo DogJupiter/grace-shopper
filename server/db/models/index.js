@@ -13,8 +13,9 @@ Experience.hasMany(Review)
 User.hasMany(Order)
 Order.belongsTo(User)
 
-Experience.belongsToMany(Category, {through: 'expCat'})
-Category.belongsToMany(Experience, {through: 'expCat'})
+// Experience.belongsTo(Category)
+// Experience.belongsToMany(Category, {through: 'expcat'})
+// Category.belongsToMany(Experience, {through: 'expcat'})
 
 module.exports = {
   User,

@@ -19,7 +19,8 @@ const experiences = [
     duration: '2 hours',
     price: 10,
     description: `Your trip to New York City wouldn't be complete without inhaling a bevvy of Dollar pizza slices from every Sal's Pizza in town. Let a true professional guide you to the hottest spots where you can grab the hottest slices. This Pizza Tour with Pizza Rat will leave you breathless as you explore some of the least-expected pizza joints around town. Tour commences at 3:00am every Sunday in the tunnels between 66th & 72nd Streets on the 1-Train Line. Please dress appropriately. Ticket price does not include cost of any pizza you may purchase or steal on the tour.`,
-    inventory: 50
+    inventory: 50,
+    category: 'food'
   },
   {
     //drink
@@ -30,7 +31,8 @@ const experiences = [
     price: 45,
     description: `There are few places in this city quite like Saint Mark’s Place after 2:00am on a Friday night. Bring your binoculars and booze, and join the party. On this heart-pounding tour, our guides will take you on an adventure as you dodge debaucherous Twenty-Somethings stumbling their way toward final call. Your pulse will race as you knock on every single store-front in search of that speakeasy that everyone’s talking about. Don’t forget to buy a pair of novelty socks! 
     `,
-    inventory: 50
+    inventory: 50,
+    category: 'drinks'
   },
   {
     //entertainment
@@ -40,7 +42,8 @@ const experiences = [
     duration: '3 hours',
     price: 60,
     description: `IT'S SHOWTIME, EVERYBODY! WHAT TIME IS IT.... You guessed it! SHOWTIME! Be part of every New Yorker's beloved morning ritual! Take advantage of this beNewYork exclusive, and participate in a small-group Subway Dancing Lesson with the Showtime Kids themselves! In just three hours, you'll learn the essentials of breakdancing, pop & locking, and amazing subway pole aerial spins. If time allows, the Kids will also go over Dance Routine Etiquette: Claiming your dance space at peak-time... Avoiding altercations with commuters that you've kicked in the face.... And more! Reservations are limited, so snatch up a ticket before they're gone.`,
-    inventory: 50
+    inventory: 50,
+    category: 'entertainment'
   },
   {
     //Education
@@ -48,9 +51,10 @@ const experiences = [
     name: 'Dakota Does CI',
     imageUrl: 'https://i.imgur.com/DnWmupv.jpg',
     duration: '4 hours',
-    price: 2,
+    price: 25,
     description: `Travis got you down? Dakota's to the rescue. Continuous Integration is hard, but Fullstack Professor Dakota will ensure that your Deployment Blues are cleared right up. Three hours of this course will review Github Merge Conflicts, and the remaining hour will cover CI.`,
-    inventory: 50
+    inventory: 50,
+    category: 'education'
   },
   {
     //food
@@ -60,7 +64,8 @@ const experiences = [
     duration: '6 hours',
     price: 65,
     description: `Whether it's the bottomless breadsticks or the promise of mediocre nachos, chain restaurants hold a special place in all our hearts. Your trip to NYC wouldn't be complete without a bevvy of chain restaurants at which to feast. Admission includes one Applebee's Cocktail and a Novelty Goblet from Dallas BBQ.`,
-    inventory: 50
+    inventory: 50,
+    category: 'food'
   },
   {
     //Drink
@@ -70,7 +75,8 @@ const experiences = [
     duration: '2 minutes',
     price: 13,
     description: `Come grab a beer with a hipster. But, like, take it with you and leave. Cash & Carry only. No, you can't borrow our moustache wax.`,
-    inventory: 50
+    inventory: 50,
+    category: 'drink'
   },
   {
     //Entertainment
@@ -80,7 +86,8 @@ const experiences = [
     duration: '149 hours',
     price: 30,
     description: `Feet swollen from all that city street wandering? Fret no more - join BigBus New York on a hop-on/hop-off city sightseeing extravaganza. You'll drive around in circles, catching sight of all the best that New York City has to offer! Don't blink, or you might miss the action. $30 PROMOTIONAL PERIOD ENDS SOON.`,
-    inventory: 50
+    inventory: 50,
+    category: 'entertainment'
   },
   {
     //education
@@ -91,7 +98,8 @@ const experiences = [
     duration: '1 hour',
     price: 1,
     description: `The Grace Hopper Program at Fullstack Academy is an immersive software engineering program for women in New York City. Are you interested in learning coding? Come join us every Friday at 1 p.m. for an one hour tour and our current students will share their education experience with you.`,
-    inventory: 50
+    inventory: 50,
+    category: 'education'
   },
   {
     //food
@@ -101,7 +109,8 @@ const experiences = [
     duration: '12 minutes',
     price: 4.5,
     description: `The New York City Department of Health and Mental Hygiene is a prime example of the Man keeping culinary creativity tamped down. Our restauranteurs will lead you on a tour of the best of the worst-rated restaurants. That's not oil congealed on those vent hoods, it's LOVE. Please arrive fifteen minutes to fill out a waiver releasing us of all liability for your esophageal woes.`,
-    inventory: 50
+    inventory: 50,
+    category: 'food'
   },
 
   {
@@ -112,18 +121,21 @@ const experiences = [
     duration: '4-18 hours',
     price: 10,
     description: `Fight the power and don't drink the Koolaid - grab some brews instead! We've got hippies for days congregating at Union Square, and we're waiting for you. $10 gets you a pair of hemp pants and a single pour of kombucha. Bring your tamborine, man!`,
-    inventory: 50
+    inventory: 50,
+    category: 'drink'
   },
   {
     //entertainment
     //expId 11
     name:
       'Ride the Elevator Up & Down in a Building Which at One Point in Time Had Some Sort of Historical Significance',
-    imageUrl: 'https://i.imgur.com/7VzWLko.jpg',
+    imageUrl:
+      'http://s3files.core77.com/blog/images/2013/11/ESB-HalloweenLightShow-1.jpg',
     duration: '2 hours',
     price: 92,
     description: `Your trip to New York City wouldn't be complete without inhaling a bevvy of Dollar pizza slices from every Sal's Pizza in town. Let a true professional guide you to the hottest spots where you can grab the hottest slices. This Pizza Tour with Pizza Rat will leave you breathless as you explore some of the least-expected pizza joints around town. Tour commences at 3:00am every Sunday in the tunnels between 66th & 72nd Streets on the 1-Train Line. Please dress appropriately. Ticket price does not include cost of any pizza you may purchase or steal on the tour.`,
-    inventory: 50
+    inventory: 50,
+    category: 'entertainment'
   },
   {
     //education
@@ -133,7 +145,8 @@ const experiences = [
     duration: '2 hour',
     price: 25,
     description: `One of your favorite Fullstack Instructors is back in town, reviewing all that's hot in the Kitty Korner of the world. You'll spend two hours with Geoff and his furry friend Rue, discussing all the news that's fit to print in the Cat World. This event is BYO-cat-nip. No dogs allowed, sorry.`,
-    inventory: 25
+    inventory: 25,
+    category: 'education'
   }
 ]
 //User Data
@@ -202,6 +215,14 @@ const users = [
     password: '123',
     imageUrl: 'https://i.imgur.com/Becyu42.jpg',
     googleId: null
+  },
+  {
+    firstName: 'Guest',
+    lastName: 'User',
+    email: 'BLAH@email.com',
+    password: '123',
+    imageUrl: 'https://i.imgur.com/yIgo5QE.jpg',
+    googleId: null
   }
 ]
 
@@ -260,19 +281,12 @@ const orders = [
   {status: 'created', items: [], userId: 3, subtotal: 0}
 ]
 
-const expCats = [
-  {experienceId: 1, categoryId: 2},
-  {experienceId: 1, categoryId: 3},
-  {experienceId: 2, categoryId: 1},
-  {experienceId: 2, categoryId: 2}
-]
-
 //Category Data
 const categories = [
-  {id: 1, type: 'food'},
-  {id: 2, type: 'drink'},
-  {id: 3, type: 'entertainment'},
-  {id: 4, type: 'education'}
+  {type: 'food'},
+  {type: 'drink'},
+  {type: 'entertainment'},
+  {type: 'education'}
 ]
 
 //CategoryExperience JointTable data
@@ -311,13 +325,6 @@ const seed = async () => {
       return Promise.all(
         categories.map(category => {
           return Category.create(category)
-        })
-      )
-    })
-    .then(categories => {
-      return Promise.all(
-        categories.map((category, idx) => {
-          return category.addExperience(idx + 1)
         })
       )
     })

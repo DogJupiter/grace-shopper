@@ -52,6 +52,7 @@ class AuthForm extends Component {
                 name="password"
                 label="Password"
                 margin="normal"
+                type="password"
                 id="standard-full-width"
                 style={{margin: 8}}
                 fullWidth

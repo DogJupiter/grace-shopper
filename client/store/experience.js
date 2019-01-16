@@ -10,6 +10,7 @@ const initState = {
 const GET_EXPERIENCE = 'GET_EXPERIENCE'
 const GET_ALL_EXPERIENCES = 'GET_ALL_EXPERIENCES'
 const GET_FILTERED_EXPERIENCES = 'GET_FILTERED_EXPERIENCES'
+const POST_REVIEWS = 'POST_REVIEWS'
 
 //action creators
 const getExperince = experience => ({
@@ -25,6 +26,11 @@ const getAllExperiences = experiences => ({
 const getFilteredExperiences = experiences => ({
   type: GET_FILTERED_EXPERIENCES,
   payload: experiences
+})
+
+const postReviews = review => ({
+  type: POST_REVIEWS,
+  payload: review
 })
 
 //thunks
@@ -46,8 +52,14 @@ export const fetchAllExperiences = () => {
 export const fetchFilteredExperiences = categoryType => {
   return async dispatch => {
     const {data} = await axios.get(`/api/experiences?category=${categoryType}`)
-    console.log('HERE IS THE QUERIED CATEGORIES', data)
     dispatch(getFilteredExperiences(data))
+  }
+}
+
+export const postUserReview = (expId, review) => {
+  return async dispatch => {
+    const {data} = await axios.post(`/api/experiences/${expId}`, review)
+    dispatch(postReviews(review))
   }
 }
 
@@ -59,6 +71,8 @@ const experienceReducer = (state = initState, action) => {
       return {...state, allExperiences: action.payload}
     case GET_FILTERED_EXPERIENCES:
       return {...state, filteredExperiences: action.payload}
+    case POST_REVIEWS:
+      return state
     default:
       return state
   }

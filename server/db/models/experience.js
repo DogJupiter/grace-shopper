@@ -20,17 +20,6 @@ const Experience = db.define('experience', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  //CG: thought here on making this minutes.
-  /* //Wenyi added a get method
-  duration:{
-    type: Sequelize.INTEGER,
-    get: function(hour){
-       let unformatedDuration = this.getDataValue(hour);
-       let formatedDuration = unformatedDuration * 60;
-       return formatedDuration
-    }
-  }
- */
   description: {
     type: Sequelize.TEXT
   },
@@ -48,6 +37,10 @@ const Experience = db.define('experience', {
     validate: {
       min: 0
     }
+  },
+  category: {
+    type: Sequelize.STRING,
+    defaultValue: 4
   }
 })
 
