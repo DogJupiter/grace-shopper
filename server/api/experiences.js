@@ -60,6 +60,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/:id', async (req, res, next) => {
   try {
+    console.log('POST ROUTE HERE')
     const experienceToReview = Number(req.params.id)
     const reviewToPost = await Review.create({
       userId: 8,

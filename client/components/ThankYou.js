@@ -40,6 +40,7 @@ const styles = () => ({
 
 class ThankYou extends React.Component {
   render() {
+    const {classes} = this.props
     return (
       <div>
         <Typography className={classes.pageHeader}>

@@ -10,6 +10,8 @@ import {Button, Grid, TextField} from '@material-ui/core'
 import {connect} from 'react-redux'
 import {fetchExperience} from '../store'
 
+import history from '../history'
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -64,7 +66,6 @@ class AllReviews extends Component {
   handleSubmit(evt) {
     const review = evt.target.review.value
     let newReview = {description: review}
-    console.log('NEW REVIEW--->', newReview)
     this.props.postUserReview(this.props.currentExp, newReview)
   }
 
