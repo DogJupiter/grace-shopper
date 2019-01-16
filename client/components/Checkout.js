@@ -4,63 +4,40 @@ import Stripe from './Stripe'
 import {Link, Redirect} from 'react-router-dom'
 import {getCart, makeNewOrder} from '../store/cart'
 import {Grid, Typography} from '@material-ui/core'
-import {withStyles} from '@material-ui/core/styles'
+import {
+  withStyles,
+  MuiThemeProvider,
+  createMuiTheme
+} from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-
+import PropTypes from 'prop-types'
 const styles = theme => ({
   root: {
     flexGrow: 1
   },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    margin: 'auto',
-    maxWidth: '100vw'
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: 30
   },
-  image: {
-    height: '100%',
-    width: '100%',
-    objectFit: 'cover'
+  center: {
+    alignItems: 'center'
   },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%'
-  },
-  icons: {
-    align: 'center'
-  },
-  avatar: {
-    margin: 10
-  },
-  header: {
-    fontSize: '48px',
-    textTransform: 'uppercase'
-  },
-  uppercase: {
-    textTransform: 'uppercase'
-  },
-  text: {
-    fontSize: 18
+  green: {
+    color: '#627264'
   },
   margin: {
     marginTop: 100
-  },
-  //form
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  dense: {
-    marginTop: 16
-  },
-  menu: {
-    width: 200
   }
+})
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#627264'
+    }
+  },
+  typography: {useNextVariants: true}
 })
 
 //Guest Checkout
@@ -70,7 +47,9 @@ class Checkout extends React.Component {
     this.state = {
       firstName: '',
       lastName: '',
-      email: ''
+      email: '',
+      address: '',
+      instruction: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -90,6 +69,8 @@ class Checkout extends React.Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       email: this.state.email,
+      address: this.state.address,
+      instruction: this.state.instruction,
       subtotal: this.totalCost(this.props.activeCart.experiences),
       userId: this.props.user.id || null,
 
@@ -115,83 +96,155 @@ class Checkout extends React.Component {
   }
 
   render() {
-    const {firstName, lastName, email} = this.state
-    const {user} = this.props
+    const {user, classes} = this.props
     let currentCart = this.props.activeCart.experiences
 
     // if (!user.id) {
     return (
-      <Grid container spacing={24}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6">New Customer</Typography>
-          <Link to="/login">Already have an account?</Link>
-          <Typography variant="body1" style={{marginTop: 10}}>
-            You can complete your purchase as a guest and will be able to sign
-            up and save your details for future purchases at the end of the
-            order process
-          </Typography>
-          <form onSubmit={this.handleSubmit}>
-            <TextField
-              id="outlined-full-width"
-              label="First Name"
-              style={{margin: 8}}
-              margin="normal"
-              variant="outlined"
-              type="text"
-              name="firstName"
-              fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
-              onChange={this.handleChange}
-            />
-            <TextField
-              id="outlined-full-width"
-              label="Last Name"
-              style={{margin: 8}}
-              margin="normal"
-              variant="outlined"
-              type="text"
-              name="lastName"
-              fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
-              onChange={this.handleChange}
-            />
-            <TextField
-              id="outlined-full-width"
-              label="Email"
-              style={{margin: 8}}
-              margin="normal"
-              variant="outlined"
-              type="text"
-              name="email"
-              helperText="We will send confirmation to this email"
-              fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
-              onChange={this.handleChange}
-            />
-            <Stripe
-              name="Confirm purchase"
-              description="Test only"
-              amount={this.totalCost(currentCart)}
-            />
-          </form>
-        </Grid>
+      <div className={classes.container}>
+        <Grid className={classes.container}>
+          {!this.props.user.id ? (
+            <div className={classes.container}>
+              <Grid item xs={6}>
+                <Typography variant="h4" styles={{textAlign: 'center'}}>
+                  {' '}
+                  COMPLETE YOUR ORDER
+                </Typography>
+              </Grid>
 
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6">
-            Total:${this.totalCost(currentCart)}.00
-          </Typography>
+              <Grid item xs={6}>
+                <Typography variant="h6" styles={{textAlign: 'center'}}>
+                  New Customer
+                </Typography>
+                <Link to="/login">Already have an account?</Link>
+                <Typography variant="body1" style={{marginTop: 10}}>
+                  You can complete your purchase as a guest and will be able to
+                  sign up and save your details for future purchases at the end
+                  of the order process
+                </Typography>
+              </Grid>
+            </div>
+          ) : (
+            <Grid item xs={12} className={classes.container}>
+              <Typography variant="h4" styles={{textAlign: 'center'}}>
+                COMPLETE YOUR ORDER
+              </Typography>
+            </Grid>
+          )}
+          <Grid item>
+            <MuiThemeProvider theme={theme}>
+              <form className={classes.container} onSubmit={this.handleSubmit}>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    label="First Name"
+                    id="outlined-full-width"
+                    style={{margin: 8, width: '95%'}}
+                    margin="normal"
+                    variant="outlined"
+                    type="text"
+                    name="firstName"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    placeholder="First Name"
+                    onChange={this.handleChange}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    id="outlined-full-width"
+                    label="Last Name"
+                    style={{margin: 8, width: '95%'}}
+                    margin="normal"
+                    variant="outlined"
+                    type="text"
+                    name="lastName"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    placeholder="Last Name"
+                    onChange={this.handleChange}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    id="outlined-full-width"
+                    label="Email"
+                    style={{margin: 8, width: '95%'}}
+                    margin="normal"
+                    variant="outlined"
+                    type="email"
+                    name="email"
+                    helperText="We will send confirmation to this email"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    placeholder="Email"
+                    onChange={this.handleChange}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    id="outlined-full-width"
+                    label="Billing address"
+                    style={{margin: 8, width: '95%'}}
+                    margin="normal"
+                    variant="outlined"
+                    type="text"
+                    name="address"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    placeholder="Billing Address"
+                    onChange={this.handleChange}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Special instructions"
+                    style={{margin: 8, width: '95%'}}
+                    margin="normal"
+                    variant="outlined"
+                    type="text"
+                    name="instruction"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    placeholder="Special instructions"
+                    onChange={this.handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body"
+                    style={{
+                      textTransform: 'uppercase',
+                      textAlign: 'center',
+                      paddingBottom: 20
+                    }}
+                  >
+                    Your total is ${this.totalCost(currentCart)}.00
+                  </Typography>
+                  <Grid item xs={12} className={classes.container}>
+                    <Stripe
+                      name="Confirm purchase"
+                      description="Test only"
+                      amount={this.totalCost(currentCart)}
+                    />
+                  </Grid>
+                </Grid>
+              </form>
+            </MuiThemeProvider>
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     )
-    // } else {
-    //   return <Redirect to="/cart" />
-    // }
   }
 }
 
@@ -214,3 +267,7 @@ const mapDispatchToProps = dispatch => {
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(Checkout)
 )
+
+Checkout.propTypes = {
+  classes: PropTypes.object.isRequired
+}
