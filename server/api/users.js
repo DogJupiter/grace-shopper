@@ -76,8 +76,7 @@ router.get('/:id/orders/cart', async (req, res, next) => {
   if (req.user && req.user.id === userId) {
     try {
       const order = await Order.findOne({
-        where: {status: 'created'},
-        include: [{model: Item, include: [{model: Experience}]}]
+        where: {status: 'created'}
       })
       res.send(order)
     } catch (err) {

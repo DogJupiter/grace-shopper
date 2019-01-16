@@ -1,12 +1,10 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import CartItemSummary from './Cart-Item-Summary'
 import {
   Grid,
   Typography,
   Button,
   Card,
-  CardContent,
   Divider,
   CardMedia,
   CardHeader
@@ -17,7 +15,7 @@ import {connect} from 'react-redux'
 
 import {clearCart} from '../store/cart'
 
-const styles = theme => ({
+const styles = () => ({
   content: {
     flexGrow: 1,
     marginTop: '50px',
@@ -42,8 +40,6 @@ const styles = theme => ({
 
 class ThankYou extends React.Component {
   render() {
-    const {classes} = this.props
-
     return (
       <div>
         <Typography className={classes.pageHeader}>

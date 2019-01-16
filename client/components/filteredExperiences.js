@@ -25,7 +25,6 @@ const styles = () => ({
 class FilteredExperiences extends React.Component {
   async componentDidMount() {
     const values = queryString.parse(this.props.location.search)
-    console.log('THESE ARE THE PARAMS PASSED TO FETCH FILTER:', values)
     await this.props.fetchFiltered(values.category)
   }
 
