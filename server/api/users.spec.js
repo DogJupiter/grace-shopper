@@ -12,12 +12,12 @@ describe('User routes', () => {
   })
 
   describe('/api/users/', () => {
-    // const dummyUser = {
-    //   email: 'test@email.com',
-    //   password: '1234',
-    //   firstName: 'Arnold',
-    //   lastName: 'Schwarzenegger'
-    // }
+    const dummyUser = {
+      email: 'test@email.com',
+      password: '1234',
+      firstName: 'Arnold',
+      lastName: 'Schwarzenegger'
+    }
 
     beforeEach(() => {
       return User.create({
@@ -30,7 +30,7 @@ describe('User routes', () => {
       })
     })
 
-    xit('GET /api/users', async () => {
+    it('GET /api/users', async () => {
       const res = await request(app)
         .get('/api/users')
         .expect(200)
@@ -38,5 +38,5 @@ describe('User routes', () => {
       expect(res.body).to.be.an('array')
       expect(res.body[0].email).to.be.equal('test@email.com')
     })
-  }) // end describe('/api/users')
-}) // end describe('User routes')
+  })
+})

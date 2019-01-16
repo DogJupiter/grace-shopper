@@ -9,7 +9,7 @@ describe('<SingleExperience/>', function() {
     expect(wrapper.find('image')).to.have.length(0)
   })
 
-  it('should have props for all experiencews', function() {
+  it('should have props for all experiences', function() {
     const wrapper = shallow(<singleExperience />)
     const experiences = wrapper.props().experiences
     expect(experiences).to.be.defined
