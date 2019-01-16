@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth, fetchCart} from '../store'
-import {Grid, TextField, Button} from '@material-ui/core'
+import {auth, fetchCart, getCart} from '../store'
+import {Grid, TextField, Button, InputAdornment} from '@material-ui/core'
+import {AccountCircle} from '@material-ui/icons'
 
 class AuthForm extends Component {
   constructor() {
@@ -31,7 +32,7 @@ class AuthForm extends Component {
           style={{minHeight: '100vh'}}
         >
           <Grid item xs={12}>
-            <form method="get" action="/auth/google">
+            {/* <form method="get" action="/auth/google">
               <Button
                 type="submit"
                 color="primary"
@@ -42,7 +43,20 @@ class AuthForm extends Component {
               >
                 {displayName} with Google
               </Button>
-            </form>
+            </form> */}
+            {/*
+            <TextField
+              className={classes.margin}
+              id="input-with-icon-textfield"
+              label="TextField"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                )
+              }} */}
+            {/* /> */}
             <form onSubmit={this.handleSubmit} name={name}>
               <TextField
                 name="email"
@@ -51,6 +65,13 @@ class AuthForm extends Component {
                 id="standard-full-width"
                 style={{margin: 8}}
                 fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircle />
+                    </InputAdornment>
+                  )
+                }}
               />
               <TextField
                 name="password"
