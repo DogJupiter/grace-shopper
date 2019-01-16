@@ -47,7 +47,6 @@ class AuthForm extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log(this.state)
   }
 
   async handleSubmit(evt) {
@@ -58,18 +57,14 @@ class AuthForm extends Component {
     const password = evt.target.password.value
 
     if (this.props.name !== 'signup') {
-      console.log('logging in')
-
       await this.props.auth({email, password, method})
     } else {
       const firstName = evt.target.firstName.value
       const lastName = evt.target.lastName.value
-      const imageUrl = evt.target.imageUrl.value
       await this.props.auth({
         method,
         firstName,
         lastName,
-        imageUrl,
         email,
         password
       })
@@ -180,14 +175,6 @@ class AuthForm extends Component {
                   style={{margin: 8}}
                   fullWidth
                 />
-                <TextField
-                  name="imageUrl"
-                  label="Image-Url"
-                  margin="normal"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                />
                 <Button
                   type="submit"
                   color="primary"
@@ -214,74 +201,19 @@ class AuthForm extends Component {
                 {displayName} with Google
               </Button>
             </form>
-          </Grid>
-          <MuiThemeProvider theme={theme}>
-            <form
-              className={classes.container}
-              onSubmit={this.handleSubmit}
-              name={name}
-            >
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  // id="outlined-full-width"
-                  label="Email"
-                  style={{margin: 8, width: '95%'}}
-                  margin="normal"
-                  variant="outlined"
-                  type="email"
-                  name="email"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  placeholder="Email"
-                  onChange={this.handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  // id="outlined-full-width"
-                  label="Password"
-                  style={{margin: 8, width: '95%'}}
-                  margin="normal"
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                />
-              </Grid>
-              <Grid item xs={12} className={classes.container}>
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="outlined"
-                  // id="standard-full-width"
-                  style={{margin: 8}}
-                  // fullWidth
-                >
-                  {displayName}
-                </Button>
-              </Grid>
-
-              {error &&
-                error.response && (
-                  <div className={classes.container}>
-                    <Grid className={classes.container}>
-                      <Grid item xs={12} className={classes.container}>
-                        <Typography variant="h6" styles={{textAlign: 'center'}}>
-                          {error.response.data}
-                        </Typography>
-                      </Grid>
+            {error &&
+              error.response && (
+                <div className={classes.container}>
+                  <Grid className={classes.container}>
+                    <Grid item xs={12} className={classes.container}>
+                      <Typography variant="h6" styles={{textAlign: 'center'}}>
+                        {error.response.data}
+                      </Typography>
                     </Grid>
-                  </div>
-                )}
-            </form>
-          </MuiThemeProvider>
+                  </Grid>
+                </div>
+              )}
+          </Grid>
         </Grid>
       </div>
     )

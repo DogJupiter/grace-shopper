@@ -1,14 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {
-  Grid,
-  Typography,
-  Button,
-  Card,
-  Divider,
-  CardMedia,
-  CardHeader
-} from '@material-ui/core'
+import {Typography} from '@material-ui/core'
 
 import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
