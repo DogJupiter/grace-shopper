@@ -33,7 +33,6 @@ const User = db.define('user', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    allowNull: false,
     validate: {
       isUrl: true
     }
