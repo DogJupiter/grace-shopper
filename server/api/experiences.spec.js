@@ -1,9 +1,8 @@
-/* global describe beforeEach it */
-
 const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../db')
 const app = require('../index')
+
 const Experience = db.model('experience')
 
 describe('Experience routes', () => {
@@ -14,18 +13,17 @@ describe('Experience routes', () => {
   describe('/api/experiences/', () => {
     beforeEach(() => {
       return Experience.create({
-        id: 9999,
+        id: 5000,
         imageUrl:
           'http://media.cmgdigital.com/shared/img/photos/2015/09/21/c4/7a/pizza_rat.JPG',
         name: 'Pizza Tasting with Pizza Rat!',
-        duration: '4 hours', // this may change - what's the column type?
-        category: 'Food',
+        duration: '4 hours',
         description: 'A SUPER AWESOME EVENT',
-        price: 9999
+        price: 10
       })
     })
 
-    xit('GET /api/experiences', async () => {
+    it('GET /api/experiences', async () => {
       const res = await request(app)
         .get('/api/experiences')
         .expect(200)
@@ -33,13 +31,21 @@ describe('Experience routes', () => {
       expect(res.body[0].name).to.be.equal('Pizza Tasting with Pizza Rat!')
     })
 
-    xit('GET /api/experiences/:id', async () => {
+    it('GET /api/experiences/:id', async () => {
       const res = await request(app)
-        .get('/api/experiences/9999')
+        .get('/api/experiences/5000')
         .expect(200)
 
       expect(res.body).to.be.an('object')
       expect(res.body.name).to.be.equal('Pizza Tasting with Pizza Rat!')
     })
-  }) // end describe('/api/users')
-}) // end describe('User routes')
+  })
+
+  describe('error handling', () => {
+    xit('responds with a 500', async () => {
+      await request(app)
+        .get('/api/experiences/10000')
+        .expect(500)
+    })
+  })
+})

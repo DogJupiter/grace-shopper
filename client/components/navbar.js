@@ -1,13 +1,10 @@
-//react, redux
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout, fetchCart} from '../store'
-//materialUI
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
 import {
   AppBar,
@@ -84,7 +81,7 @@ class Navbar extends Component {
   componentDidMount() {
     this.props.getCart()
   }
-  //sabira: refactored function
+
   sumCart(cart) {
     return cart.experiences.reduce((accum, item) => accum + item.quantity, 0)
   }
@@ -94,7 +91,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const {isLoggedIn, classes, activeCart} = this.props
+    const {isLoggedIn, classes} = this.props
     return (
       <div className={classes.root}>
         <AppBar position="static" color="secondary" className={classes.appBar}>
@@ -162,10 +159,6 @@ const mapState = state => {
 }
 const mapDispatch = dispatch => {
   return {
-    // sabira: handleClick is now handle logout, if you scroll up you'll see
-    // handleClick() {
-    //   dispatch(logout())
-    // },
     logout: () => dispatch(logout()),
     getCart: () => dispatch(getCart()),
     fetchCart: userId => dispatch(fetchCart(userId))
@@ -176,7 +169,6 @@ export default withStyles(styles)(connect(mapState, mapDispatch)(Navbar))
  * PROP TYPES
  */
 Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired
 }

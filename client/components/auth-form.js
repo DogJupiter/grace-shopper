@@ -5,6 +5,7 @@ import {auth, fetchCart, getCart} from '../store'
 import {Grid, TextField, Button, Typography} from '@material-ui/core'
 import {AccountCircle} from '@material-ui/icons'
 
+
 import {
   withStyles,
   MuiThemeProvider,
@@ -29,6 +30,7 @@ const theme = createMuiTheme({
     }
   }
 })
+
 class AuthForm extends Component {
   constructor() {
     super()
@@ -39,12 +41,14 @@ class AuthForm extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
     console.log(this.state)
   }
+
 
   async handleSubmit(evt) {
     evt.preventDefault()
@@ -184,6 +188,5 @@ export const Signup = withStyles(styles)(
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }

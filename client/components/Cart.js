@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import CartItemSummary from './Cart-Item-Summary'
-import Stripe from './Stripe'
+// import Stripe from './Stripe'
 import {
   Grid,
   Typography,
@@ -16,7 +16,7 @@ import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import {getCart} from '../store/cart'
 
-const styles = theme => ({
+const styles = () => ({
   content: {
     flexGrow: 1,
     marginTop: '45px'
@@ -55,12 +55,14 @@ const styles = theme => ({
 class Cart extends React.Component {
   totalCost(cart) {
     let total = 0
-    cart.map(item => (total += item.experience.price * item.quantity))
+    cart.forEach(item => {
+      total += item.experience.price * item.quantity
+    })
     return total
   }
 
   render() {
-    const {classes, theme, user} = this.props
+    const {classes} = this.props
     let currentCart = this.props.activeCart.experiences
 
     if (!currentCart || currentCart.length < 1) {

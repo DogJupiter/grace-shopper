@@ -16,10 +16,8 @@ const styles = theme => ({
 })
 
 class UserHome extends Component {
-  //export const UserHome = props => {
   render() {
-    const {user} = this.props
-    const {classes} = this.props
+    const {user, classes} = this.props
     if (!user.id) {
       return (
         <div className="landing-page-container">
@@ -27,7 +25,8 @@ class UserHome extends Component {
           <div className="overlay" />
           <video autoPlay loop className="video-background" muted plays-inline>
             <source
-              src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+              // src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+              src="https://media.cntraveler.com/clips/5a983caea566be4ab1b46ccf/720p/pass/CNT_Marquee_NYC_022618.mp4"
               type="video/mp4"
             />
           </video>
@@ -65,7 +64,6 @@ class UserHome extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    //sabira - checks if the user loggedIn
     isLoggedIn: !!state.user.id
   }
 }
