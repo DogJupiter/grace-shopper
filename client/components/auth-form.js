@@ -5,13 +5,12 @@ import {auth, fetchCart, getCart} from '../store'
 import {Grid, TextField, Button, InputAdornment} from '@material-ui/core'
 import {AccountCircle} from '@material-ui/icons'
 
-//sabira: changing to class component
 class AuthForm extends Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  //sabira: placing handle submit here, because previous code i didn't understand (ps handleSubmit nested in mapDispatch) and the code below seems like working
+
   async handleSubmit(evt) {
     evt.preventDefault()
     const formName = evt.target.name
@@ -120,6 +119,5 @@ export const Signup = connect(mapSignupToProps, mapDispatchToProps)(AuthForm)
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }

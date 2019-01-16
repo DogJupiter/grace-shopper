@@ -8,7 +8,7 @@ import SideBar from './SideBar'
 
 import {fetchFilteredExperiences} from '../store/experience'
 
-const styles = theme => ({
+const styles = () => ({
   content: {
     flexGrow: 1,
     marginTop: '45px'

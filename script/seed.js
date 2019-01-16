@@ -6,8 +6,7 @@ const {
   Experience,
   Review,
   Order,
-  Category,
-  Item
+  Category
 } = require('../server/db/models')
 
 //Experiences Data
