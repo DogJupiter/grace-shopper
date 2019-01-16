@@ -4,6 +4,7 @@ import {withStyles} from '@material-ui/core/styles'
 
 import {addToCart} from '../store/cart'
 import {fetchCart, addItemToCart, getCart} from '../store/'
+import {Grid, TextField, Button, InputAdornment} from '@material-ui/core'
 
 import {
   Grid,
@@ -82,6 +83,7 @@ class ExperienceDetails extends Component {
 
   render() {
     const {classes, experience} = this.props
+    console.log(experience)
 
     return experience && experience.name ? (
       <div
@@ -111,7 +113,7 @@ class ExperienceDetails extends Component {
 
               <ListItem>
                 <EventNote className={classes.icons} />
-                <ListItemText> {experience.category}</ListItemText>
+                <ListItemText> {experience.categories[0].type}</ListItemText>
               </ListItem>
               <ListItem>
                 <ListItemText>$ {experience.price}.00</ListItemText>

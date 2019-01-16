@@ -39,7 +39,7 @@ router.get('/:id', async (req, res, next) => {
       where: {
         id: experienceId
       },
-      include: [{model: Review, include: [{model: User}]}]
+      include: [{model: Category}, {model: Review, include: [{model: User}]}]
     })
     res.json(requestedExperience)
   } catch (err) {

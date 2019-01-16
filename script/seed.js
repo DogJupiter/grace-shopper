@@ -270,10 +270,10 @@ const expCats = [
 
 //Category Data
 const categories = [
-  {type: 'food'},
-  {type: 'drink'},
-  {type: 'entertainment'},
-  {type: 'education'}
+  {id: 1, type: 'food'},
+  {id: 2, type: 'drink'},
+  {id: 3, type: 'entertainment'},
+  {id: 4, type: 'education'}
 ]
 
 //CategoryExperience JointTable data
@@ -322,13 +322,6 @@ const seed = async () => {
         })
       )
     })
-  // .then(experiences => {
-  //   let catIdx = 1
-  //   for (let i = 0; i < experiences.length; i++) {
-  //     catIdx === 5 ? (catIdx = 1) : experiences[i].addCategory(catIdx)
-  //     catIdx++
-  //   }
-  // })
 }
 
 // We've separated the `seed` function from the `runSeed` function.

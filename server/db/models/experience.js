@@ -55,4 +55,7 @@ Experience.prototype.decreaseInventory = function(num) {
   this.inventory = this.inventory - num
 }
 
+Experience.prototype.setCat = function(catNum) {
+  this.categoryId = catNum
+}
 module.exports = Experience

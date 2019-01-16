@@ -33,31 +33,6 @@ class AuthForm extends Component {
           style={{minHeight: '100vh'}}
         >
           <Grid item xs={12}>
-            {/* <form method="get" action="/auth/google">
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                id="standard-full-width"
-                style={{margin: 8}}
-                fullWidth
-              >
-                {displayName} with Google
-              </Button>
-            </form> */}
-            {/*
-            <TextField
-              className={classes.margin}
-              id="input-with-icon-textfield"
-              label="TextField"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                )
-              }} */}
-            {/* /> */}
             <form onSubmit={this.handleSubmit} name={name}>
               <TextField
                 name="email"

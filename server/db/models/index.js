@@ -6,6 +6,7 @@ const Category = require('./category')
 const Item = require('./item')
 
 Review.belongsTo(User)
+
 Review.belongsTo(Experience)
 Experience.hasMany(Review)
 
