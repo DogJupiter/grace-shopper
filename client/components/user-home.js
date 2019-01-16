@@ -27,7 +27,8 @@ class UserHome extends Component {
           <div className="overlay" />
           <video autoPlay loop className="video-background" muted plays-inline>
             <source
-              src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+              // src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+              src="https://media.cntraveler.com/clips/5a983caea566be4ab1b46ccf/720p/pass/CNT_Marquee_NYC_022618.mp4"
               type="video/mp4"
             />
           </video>
