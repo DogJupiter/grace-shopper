@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
   })
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', (req, res, next) => {
   stripe.charges.create(req.body, postStripeCharge(res))
 })
 

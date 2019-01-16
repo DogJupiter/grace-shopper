@@ -40,8 +40,6 @@ class App extends Component {
   //fetch cart before anything else
   async componentDidMount() {
     const {user, isLoggedIn, loadInitialData} = this.props
-    //sabira: if the user logged in?
-    console.log('app.js', 'is logged in?', isLoggedIn)
     loadInitialData()
     isLoggedIn ? await this.props.fetchCart(user.id) : this.props.getCart()
   }
