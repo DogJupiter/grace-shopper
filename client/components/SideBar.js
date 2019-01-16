@@ -55,6 +55,11 @@ class SideBar extends React.Component {
                 <ListItemText>Entertainment</ListItemText>
               </ListItem>
             </Link>
+            <Link to={{pathname: '/filter', search: `?category=education`}}>
+              <ListItem button>
+                <ListItemText>Education</ListItemText>
+              </ListItem>
+            </Link>
           </List>
         </Drawer>
       </div>

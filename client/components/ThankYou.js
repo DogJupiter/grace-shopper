@@ -13,7 +13,6 @@ import {
 import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 
-import history from '../history'
 import {clearCart} from '../store/cart'
 
 const styles = () => ({
@@ -40,60 +39,13 @@ const styles = () => ({
 })
 
 class ThankYou extends React.Component {
-  totalCost(cart) {
-    let total = 0
-    cart.map(item => (total += item.experience.price * item.quantity))
-    return total
-  }
-
-  handleClick() {
-    this.props.clearCart()
-    history.push('/')
-  }
-
   render() {
     const {classes} = this.props
-    let currentOrder = localStorage.getItem('cart')
-    let orderObj = JSON.parse(currentOrder)
-
     return (
       <div>
         <Typography className={classes.pageHeader}>
-          Thanks for your order!
+          Thanks for your order! Come again soon!
         </Typography>
-        <Button
-          variant="outlined"
-          color="secondary"
-          className={classes.button}
-          onClick={() => this.handleClick()}
-        >
-          Back to Home
-        </Button>
-        <Divider variant="middle" />
-        <Grid container justify="center" spacing={40}>
-          {orderObj.experiences.map(item => {
-            return (
-              <div key={item.experience.id}>
-                <Grid item xs={3} className={classes.content}>
-                  <Card container justify="center">
-                    <Link to={`/experiences/${item.experience.id}`}>
-                      <CardHeader
-                        title={item.experience.name}
-                        subheader={'Quantity: ' + item.quantity}
-                      />
-
-                      <CardMedia
-                        component="img"
-                        alt={item.experience.name}
-                        image={item.experience.imageUrl}
-                      />
-                    </Link>
-                  </Card>
-                </Grid>
-              </div>
-            )
-          })}
-        </Grid>
       </div>
     )
   }

@@ -7,7 +7,6 @@ import {Grid, TextField, Button, InputAdornment} from '@material-ui/core'
 
 import {AccountCircle} from '@material-ui/icons'
 
-
 import {
   withStyles,
   MuiThemeProvider,
@@ -51,7 +50,6 @@ class AuthForm extends Component {
     console.log(this.state)
   }
 
-
   async handleSubmit(evt) {
     evt.preventDefault()
 
@@ -80,7 +78,6 @@ class AuthForm extends Component {
   render() {
     const {name, displayName, error, classes} = this.props
     return (
-
       <div>
         <Grid
           container
@@ -217,7 +214,6 @@ class AuthForm extends Component {
                 {displayName} with Google
               </Button>
             </form>
-
           </Grid>
           <MuiThemeProvider theme={theme}>
             <form

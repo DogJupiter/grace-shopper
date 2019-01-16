@@ -4,6 +4,7 @@ import {
   removeItemFromCartFunc,
   deleteAllFromCartFunc
 } from './storeUtilFuncs'
+import history from '../history'
 //ACTION TYPES
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
@@ -40,13 +41,13 @@ export const purchaseComplete = orderId => {
   return async dispatch => {
     const {data} = await axios.put(`/api/orders/${orderId}`)
     history.push(`/thanks/`)
+    localStorage.clear()
   }
 }
 export const makeNewOrder = order => {
   return async dispatch => {
     const {data} = await axios.post('/api/orders', order)
     dispatch(createNewOrder(data))
-    localStorage.setItem('orderId', data.id)
   }
 }
 export const inStockCheck = (experience, qty) => {

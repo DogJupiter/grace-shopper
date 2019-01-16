@@ -3,16 +3,18 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 
 import {addToCart} from '../store/cart'
+import {postUserReview} from '../store/experience'
 import {getCart} from '../store/'
+import AllReviews from './AllReviews'
+import AddReviewForm from './AddReviewForm'
 
 import {
-  Grid,
   Typography,
-  Avatar,
   Button,
   ListItemText,
   ListItem,
-  List
+  List,
+  Grid
 } from '@material-ui/core'
 
 import {
@@ -137,37 +139,21 @@ class ExperienceDetails extends Component {
 
           <Grid item sm={12}>
             {experience.reviews[0] ? (
-              <div>
-                <Typography variant="h6">
-                  Reviews from people who took this experience
-                </Typography>
-
-                {experience.reviews.map(review => (
-                  <List className={classes.root} key={review.id}>
-                    <ListItem>
-                      <Avatar
-                        alt="userImg"
-                        src={review.user.imageUrl}
-                        className={classes.avatar}
-                      />
-                      <ListItemText
-                        primary={review.user.firstName}
-                        secondary={`${new Date(
-                          review.user.createdAt
-                        ).toLocaleString('en-us', {
-                          month: 'long'
-                        })}, ${new Date(review.user.createdAt).getFullYear()}`}
-                      />
-                    </ListItem>
-                    <ListItemText>{review.description}</ListItemText>
-                  </List>
-                ))}
-              </div>
+              <AllReviews
+                experience={experience}
+                currentExp={this.props.match.params.id}
+              />
             ) : (
-              <p>
-                <SentimentVeryDissatisfied className={classes.icons} /> No
-                reviews for this experience
-              </p>
+              <div>
+                <p>
+                  <SentimentVeryDissatisfied className={classes.icons} /> No
+                  reviews for this experience... yet! Add your own.
+                </p>
+                <AddReviewForm
+                  experience={experience}
+                  currentExp={this.props.match.params.id}
+                />
+              </div>
             )}
           </Grid>
         </Grid>
@@ -189,7 +175,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchExperience: id => dispatch(fetchExperience(id)),
   addToCart: exp => dispatch(addToCart(exp)),
-  getCart: () => dispatch(getCart())
+  getCart: () => dispatch(getCart()),
+  postUserReview: (expId, review) => dispatch(postUserReview(expId, review))
 })
 
 export default withStyles(styles)(

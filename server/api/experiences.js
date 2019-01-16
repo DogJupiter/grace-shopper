@@ -7,21 +7,13 @@ router.get('/', async (req, res, next) => {
   try {
     if (req.query.category) {
       const filterExperiences = await Experience.findAll({
-        include: [
-          {model: Review},
-          {
-            model: Category,
-            where: {
-              type: req.query.category
-            }
-          }
-        ]
+        where: {category: req.query.category}
       })
 
       res.json(filterExperiences)
     } else {
       const experiences = await Experience.findAll({
-        include: [{model: Review}, {model: Category}]
+        include: [{model: Review}]
       })
       res.json(experiences)
     }
@@ -61,6 +53,25 @@ router.get('/:id', async (req, res, next) => {
     } else {
       res.status(404).send()
     }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/:id', async (req, res, next) => {
+  try {
+    console.log('POST ROUTE HERE')
+    const experienceToReview = Number(req.params.id)
+    const reviewToPost = await Review.create({
+      userId: 8,
+      description: req.body.description,
+      experienceId: experienceToReview,
+      stars: 5
+    })
+    await reviewToPost.save()
+
+    const returnReview = reviewToPost.toJSON()
+    res.json(returnReview)
   } catch (err) {
     next(err)
   }
