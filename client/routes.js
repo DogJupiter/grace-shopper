@@ -4,11 +4,13 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
+import ThankYou from './components/ThankYou'
 import AllExperiences from './components/allExperiences'
 import ExperienceDetails from './components/ExperienceDetails'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
 import FilteredExperiences from './components/filteredExperiences'
+
 /**
  * COMPONENT
  */
@@ -22,6 +24,7 @@ class Routes extends Component {
     return (
       <Switch>
         <Route exact path="/" component={UserHome} />
+        <Route exact path="/thanks" component={ThankYou} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/home" component={UserHome} />

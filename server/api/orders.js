@@ -76,6 +76,7 @@ router.put('/:orderId', async (req, res, next) => {
     requestedOrder.status = 'completed'
     requestedOrder.save(() => console.log('REQUESTED ORDER UPDATED'))
     res.send(requestedOrder)
+
     // else res.status(403).send('Forbidden')
   } catch (err) {
     next(err)

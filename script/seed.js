@@ -192,7 +192,7 @@ const expCats = [
 ]
 
 //Category Data
-const categories = [{type: 'entertainment'}, {type: 'food'}, {type: 'drink'}]
+const categories = [{type: 'entertainment'}, {type: 'drink'}, {type: 'food'}]
 
 //CategoryExperience JointTable data
 const seed = async () => {
@@ -228,8 +228,8 @@ const seed = async () => {
     })
     // .then(() => {
     //   return Promise.all(
-    //     items.map(item => {
-    //       return Item.create(item)
+    //     expCats.map(item => {
+    //       return .create(item)
     //     })
     //   )
     // })
@@ -243,8 +243,8 @@ const seed = async () => {
     .then(categories => {
       // console.log(categories);
       return Promise.all(
-        categories.map(category => {
-          return category.addExperience()
+        categories.map((category, idx) => {
+          return category.addExperience(idx + 1)
         })
       )
     })
@@ -252,7 +252,7 @@ const seed = async () => {
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
-// The `seed` function is concerned only with modifying the database.
+// The `seed` function is concerned  only with modifying the database.
 async function runSeed() {
   console.log('seeding...')
   try {
