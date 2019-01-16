@@ -55,7 +55,7 @@ class UserHome extends Component {
     }
     return (
       <div>
-        <div classNmae="landing-page">
+        <div className="landing-page">
           <Redirect to="/experiences" />
         </div>
       </div>

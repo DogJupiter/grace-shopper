@@ -25,7 +25,6 @@ const styles = theme => ({
 class AllExperiences extends React.Component {
   async componentDidMount() {
     this.props.fetchAllExperiences()
-    //sabira: if the user logged in fetchServerCart
     this.props.user.id
       ? await this.props.fetchCart(this.props.user.id)
       : this.props.getCart()

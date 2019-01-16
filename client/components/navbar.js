@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, fetchCart} from '../store'
+import {logout, fetchCart} from '../store/'
 //materialUI
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
@@ -176,7 +176,6 @@ export default withStyles(styles)(connect(mapState, mapDispatch)(Navbar))
  * PROP TYPES
  */
 Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired
 }

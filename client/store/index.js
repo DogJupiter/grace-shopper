@@ -6,7 +6,7 @@ import user, {me} from './user'
 import cart, {getCart} from './cart'
 import experience, {fetchExperience, fetchAllExperiences} from './experience'
 
-// import cartServer, {fetchCart, addItemToCart} from './cartServer'
+import {fetchCart} from './cartServer'
 
 const reducer = combineReducers({user, experience, cart})
 const middleware = composeWithDevTools(
@@ -17,4 +17,4 @@ const store = createStore(reducer, middleware)
 export default store
 export * from './user'
 // exported thunk creators
-export {fetchExperience, fetchAllExperiences, me, getCart}
+export {fetchExperience, fetchAllExperiences, me, getCart, fetchCart}

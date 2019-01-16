@@ -85,34 +85,27 @@ router.get('/:id/orders/completed', async (req, res, next) => {
 //sabira: get cart (if status set to 'created' it means it cart, otherwise it's comleted order)
 router.get('/:id/orders/cart', async (req, res, next) => {
   const userId = Number(req.params.id)
-  // sabira: commented out security to test route
-  // if (req.user && req.user.id === userId) {
-  try {
-    const order = await Order.findOne({
-      where: {status: 'created'},
-      include: [{model: Item, include: [{model: Experience}]}]
-    })
-    res.send(order)
-  } catch (err) {
-    next(err)
+  if (req.user && req.user.id === userId) {
+    try {
+      const order = await Order.findOne({
+        where: {status: 'created'}
+      })
+      res.send(order)
+    } catch (err) {
+      next(err)
+    }
+  } else {
+    res.status(403).send('Forbidden')
   }
-  // } else {
-  //   res.status(403).send('Forbidden')
-  // }
 })
 
 // POST /api/users/:id/orders
-// add order based on specific user
-// ?
 router.post('/:id/orders', async (req, res, next) => {
   const userId = Number(req.params.id)
   if (req.user && req.user.id === userId) {
-    // get all Order's information
     let newOrder = req.body
-    // attach userId on the object
     newOrder.userId = req.params.id
     try {
-      // create the new order
       const order = await Order.create(newOrder)
       res.json(order)
     } catch (error) {
@@ -123,7 +116,6 @@ router.post('/:id/orders', async (req, res, next) => {
   }
 })
 
-//sabira: fetch specific completed order for specific user, eager load always nessesary to calculate subtotal
 router.get('/:id/orders/:orderId', async (req, res, next) => {
   try {
     const order = await Order.findOne({
@@ -148,16 +140,12 @@ router.put('/:id/orders/cart/items/:itemId/add', async (req, res, next) => {
   }
 })
 
-//sabira: add item to cart route (axios.post('route', experience))
 router.post('/:id/orders/cart/', async (req, res, next) => {
   try {
-    //sabira: find the cart if it exists
     let cart = await Order.findOne({where: {status: 'created'}})
-    //sabira: if we don't have a cart yet - create a cart
     if (!cart) {
       cart = await Order.create()
     }
-    //sabira: add item to the created/existing cart
     await Item.create({
       quantity: 1,
       orderId: cart.id,

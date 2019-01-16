@@ -47,7 +47,6 @@ export const fetchAllExperiences = () => {
 export const fetchFilteredExperiences = categoryType => {
   return async dispatch => {
     const {data} = await axios.get(`/api/experiences?category=${categoryType}`)
-    console.log('HERE IS THE QUERIED CATEGORIES', data)
     dispatch(getFilteredExperiences(data))
   }
 }

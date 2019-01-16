@@ -1,31 +1,39 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth, fetchCart, getCart} from '../store'
+import {auth, fetchCart} from '../store'
 import {Grid, TextField, Button, InputAdornment} from '@material-ui/core'
 import {AccountCircle} from '@material-ui/icons'
 
-//sabira: changing to class component
 class AuthForm extends Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  //sabira: placing handle submit here, because previous code i didn't understand (ps handleSubmit nested in mapDispatch) and the code below seems like working
+
   async handleSubmit(evt) {
     evt.preventDefault()
-    const formName = evt.target.name
+    const method = evt.target.name
     const email = evt.target.email.value
     const password = evt.target.password.value
+
     if (this.props.name !== 'signup') {
-      await this.props.auth(email, password, formName)
+      console.log('logging in')
+
+      await this.props.auth({email, password, method})
     } else {
       const firstName = evt.target.firstName.value
       const lastName = evt.target.lastName.value
-      await this.props.auth(email, password, formName, firstName, lastName)
+      const imageUrl = evt.target.imageUrl.value
+      await this.props.auth({
+        method,
+        firstName,
+        lastName,
+        imageUrl,
+        email,
+        password
+      })
     }
-
-    await this.props.fetchCart(this.props.user.id)
   }
   render() {
     const {name, displayName, error} = this.props
@@ -40,42 +48,119 @@ class AuthForm extends Component {
           style={{minHeight: '100vh'}}
         >
           <Grid item xs={12}>
-            <form onSubmit={this.handleSubmit} name={name}>
-              <TextField
-                name="email"
-                label="Email"
-                margin="normal"
-                id="standard-full-width"
-                style={{margin: 8}}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircle />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <TextField
-                name="password"
-                label="Password"
-                margin="normal"
-                id="standard-full-width"
-                style={{margin: 8}}
-                fullWidth
-              />
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                id="standard-full-width"
-                style={{margin: 8}}
-                fullWidth
-              >
-                {displayName}
-              </Button>
-              {error && error.response && <div> {error.response.data} </div>}
-            </form>
+            {name !== 'signup' ? (
+              <form onSubmit={this.handleSubmit} name={name}>
+                <TextField
+                  name="email"
+                  label="Email"
+                  margin="normal"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                  name="password"
+                  label="Password"
+                  margin="normal"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                />
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                >
+                  {displayName}
+                </Button>
+                {error && error.response && <div> {error.response.data} </div>}
+              </form>
+            ) : (
+              <form onSubmit={this.handleSubmit} name={name}>
+                <TextField
+                  name="firstName"
+                  label="First Name"
+                  margin="normal"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                  name="lastName"
+                  label="Last Name"
+                  margin="normal"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                  name="email"
+                  label="Email"
+                  margin="normal"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                  name="password"
+                  label="Password"
+                  margin="normal"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                />
+                <TextField
+                  name="imageUrl"
+                  label="Image-Url"
+                  margin="normal"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                />
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  id="standard-full-width"
+                  style={{margin: 8}}
+                  fullWidth
+                >
+                  {displayName}
+                </Button>
+                {error && error.response && <div> {error.response.data} </div>}
+              </form>
+            )}
 
             <form method="get" action="/auth/google">
               <Button
@@ -89,19 +174,6 @@ class AuthForm extends Component {
                 {displayName} with Google
               </Button>
             </form>
-            {/*
-            <TextField
-              className={classes.margin}
-              id="input-with-icon-textfield"
-              label="TextField"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                )
-              }} */}
-            {/* /> */}
           </Grid>
         </Grid>
       </div>
@@ -129,32 +201,16 @@ const mapSignupToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    auth: (email, password, formName) =>
-      dispatch(auth(email, password, formName)),
+    auth: formObj => dispatch(auth(formObj)),
     fetchCart: userId => dispatch(fetchCart(userId))
-    //sabira: this is a code I mentioned earlier. Couldn't figure out how to place fetchCart function
-    //  handleSubmit(evt) {
-    //     evt.preventDefault()
-    //     const formName = evt.target.name
-    //     const email = evt.target.email.value
-    //     const password = evt.target.password.value
-    //     const firstName = evt.target.firstName.value
-    //     const lastName = evt.target.lastName.value
-
-    //     await dispatch(auth(email, password, formName))
-
-    //   }
   }
 }
 
 export const Login = connect(mapLoginToProps, mapDispatchToProps)(AuthForm)
 export const Signup = connect(mapSignupToProps, mapDispatchToProps)(AuthForm)
 
-//Google-Login
-
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }
