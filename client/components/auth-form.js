@@ -17,7 +17,14 @@ class AuthForm extends Component {
     const formName = evt.target.name
     const email = evt.target.email.value
     const password = evt.target.password.value
-    await this.props.auth(email, password, formName)
+    if (this.props.name !== 'signup') {
+      await this.props.auth(email, password, formName)
+    } else {
+      const firstName = evt.target.firstName.value
+      const lastName = evt.target.lastName.value
+      await this.props.auth(email, password, formName, firstName, lastName)
+    }
+
     await this.props.fetchCart(this.props.user.id)
   }
   render() {
@@ -33,31 +40,6 @@ class AuthForm extends Component {
           style={{minHeight: '100vh'}}
         >
           <Grid item xs={12}>
-            {/* <form method="get" action="/auth/google">
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                id="standard-full-width"
-                style={{margin: 8}}
-                fullWidth
-              >
-                {displayName} with Google
-              </Button>
-            </form> */}
-            {/*
-            <TextField
-              className={classes.margin}
-              id="input-with-icon-textfield"
-              label="TextField"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                )
-              }} */}
-            {/* /> */}
             <form onSubmit={this.handleSubmit} name={name}>
               <TextField
                 name="email"
@@ -94,6 +76,32 @@ class AuthForm extends Component {
               </Button>
               {error && error.response && <div> {error.response.data} </div>}
             </form>
+
+            <form method="get" action="/auth/google">
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                id="standard-full-width"
+                style={{margin: 8}}
+                fullWidth
+              >
+                {displayName} with Google
+              </Button>
+            </form>
+            {/*
+            <TextField
+              className={classes.margin}
+              id="input-with-icon-textfield"
+              label="TextField"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                )
+              }} */}
+            {/* /> */}
           </Grid>
         </Grid>
       </div>
@@ -130,6 +138,8 @@ const mapDispatchToProps = dispatch => {
     //     const formName = evt.target.name
     //     const email = evt.target.email.value
     //     const password = evt.target.password.value
+    //     const firstName = evt.target.firstName.value
+    //     const lastName = evt.target.lastName.value
 
     //     await dispatch(auth(email, password, formName))
 
