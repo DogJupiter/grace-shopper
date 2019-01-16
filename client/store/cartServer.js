@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 const initState = {}
 //ACTION TYPES
@@ -14,7 +13,7 @@ export const getCart = cart => ({
   payload: cart
 })
 
-export const addToCart = (experience, history) => ({
+export const addToCart = experience => ({
   type: ADD_TO_CART,
   payload: experience,
   history

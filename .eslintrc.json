@@ -4,5 +4,15 @@
   "rules": {
     "semi": 0,
     "complexity": "off"
-  }
+  },
+  "plugins": ["chai-friendly"],
+  "overrides": [
+    {
+      "files": "*.spec.js",
+      "rules": {
+        "no-unused-expressions": "off",
+        "chai-friendly/no-unused-expressions": "error"
+      }
+    }
+  ]
 }
