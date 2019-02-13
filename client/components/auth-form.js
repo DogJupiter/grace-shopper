@@ -1,34 +1,40 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-
+import {Link} from 'react-router-dom'
 import {auth, fetchCart} from '../store'
-import {Grid, TextField, Button, InputAdornment} from '@material-ui/core'
-
-import {AccountCircle} from '@material-ui/icons'
-
-import {
-  withStyles,
-  MuiThemeProvider,
-  createMuiTheme
-} from '@material-ui/core/styles'
-
+import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
+import Textfield from '@material-ui/core/TextField'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import red from '@material-ui/core/colors/red'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import IconButton from '@material-ui/core/IconButton'
+import {withStyles} from '@material-ui/core/styles'
 const styles = theme => ({
   root: {
-    flexGrow: 1
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginTop: 30
-  }
-})
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#627264'
+    padding: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 16,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '95%',
+    // md = 960px or larger
+    [theme.breakpoints.up('md')]: {
+      width: '70%',
+      padding: theme.spacing.unit * 8
     }
+  },
+  form: {
+    marginTop: theme.spacing.unit * 4
+  },
+  errorMessage: {
+    marginTop: 0,
+    color: red.A200,
+    fontSize: '16px'
   }
 })
 
@@ -36,221 +42,197 @@ class AuthForm extends Component {
   constructor() {
     super()
     this.state = {
-      email: '',
-      password: ''
+      showPassword: false
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+
+    this.handleClickShowPassword = this.handleClickShowPassword.bind(this)
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
+  handleClickShowPassword = () => {
+    this.setState(state => ({showPassword: !this.state.showPassword}))
   }
 
-  async handleSubmit(evt) {
-    evt.preventDefault()
-
-    const method = evt.target.name
-    const email = evt.target.email.value
-    const password = evt.target.password.value
-
-    if (this.props.name !== 'signup') {
-      await this.props.auth({email, password, method})
-    } else {
-      const firstName = evt.target.firstName.value
-      const lastName = evt.target.lastName.value
-      await this.props.auth({
-        method,
-        firstName,
-        lastName,
-        email,
-        password
-      })
-    }
-  }
   render() {
-    const {name, displayName, error, classes} = this.props
+    const {name, displayName, error, classes, handleSubmit} = this.props
+
     return (
-      <div>
+      // <Paper className={classes.root} elevation={2}>
+      <div className={classes.root}>
         <Grid
           container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
-          style={{minHeight: '100vh'}}
+          spacing={8}
+          justify="space-between"
+          alignItems="baseline"
         >
-          <Grid item xs={12}>
-            {name !== 'signup' ? (
-              <form onSubmit={this.handleSubmit} name={name}>
-                <TextField
-                  name="email"
-                  label="Email"
-                  margin="normal"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-                <TextField
-                  name="password"
-                  label="Password"
-                  margin="normal"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                />
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                >
-                  {displayName}
-                </Button>
-                {error && error.response && <div> {error.response.data} </div>}
-              </form>
+          <Grid item>
+            <Typography variant="h3" component="h3" gutterBottom>
+              {/* Log In To Be New York or Sign Up For Be New York */}
+              {displayName}
+            </Typography>
+          </Grid>
+          <Grid item>
+            {name === 'login' ? (
+              <Button component={Link} to="/signup">
+                Sign Up Instead
+              </Button>
             ) : (
-              <form onSubmit={this.handleSubmit} name={name}>
-                <TextField
-                  name="firstName"
-                  label="First Name"
-                  margin="normal"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-                <TextField
-                  name="lastName"
-                  label="Last Name"
-                  margin="normal"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-                <TextField
-                  name="email"
-                  label="Email"
-                  margin="normal"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-                <TextField
-                  name="password"
-                  label="Password"
-                  margin="normal"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                />
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  id="standard-full-width"
-                  style={{margin: 8}}
-                  fullWidth
-                >
-                  {displayName}
-                </Button>
-                {error && error.response && <div> {error.response.data} </div>}
-              </form>
+              <Button component={Link} to="/login">
+                Log In Instead
+              </Button>
             )}
-
-            <form method="get" action="/auth/google">
+          </Grid>
+        </Grid>
+        <form
+          onSubmit={evt => handleSubmit(evt, this.props.history)}
+          name={name}
+          className={classes.form}
+        >
+          <Grid container spacing={24}>
+            {name === 'signup' ? (
+              <Grid item xs={12}>
+                {' '}
+                <Textfield
+                  name="fullName"
+                  label="Your Name"
+                  variant="outlined"
+                  type="text"
+                  fullWidth
+                  autoFocus={name === 'signup'}
+                  required
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+            ) : (
+              ''
+            )}
+            <Grid item xs={6}>
+              <Textfield
+                name="email"
+                label="Your Email Address"
+                variant="outlined"
+                type="email"
+                fullWidth
+                autoFocus={name === 'login'}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                required
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Textfield
+                id="outlined-adornment-password"
+                name="password"
+                label="Your Password"
+                variant="outlined"
+                type={this.state.showPassword ? 'text' : 'password'}
+                fullWidth
+                required
+                autoComplete="current-password"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="Toggle password visibility"
+                        onClick={this.handleClickShowPassword}
+                      >
+                        {this.state.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Grid>
+            <Grid item>
               <Button
                 type="submit"
-                color="primary"
-                variant="contained"
-                id="standard-full-width"
-                style={{margin: 8}}
-                fullWidth
+                color="secondary"
+                variant="outlined"
+                size="large"
+                className={classes.button}
+              >
+                {displayName}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                type="submit"
+                color="secondary"
+                variant="outlined"
+                size="large"
+                href="/auth/google"
+                className={classes.button}
               >
                 {displayName} with Google
               </Button>
-            </form>
-            {error &&
-              error.response && (
-                <div className={classes.container}>
-                  <Grid className={classes.container}>
-                    <Grid item xs={12} className={classes.container}>
-                      <Typography variant="h6" styles={{textAlign: 'center'}}>
-                        {error.response.data}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </div>
-              )}
+            </Grid>
+            <Grid item>
+              <Typography variant="subtitle2" component="p" color="inherit">
+                <FormHelperText
+                  component="span"
+                  className={classes.errorMessage}
+                >
+                  {error && error.response && error.response.data}
+                </FormHelperText>
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
+        </form>
+        {/* </Paper> */}
       </div>
     )
   }
 }
 
-const mapLoginToProps = state => {
+const StyledAuthForm = withStyles(styles)(AuthForm)
+
+const mapLogin = state => {
   return {
     name: 'login',
-    displayName: 'Login',
-    error: state.user.error,
-    user: state.user
+    displayName: 'Log In',
+    error: state.user.error
   }
 }
 
-const mapSignupToProps = state => {
+const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error,
-    user: state.user
+    error: state.user.error
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatch = dispatch => {
   return {
-    auth: formObj => dispatch(auth(formObj)),
-    fetchCart: userId => dispatch(fetchCart(userId))
+    // fetchCart: userId => dispatch(fetchCart(userId)),
+    handleSubmit(evt, history) {
+      evt.preventDefault()
+      const formName = evt.target.name
+
+      const email = evt.target.email.value
+      const password = evt.target.password.value
+      let fullName
+      if (evt.target.fullName) {
+        fullName = evt.target.fullName.value
+      }
+
+      dispatch(auth(email, password, fullName, formName, history))
+      // props.history.push('/experiences')
+    }
   }
 }
 
-export const Login = withStyles(styles)(
-  connect(mapLoginToProps, mapDispatchToProps)(AuthForm)
-)
-export const Signup = withStyles(styles)(
-  connect(mapSignupToProps, mapDispatchToProps)(AuthForm)
-)
+export const Login = connect(mapLogin, mapDispatch)(StyledAuthForm)
+export const Signup = connect(mapSignup, mapDispatch)(StyledAuthForm)
 
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,

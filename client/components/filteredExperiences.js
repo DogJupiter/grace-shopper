@@ -7,12 +7,8 @@ import SingleExperience from './singleExperience'
 import SideBar from './SideBar'
 
 import {fetchFilteredExperiences} from '../store/experience'
-
-const styles = () => ({
-  content: {
-    flexGrow: 1,
-    marginTop: '45px'
-  },
+const drawerWidth = 264
+const styles = theme => ({
   loader: {
     fontSize: '35px',
     marginTop: '50px',
@@ -40,21 +36,12 @@ class FilteredExperiences extends React.Component {
     const {classes} = this.props
     return this.props.filteredExperiences &&
       this.props.filteredExperiences.length ? (
-      <div style={{marginLeft: '27%', justifyContent: 'center'}}>
-        <Grid item xs={3} className={classes.content}>
+      <div>
+        <Grid item>
           <SideBar />
         </Grid>
-        <Grid
-          container
-          justify="center"
-          style={{
-            flexGrow: 1
-          }}
-          spacing={40}
-        >
-          <Grid item xs={12}>
-            <SingleExperience experiences={this.props.filteredExperiences} />
-          </Grid>
+        <Grid item xs={12}>
+          <SingleExperience experiences={this.props.filteredExperiences} />
         </Grid>
       </div>
     ) : (

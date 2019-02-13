@@ -17,7 +17,7 @@ import {withRouter} from 'react-router-dom'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#FFFFFF'
+      main: '#F5F1ED'
     },
     secondary: {
       main: '#627264',

@@ -12,7 +12,7 @@ const User = db.define('user', {
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     validtae: {
       notEmpty: true
     }
@@ -33,9 +33,10 @@ const User = db.define('user', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    validate: {
-      isUrl: true
-    }
+    // validate: {
+    //   isUrl: true
+    // },
+    allowNull: true
   },
   salt: {
     type: Sequelize.STRING,

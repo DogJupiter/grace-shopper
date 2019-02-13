@@ -5,11 +5,16 @@ import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import Icon from '@material-ui/core/Icon'
 import {Link} from 'react-router-dom'
+import Fastfood from '@material-ui/icons/Fastfood'
+import Casino from '@material-ui/icons/Casino'
+import School from '@material-ui/icons/School'
+import LocalBar from '@material-ui/icons/LocalBar'
+const drawerWidth = 264
 
-const drawerWidth = 246
-
-const styles = () => ({
+const styles = theme => ({
   root: {
     display: 'flex'
   },
@@ -17,10 +22,39 @@ const styles = () => ({
     width: drawerWidth,
     flexShrink: 0
   },
+  // drawerPaper: {
+  //   width: drawerWidth,
+  //   position: 'absolute',
+  //   top: 80,
+  //    height: 'auto',
+  // },
   drawerPaper: {
-    width: drawerWidth,
+    width: '100%',
+    top: 66, //Navbar height
+    height: 'auto',
     position: 'absolute',
-    top: 65
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      height: '100%'
+    }
+  },
+  drawerHeader: {
+    // 600px or smaller
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
+    },
+    padding: theme.spacing.unit * 2,
+
+    textTransform: 'uppercase',
+    fontWeight: 700,
+    letterSpacing: '0.6px',
+    fontSize: '1.25rem',
+    lineHeight: '1.875rem'
+  },
+  navItem: {
+    '&:hover': {
+      color: '#627264'
+    }
   }
 })
 
@@ -37,26 +71,40 @@ class SideBar extends React.Component {
           }}
         >
           <List>
-            <Typography style={{margin: 10}} variant="h6">
-              Category
-            </Typography>
+            <Link to="/experiences">
+              <Typography className={classes.drawerHeader} variant="h5">
+                Categories
+              </Typography>
+            </Link>
             <Link to={{pathname: '/filter', search: `?category=food`}}>
-              <ListItem button>
+              <ListItem button className={classes.navItem}>
+                <ListItemIcon>
+                  <Fastfood />
+                </ListItemIcon>
                 <ListItemText>Food</ListItemText>
               </ListItem>
             </Link>
             <Link to={{pathname: '/filter', search: `?category=drink`}}>
-              <ListItem button>
+              <ListItem button className={classes.navItem}>
+                <ListItemIcon>
+                  <LocalBar />
+                </ListItemIcon>
                 <ListItemText>Drink</ListItemText>
               </ListItem>
             </Link>
             <Link to={{pathname: '/filter', search: `?category=entertainment`}}>
-              <ListItem button>
+              <ListItem button className={classes.navItem}>
+                <ListItemIcon>
+                  <Casino />
+                </ListItemIcon>
                 <ListItemText>Entertainment</ListItemText>
               </ListItem>
             </Link>
             <Link to={{pathname: '/filter', search: `?category=education`}}>
-              <ListItem button>
+              <ListItem button className={classes.navItem}>
+                <ListItemIcon>
+                  <School />
+                </ListItemIcon>
                 <ListItemText>Education</ListItemText>
               </ListItem>
             </Link>

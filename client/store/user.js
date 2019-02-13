@@ -30,20 +30,17 @@ export const me = () => async dispatch => {
   }
 }
 
-export const auth = ({
-  method,
-  firstName,
-  lastName,
-  imageUrl,
+export const auth = (
   email,
-  password
-}) => async dispatch => {
+  password,
+  fullName,
+  method,
+  history
+) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {
-      firstName,
-      lastName,
-      imageUrl,
+      fullName,
       email,
       password
     })
@@ -53,7 +50,9 @@ export const auth = ({
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
+    // dispatch(fetchCart(res.data.id))
+    console.log('in auth')
+    history.push('/experiences')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }

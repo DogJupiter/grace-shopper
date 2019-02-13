@@ -48,7 +48,9 @@ const styles = () => ({
   },
   subtotal: {
     fontSize: '15px',
-    fontWeight: 500
+    fontWeight: 500,
+    marginRight: '11%',
+    textTransform: 'uppercase'
   }
 })
 
@@ -128,23 +130,16 @@ class Cart extends React.Component {
         })}
         <Card className={classes.cart} align="right">
           <CardContent>
-            <Typography className={classes.subtotal} color="textSecondary">
+            <Typography className={classes.subtotal}>
               Subtotal: ${this.totalCost(currentCart)}.00
             </Typography>
             <p>
-              {/* {user.id ? (
-                <Stripe
-                  name="Confirm purchase"
-                  description="Test only"
-                  amount={this.totalCost(currentCart)}
-                />
-              ) : ( */}
               <Link to="/checkout">
                 <Button
                   variant="outlined"
                   color="secondary"
                   className={classes.button}
-                  align="right"
+                  style={{marginRight: '11%'}}
                 >
                   Continue &nbsp;<ContinueIcon />
                 </Button>
