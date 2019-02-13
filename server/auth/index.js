@@ -21,13 +21,13 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const user = await User.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: req.body.password,
-      imageUrl: req.body.imageUrl
-    })
+    const {email, password, fullName} = req.body
+    let firstName, lastName
+    if (fullName) {
+      firstName = fullName.split(' ')[0]
+      lastName = fullName.split(' ')[1] ? fullName.split(' ')[1] : ''
+    }
+    const user = await User.create({firstName, lastName, email, password})
     req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {

@@ -38,14 +38,14 @@ class AllExperiences extends React.Component {
     }
     return (
       <div>
-        <Grid container justify="center" spacing={40}>
-          <Grid item xs={3} className={classes.content}>
-            <SideBar />
-          </Grid>
-          <Grid item xs={9} className={classes.content}>
-            <SingleExperience experiences={this.props.allExperiences} />
-          </Grid>
-        </Grid>
+        {/* <Grid container justify="center" spacing={40}>
+          <Grid item xs={3} className={classes.content}> */}
+        <SideBar />
+        {/* </Grid>
+          <Grid item xs={9} className={classes.content}> */}
+        <SingleExperience experiences={this.props.allExperiences} />
+        {/* </Grid> */}
+        {/* </Grid> */}
       </div>
     )
   }
